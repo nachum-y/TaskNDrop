@@ -1,0 +1,90 @@
+@import '../../styles/setup/vars';
+
+.surface-control {
+    background-color: $--color-surface;
+    color: #fff;
+
+    position: absolute;
+    inset: 0;
+    display: flex;
+
+    &-component {
+        display: flex;
+        // height: 100%;
+        width: 66px;
+        flex-direction: column;
+        position: relative;
+    }
+}
+
+.top-navigation-items-area {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    // padding-right: 6px;
+    // direction: rtl;
+    width: 100%;
+}
+
+.surface-action-icon-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.selected-view-indication {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 6px 8px 0;
+    position: absolute;
+    right: -6px;
+    transition: opacity .1s ease-in-out;
+    opacity: 0;
+    border-color: transparent $--primary-background-color transparent transparent;
+
+    &.selected {
+        opacity: 1;
+        right: 0;
+    }
+}
+
+
+
+.surface-control-component {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+}
+
+.surface-divider {
+    margin: 0 8px;
+    width: 50px;
+    background-color: $--color-asphalt;
+    height: 1px;
+    margin-bottom: 12px;
+}
+
+.surface-view-icon-wrapper {
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+
+    &.is-selected {
+        background-color: rgba(255, 255, 255, .3);
+    }
+
+}

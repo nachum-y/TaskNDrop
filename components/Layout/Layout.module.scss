@@ -1,5 +1,33 @@
+@import '../../styles/setup/vars';
+
 .main {
-    margin: 3rem auto;
-    width: 90%;
-    max-width: 40rem;
-  }
+  background-color: $--primary-background-color;
+  color: $--primary-text-color;
+  font-size: 0.875rem;
+
+  position: absolute;
+  inset: 0 0 0 66px;
+  height: 100%;
+  overflow: hidden;
+
+  -o-transition: left 150ms cubic-bezier(0, 0, 0.35, 1);
+  transition: left 150ms cubic-bezier(0, 0, 0.35, 1);
+
+}
+
+
+.first-level-content {
+  margin-left: 30px;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  min-width: 0;
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+}

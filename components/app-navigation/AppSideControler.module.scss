@@ -1,0 +1,22 @@
+@import '../../styles/setup/vars';
+
+
+.side-controler {
+    animation-name: slideInFromLeft;
+    animation-duration: .1s;
+    animation-timing-function: cubic-bezier(0, 0, 0.35, 1);
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    display: flex;
+    height: 100%;
+    position: absolute;
+    border-right: 1px solid;
+    border-color: $--layout-border-color;
+    // z-index: 1000001;
+    width: 30px;
+    transition: width .1s cubic-bezier(0, 0, 0.35, 1);
+    color: $--primary-text-color;
+    background-color: $--dark-background-color;
+
+}
