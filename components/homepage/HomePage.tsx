@@ -43,10 +43,11 @@ const HomePage = () => {
                 <Image src={homePageImg}
                     priority
                     layout='fill'
+                    alt='Home page image'
                 />
             </div>
             <footer className={classes.footer}>
-                "Task And Drop" - Pixel perfect, E2E clone of Monday.com (Next.js applicatio).
+                <span>&quot;Task And Drop&quot; - Pixel perfect, E2E clone of Monday.com (Next.js applicatio).</span>
             </footer>
         </div >
     )
