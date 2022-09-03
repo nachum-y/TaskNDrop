@@ -1,6 +1,18 @@
 // MAIN COLOR
 $--primary-text-color: #323338;
 $--primary-background-color: #ffffff;
+$--dark-background-color: #f6f7fb;
+$--secondary-text-color: #676879;
+$--primary-color: #0073ea;
+
+
+// HOVER COLOER
+
+$--primary-hover-color: #0060b9;
+$--primary-background-hover-color: #dcdfec;
+
+
+
 
 
 // APP NAVIGATION COLOR
@@ -9,6 +21,17 @@ $--color-surface: #292f4c;
 $--color-asphalt: #676879;
 
 
-// BORDER COLOR
-$--dark-background-color: #f6f7fb;
+// BORDER STYLE
 $--layout-border-color: #d0d4e4;
+$--border-style: 1px solid #d0d4e4;
+$--ui-border-color: #c3c6d4;
+
+
+// box-shadow
+
+$--box-shadow-xs: 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+$--box-shadow-large: 0px 15px 50px rgba(0, 0, 0, 0.3);
+$--board-elevation: 0px 1px 1px rgba(0, 0, 0, 0.1);
+
+//spacing
+$--spacing-small: 0.5rem;

@@ -1,0 +1,103 @@
+@font-face {
+    font-family: "dapulse";
+    src: url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.eot");
+    src: url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.eot?#iefix") format("embedded-opentype"),
+        url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.woff") format("woff"),
+        url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.ttf") format("truetype"),
+        url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.svg#dapulse") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.board-header {
+    padding-top: 1rem;
+    padding: 1rem 2rem 0px 2.5rem;
+
+    &-top {
+        display: flex;
+        align-items: center;
+    }
+
+    &-left {
+        display: flex;
+        flex: 1 0;
+        min-width: 100px;
+        margin-right: 8px;
+        margin-left: -5px;
+    }
+
+    &-right {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        gap: 1.5rem;
+    }
+}
+
+.board-name {
+    font-size: 28px;
+    white-space: nowrap;
+    font-weight: 500;
+    cursor: text;
+    display: inline-flex;
+    max-width: 100%;
+    align-items: center;
+    overflow: hidden;
+
+    .board-title-component {
+        padding-inline-end: 1rem;
+    }
+}
+
+
+
+
+.board-header-main {
+    position: sticky;
+    left: 0;
+    height: 2.75rem;
+}
+
+
+.board-header-show-description,
+.board-header-star {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    padding-inline-end: 1rem;
+}
+
+
+
+.board-header-icon-star,
+.board-header-icon-info {
+    font-size: 16px;
+    color: #676879;
+    font-family: dapulse;
+}
+
+.board-header-icon-star::before {
+    content: "\f344";
+}
+
+
+.board-header-icon-info::before {
+    content: "\f3dc";
+}
+
+.board-header-icon-invite {
+    font-size: 16px;
+    font-family: dapulse;
+}
+
+.board-header-icon-invite::before {
+    margin-inline-end: 0.25rem;
+    content: "\f3fb";
+}
+
+.board-subset-toolbar {
+    
+}

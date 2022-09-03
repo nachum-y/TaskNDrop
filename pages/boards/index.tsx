@@ -1,8 +1,14 @@
+import classes from './BoardApp.module.scss'
+
+import BoardAppHeader from '../../components/boards/board-header/BoardAppHeader'
+import GroupList from '../../components/boards/groups/GroupList'
 const BoardApp = () => {
     return (
-        <div>
-            <h1>BoardApp</h1>
-        </div>
+        <section className={classes['board-wrapper']}>
+            <BoardAppHeader />
+            <GroupList />
+
+        </section>
     )
 }
 
