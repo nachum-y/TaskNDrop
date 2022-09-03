@@ -4,27 +4,6 @@ import classes from './GroupList.module.scss'
 
 const GroupList = () => {
 
-
-
-    // const testPost = async () => {
-    //     console.log('post')
-    //     // const data = {
-    //     //     title: 'testTitle',
-    //     //     image: 'test Image',
-    //     //     message: 'test Message!'
-    //     // }
-
-    //     // const response = await fetch('/api/boards', {
-    //     //     method: 'POST',
-    //     //     body: JSON.stringify(data),
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json'
-    //     //     }
-    //     // })
-    //     // const dataRed = await response.json()
-    //     // console.log(dataRed)
-    // }
-
     return (
         <div className={classes['board-content-component']}>
 
