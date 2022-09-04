@@ -64,7 +64,7 @@ export type Cols = {
 
 export type Task = {
     id: string
-    cols: Cols
+    cols: Cols[]
     isDone: boolean
     createdAt: Double
     createdBy: FullMember
@@ -72,7 +72,7 @@ export type Task = {
 }
 
 
-export type Gropup = {
+export type Group = {
     title: string
     color: string
     tasks: Task[]
@@ -90,12 +90,13 @@ export type Board = {
     priority: Priority[]
     members: FullMember[]
     colsOrder: ColsOrder[]
-    groups: Gropup[]
+    groups: Group[]
 }
 export type BoardContextState = {
-    board: null | Board
-    test: string,
-    changeText: (text: string) => void
-    onAppLoad: (boardInitial: Board) => void
+    board: null | Board,
+    setBoard: (board: Board) => void
+    loadBoard: (boardInitial: Board) => void,
+    onSaveGroup: (group?: Group) => void
+    onAppLoad: () => void
 }
 

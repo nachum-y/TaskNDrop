@@ -1,6 +1,6 @@
 import classes from '../GroupList.module.scss'
 
-const GroupHeader = () => {
+const GroupHeader: React.FC<{ title: string }> = (props) => {
     return (
         <div className={classes['group-title-action']}>
             <div className={classes['group-header-menu']}>
@@ -14,7 +14,7 @@ const GroupHeader = () => {
 
                     </div>
                 </div>
-                <span>Title</span>
+                <span>{props.title}</span>
             </div>
         </div>
     )

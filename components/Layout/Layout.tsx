@@ -9,21 +9,22 @@ type Props = { children: React.ReactNode }
 
 const Layout: React.FC<Props> = (props) => {
 
-    const boardCtx = useContext(BoardContext)
-    const [initialBoard, setInitialBoard] = useState(null)
+    const { board, onAppLoad } = useContext(BoardContext)
+
 
     useEffect(() => {
-        async function fetchData() {
-            const res = await fetch('http://127.0.0.1:3000/api/boards')
-            const json = await res.json()
-            const loadBoard = json[0]
-            setInitialBoard(loadBoard)
-            boardCtx.onAppLoad(loadBoard)
-        }
-        fetchData()
+        onAppLoad()
+        // async function fetchData() {
+        //     const res = await fetch('http://127.0.0.1:3000/api/boards')
+        //     const json = await res.json()
+        //     const loadBoard = json[0]
+        //     setInitialBoard(loadBoard)
+        //     boardCtx.loadBoard(loadBoard)
+        // }
+        // fetchData()
     }, [])
 
-    if (!initialBoard) {
+    if (!board) {
         return (<div>Loading...</div>)
     }
 

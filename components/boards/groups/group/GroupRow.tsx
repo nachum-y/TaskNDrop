@@ -1,6 +1,11 @@
+import { Task } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 
-const GroupRow = () => {
+const GroupRow: React.FC<{ task: Task }> = (props) => {
+
+
+    const { cols, createdAt } = props.task
+
     return (
         <div className={classes['board-content-group-row']}>
             <div className={`${classes.col} ${classes.fixed}`}>
@@ -15,7 +20,10 @@ const GroupRow = () => {
                     <div className={classes['item-title']}>
                         <div className={classes['input-holder']}>
                             <form>
-                                <input className={classes['title-input']} type='text' placeholder='SheCodes Hackaton' />
+                                <input
+                                    className={classes['title-input']}
+                                    type='text'
+                                    placeholder={cols[0].value?.toString()} />
                             </form>
                         </div>
                         <div className={classes['open-icon-holder']}>
@@ -30,28 +38,30 @@ const GroupRow = () => {
                 </div>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span>
+                    {cols[1].value?.toString()}
+                </span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> {cols[2].value?.toString()}</span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> {cols[3].value?.toString()}</span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> {cols[4].value?.toString()}</span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> {cols[5].value?.toString()}</span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> {cols[6].value?.toString()}</span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> {cols[7].value?.toString()}</span>
             </div>
             <div className={classes.col}>
-                <span>1</span>
+                <span> location</span>
             </div>
         </div>
     )
