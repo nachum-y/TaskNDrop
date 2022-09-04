@@ -24,7 +24,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const onAppLoad = async () => {
         console.log('here')
-        const res = await fetch('http://127.0.0.1:3000/api/boards')
+        const res = await fetch('/api/boards')
         const json = await res.json()
         const initialBoard:Board = json[0]
         loadBoard(initialBoard)
