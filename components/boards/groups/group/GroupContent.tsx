@@ -57,7 +57,7 @@ const GroupContent: React.FC<{ group: Group }> = (props) => {
                                             key={task.id}
                                             task={task} />
 
-                                        {draggableProvided.placeholder}
+                                        {/* {draggableProvided.placeholder} */}
 
                                     </div>
                                 )}
