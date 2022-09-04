@@ -1,13 +1,17 @@
 // import React from "react"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels } from '../service/type'
 
 
 
 
 const contextDefaultValues: BoardContextState = {
     board: null,
+    colsOrderBoard: undefined,
+    statusValueBoard: [],
+    labelsValueBoard: [],
+    priorityValueBoard: [],
     loadBoard: () => { },
     setBoard: () => { },
     onSaveGroup: () => { },
@@ -20,19 +24,35 @@ export const BoardContext = createContext<BoardContextState>(
 
 const BoardProvider: FC<Props> = ({ children }) => {
     const [board, setBoard] = useState<Board | null>(contextDefaultValues.board)
+
+    const [colsOrderBoard, setColsOrder] = useState<ColsOrder[] | undefined>(undefined)
+    const [statusValueBoard, setStatusValueBoard] = useState<Labels[]>([])
+    const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
+    const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
+
+
+
+    useEffect(() => {
+        if (board) {
+            const { colsOrder } = board
+            setColsOrder(colsOrder)
+
+        }
+    }, [colsOrderBoard, board])
+
     const loadBoard = (loadedBoard: Board) => setBoard(() => loadedBoard)
 
     const onAppLoad = async () => {
-        console.log('here')
         const res = await fetch('/api/boards')
         const json = await res.json()
-        const initialBoard:Board = json[0]
+        const initialBoard: Board = json[0]
         loadBoard(initialBoard)
-        
+        setStatusValueBoard(initialBoard.status)
+        setLabelsValueBoard(initialBoard.labels)
+        setPriorityValueBoard(initialBoard.priority)
     }
 
     const onSaveGroup = (group?: Group) => {
-        console.log(group)
     }
 
 
@@ -49,6 +69,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
             value={{
                 onAppLoad,
                 board,
+                colsOrderBoard,
+                statusValueBoard,
+                labelsValueBoard,
+                priorityValueBoard,
                 setBoard,
                 loadBoard,
                 onSaveGroup,

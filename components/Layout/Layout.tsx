@@ -11,7 +11,6 @@ const Layout: React.FC<Props> = (props) => {
 
     const { board, onAppLoad } = useContext(BoardContext)
 
-    console.log('123');
     
     useEffect(() => {
         onAppLoad()

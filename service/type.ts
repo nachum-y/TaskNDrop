@@ -6,7 +6,7 @@ export type Props = {
 
 export type Member = {
     fullname: string
-    img: string
+    imgUrl: string
     id: string
 }
 
@@ -56,15 +56,15 @@ export type LocationCol = {
     lnglat: LngLat
 }
 
-export type Cols = {
+export type Col = {
     type: string
-    value: string | LocationCol | undefined
+    value: string | LocationCol | Member[] | undefined
 }
 
 
 export type Task = {
     id: string
-    cols: Cols[]
+    cols: Col[]
     isDone: boolean
     createdAt: Double
     createdBy: FullMember
@@ -94,9 +94,15 @@ export type Board = {
 }
 export type BoardContextState = {
     board: null | Board,
+    colsOrderBoard: ColsOrder[] | undefined
+    statusValueBoard: Labels[]
+    labelsValueBoard: Labels[]
+    priorityValueBoard: Labels[]
     setBoard: (board: Board) => void
-    loadBoard: (boardInitial: Board) => void,
+    loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
     onAppLoad: () => void
+
+
 }
 

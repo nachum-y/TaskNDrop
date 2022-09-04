@@ -5,7 +5,7 @@ import { Group } from '../../../service/type'
 import dynamic from "next/dynamic"
 
 import classes from './GroupList.module.scss'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 type Id = string
 type TypeId = Id
@@ -53,8 +53,8 @@ const GroupContent = dynamic(() => import("./group/GroupContent"), { ssr: false 
 const GroupList = () => {
 
     const [groups, setGroups] = useState<Group[]>([])
-    const { board, setBoard } = useContext(BoardContext)
-    // const [boardData, setBoardData] = useState(board)
+    const { board, setBoard, colsOrderBoard } = useContext(BoardContext)
+    console.log(colsOrderBoard)
 
 
     useEffect(() => {
@@ -64,15 +64,14 @@ const GroupList = () => {
     }, [board])
 
 
-    const [state, setState] = useState(board)
 
     const onDragEnd = (result: DropResult) => {
         const { destination, source } = result
         if (!destination) return
-        if (!state) return
-        let newBoardData = state
-        const sourceIdx = state!.groups.findIndex((group) => group.id === source.droppableId)
-        const destinationIdx = state!.groups.findIndex((group) => group.id === destination.droppableId)
+        if (!board) return
+        let newBoardData = board
+        const sourceIdx = board!.groups.findIndex((group) => group.id === source.droppableId)
+        const destinationIdx = board!.groups.findIndex((group) => group.id === destination.droppableId)
 
         var dragItem = newBoardData.groups[sourceIdx].tasks[result.source.index]
         newBoardData.groups[sourceIdx].tasks.splice(
@@ -105,6 +104,7 @@ const GroupList = () => {
                             < GroupContent
                                 key={group.id}
                                 group={group}
+                                colsOrder={board!.colsOrder}
                             />
                         )
                     })}

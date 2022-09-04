@@ -1,10 +1,30 @@
-import { Task } from '../../../../service/type'
+import { Col, ColsOrder, Task } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
+import DynamicColComponent from './DynamicColComponent'
 
-const GroupRow: React.FC<{ task: Task }> = (props) => {
+// import Test from './dynamic-component/Test'
+import Test2 from "../dynamic-cols-component/Test2"
+
+const Components = {
+    // Test,
+    Test2
+}
+
+// export default block => {
+//     // component does exist
+//     if (typeof Components[block.component] !== "undefined") {
+//         return React.createElement(Components[block.component], {
+//             key: block._uid,
+//             block: block
+//         })
+//     }
+// }
+
+const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[] }> = (props) => {
 
 
     const { cols, createdAt } = props.task
+
 
     return (
         <div className={classes['board-content-group-row']}>
@@ -37,33 +57,17 @@ const GroupRow: React.FC<{ task: Task }> = (props) => {
                     </div>
                 </div>
             </div>
-            <div className={classes.col}>
-                <span>
-                    {cols[1].value?.toString()}
-                </span>
-            </div>
-            <div className={classes.col}>
-                <span> {cols[2].value?.toString()}</span>
-            </div>
-            <div className={classes.col}>
-                <span> {cols[3].value?.toString()}</span>
-            </div>
-            <div className={classes.col}>
-                <span> {cols[4].value?.toString()}</span>
-            </div>
-            <div className={classes.col}>
-                <span> {cols[5].value?.toString()}</span>
-            </div>
-            <div className={classes.col}>
-                <span> {cols[6].value?.toString()}</span>
-            </div>
-            <div className={classes.col}>
-                <span> {cols[7].value?.toString()}</span>
-            </div>
-            <div className={classes.col}>
-                <span> location</span>
-            </div>
-        </div>
+            {
+                props.colsOrder.slice(1).map((col, index) => (
+                    < div className={classes.col}
+                        key={index} >
+                        <DynamicColComponent
+                            col={col}
+                            taskCol={cols.find((c: Col) => c.type === col.type) || { type: 'error', value: 'error' }} />
+                    </div>
+                ))}
+
+        </div >
     )
 }
 

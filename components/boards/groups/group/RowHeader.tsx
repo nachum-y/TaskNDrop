@@ -1,6 +1,8 @@
+import { ColsOrder } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 
-const RowHeader = () => {
+const RowHeader: React.FC<{ colsOrder: ColsOrder[] }> = (props) => {
+
     return (
         <div className={classes['board-content-group-row-header']}>
             <div className={`${classes['header-col']} ${classes.fixed}`}>
@@ -15,14 +17,23 @@ const RowHeader = () => {
                     <div className={classes['item-title']}><span>Items</span></div>
                 </div>
             </div>
-            <div className={`${classes['header-col']} ${classes['item']}`}><span>date</span></div>
+            {
+                props.colsOrder.slice(1).map((col, index) => (
+                    < div className={`${classes['header-col']} ${classes['item']}`}
+                        key={index} >
+                        <span>{col.title}</span>
+                    </div>
+                ))}
+
+
+            {/* <div className={`${classes['header-col']} ${classes['item']}`}><span>date</span></div>
             <div className={`${classes['header-col']} ${classes.item}`}><span>status</span></div>
             <div className={`${classes['header-col']} ${classes.item}`}><span>Text</span></div>
             <div className={`${classes['header-col']} ${classes.item}`}><span>person</span></div>
             <div className={`${classes['header-col']} ${classes.item}`}><span>label</span></div>
             <div className={`${classes['header-col']} ${classes.item}`}><span>priority</span></div>
             <div className={`${classes['header-col']} ${classes.item}`}><span>creation log</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>location</span></div>
+            <div className={`${classes['header-col']} ${classes.item}`}><span>location</span></div> */}
         </div>
     )
 }
