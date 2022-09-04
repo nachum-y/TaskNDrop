@@ -6,6 +6,13 @@ import RowHeader from './RowHeader'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 
+
+
+
+
+type DroppableMode = 'standard' | 'virtual'
+type Direction = 'horizontal' | 'vertical'
+
 import classes from '../GroupList.module.scss'
 import { Group } from '../../../../service/type'
 
@@ -56,8 +63,8 @@ const GroupContent: React.FC<{ group: Group }> = (props) => {
                                         <GroupRow
                                             key={task.id}
                                             task={task} />
-
-                                        {/* {draggableProvided.placeholder} */}
+                                            
+                                            
 
                                     </div>
                                 )}

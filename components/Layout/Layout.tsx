@@ -11,7 +11,19 @@ const Layout: React.FC<Props> = (props) => {
 
     const { board, onAppLoad } = useContext(BoardContext)
 
-    onAppLoad()
+    console.log('123');
+    
+    useEffect(() => {
+        onAppLoad()
+        // async function fetchData() {
+        //     const res = await fetch('http://127.0.0.1:3000/api/boards')
+        //     const json = await res.json()
+        //     const loadBoard = json[0]
+        //     setInitialBoard(loadBoard)
+        //     boardCtx.loadBoard(loadBoard)
+        // }
+        // fetchData()
+    }, [])
 
     if (!board) {
         return (<div>Loading...</div>)
