@@ -1,11 +1,13 @@
-import React, { useContext } from "react"
-import { Col, ColsOrder } from "../../../../service/type"
+import React from "react"
+import { Col, ColsOrder, Idx } from "../../../../service/type"
 import classes from './DynamicColComponent.module.scss'
-import Test2 from "../dynamic-cols-component/Test2"
-import StatusCmp from "../dynamic-cols-component/StatusCmp"
-import PersonCmp from "../dynamic-cols-component/PersonCmp"
+import Test2 from "../../../UI/dynamic-cols-component/Test2"
+import StatusCmp from "../../../UI/dynamic-cols-component/StatusCmp"
+import Person from "../../../UI/dynamic-cols-component/Person"
+import CreationLog from "../../../UI/dynamic-cols-component/CreationLog"
+import Text from "../../../UI/dynamic-cols-component/Text"
 
-type Cmp = React.FC<{ taskCol: Col, id: string }>
+type Cmp = React.FC<{ taskCol: Col, id: string, updateCol: (newCol: Col) => void }>
 
 type ComponentMap = {
     item: Cmp,
@@ -21,14 +23,14 @@ type ComponentMap = {
 
 const keysToComponentMap: ComponentMap = {
     item: Test2,
-    textCmp: Test2,
-    person: PersonCmp,
+    textCmp: Text,
+    person: Person,
     date: Test2,
     labelCmp: StatusCmp,
     status: StatusCmp,
     priority: StatusCmp,
     location: Test2,
-    creationLog: Test2,
+    creationLog: CreationLog,
 
 
 }
@@ -44,11 +46,20 @@ const keysToComponentMap: ComponentMap = {
 // }
 
 
-const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col }> = (props) => {
+const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: (col: Col) => void }> = ({ col, taskCol, updateTask }) => {
+    // const { updateTask } = useContext(BoardContext)
 
-
-    const { title, type } = props.col
+    const { title, type } = col
     const key = type as string
+
+
+
+    const updateTaskHandler = (newCol: Col) => {
+        console.log('updateTaskHandler')
+        updateTask(newCol)
+
+    }
+
 
     if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {
         return React.createElement(
@@ -56,7 +67,8 @@ const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col }> = (props) 
             {
                 id: title,
                 key: title,
-                taskCol: props.taskCol
+                taskCol: taskCol,
+                updateCol: updateTaskHandler
             },
             // config.children &&
             // (typeof config.children === 'string'

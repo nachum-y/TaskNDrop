@@ -17,10 +17,7 @@
     border-inline-end: $--border-style;
     height: 100%;
     width: 100%;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    // align-content: center;
+
 }
 
 
@@ -761,8 +758,8 @@
 
 
 
-.add-group{
-    &-btn{
+.add-group {
+    &-btn {
         position: sticky;
         left: 0px;
         width: 8.5rem;
@@ -775,31 +772,130 @@
         border: 1px solid;
         border-color: #e6e9ef;
         cursor: pointer;
-        transition: 50ms transform,.1scubic-bezier(0, 0, 0.35, 1) min-width;
+        transition: 50ms transform, .1scubic-bezier(0, 0, 0.35, 1) min-width;
         margin-block-end: 2.5rem;
-        &:hover{
+
+        &:hover {
             background-color: #dddfec;
         }
 
-        &:active{
+        &:active {
             transform: scale(0.95) translate3d(0, 0, 0);
         }
     }
-    &-txt{
+
+    &-txt {
         font-size: 0.875rem;
         line-height: 1.375rem;
     }
-    &-icon{
+
+    &-icon {
         height: 0.775rem;
         content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' width='24' height='24' aria-hidden='true' class='icon_component monday-style-button--left-icon icon_component--no-focus-style'%3E%3Cpath d='M10.75 3C10.75 2.58579 10.4142 2.25 10 2.25C9.58579 2.25 9.25 2.58579 9.25 3V9.25H3C2.58579 9.25 2.25 9.58579 2.25 10C2.25 10.4142 2.58579 10.75 3 10.75H9.25V17C9.25 17.4142 9.58579 17.75 10 17.75C10.4142 17.75 10.75 17.4142 10.75 17V10.75H17C17.4142 10.75 17.75 10.4142 17.75 10C17.75 9.58579 17.4142 9.25 17 9.25H10.75V3Z' fill='%2398999b' fill-rule='evenodd' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
-    
+
     }
-    &-icon-holder{
+
+    &-icon-holder {
         height: 1.31rem;
         width: 1.31rem;
         padding-right: 0.5rem;
         display: flex;
         align-items: center;
-        
+
     }
+}
+
+
+// Group Header 
+
+
+.group-title-action {
+    width: 400px;
+    background-color: white;
+    position: sticky;
+    left: 0rem;
+
+}
+
+.group-header-title {
+    display: flex;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 25rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+    cursor: text;
+    height: 26px;
+    padding: 0px 4px;
+    font-weight: 500;
+    align-items: center;
+
+}
+
+.group-header-title:hover:not(:focus) {
+    outline-offset: 2px;
+    outline: 1px solid #d0d4e4;
+    border-radius: 4px;
+
+}
+
+.background-hider {
+    width: 2.25rem;
+    height: 4.2rem;
+    box-shadow: none;
+    left: -2.3rem;
+    top: -2px;
+    position: absolute;
+    background-color: white;
+    display: none;
+}
+
+.group-header-title:focus {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
+
+.group-title-action {
+    display: flex;
+    padding: 0.625rem 0;
+    padding-inline-start: 0.875rem;
+    align-items: center;
+}
+
+.collapsable-icon-button {
+    transform-origin: center center;
+    transform: rotate(180deg);
+    transition: transform .2s;
+    font-size: 0.75rem;
+    outline: none;
+    margin-inline-end: 0.625rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.isColapse .collapsable-icon-button {
+    transform: rotate(90deg);
+}
+
+.color-indicator-gh {
+    display: none;
+}
+
+.group-header-title:focus .color-indicator-gh {
+    display: inline-block;
+
+}
+
+.group-header-title:focus {
+    padding-inline-start: 1.5rem;
+
+}
+
+// btn
+.btn-clean {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    outline: 0;
 }

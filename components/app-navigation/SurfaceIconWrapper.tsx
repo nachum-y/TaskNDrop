@@ -1,5 +1,5 @@
 import classes from './AppNavigation.module.scss'
-import SvgIcon from "../svgIcon/SvgIcon"
+import SvgIcon from "../UI/svgIcon/SvgIcon"
 
 import Image, { StaticImageData } from 'next/image'
 

@@ -1,0 +1,35 @@
+.menu-dialog {
+    z-index: 100000;
+}
+
+.dialog-content-wrapper {
+    outline: 0;
+    display: flex;
+    width: 264px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 17px 6px rgba(0, 0, 0, .1);
+
+}
+
+
+
+.menu-dialog-inner {
+    width: 264px;
+    transition: all 50ms ease-in;
+    transition-property: opacity, width;
+}
+
+.menu-section {
+    padding: 0.5rem;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid;
+        border-bottom-color: #e6e9ef;
+    }
+}
+
+// .menu-section:not(:last-child) {
+//     border-bottom: 1px solid;
+//     border-bottom-color: #e6e9ef;
+// }

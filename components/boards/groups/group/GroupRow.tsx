@@ -1,9 +1,11 @@
-import { Col, ColsOrder, Task } from '../../../../service/type'
+import { useContext } from 'react'
+import { Col, ColsOrder, Idx, Task } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 import DynamicColComponent from './DynamicColComponent'
+import { BoardContext } from "../../../../store/board"
 
 // import Test from './dynamic-component/Test'
-import Test2 from "../dynamic-cols-component/Test2"
+import Test2 from "../../../UI/dynamic-cols-component/Test2"
 
 const Components = {
     // Test,
@@ -20,11 +22,23 @@ const Components = {
 //     }
 // }
 
-const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[] }> = (props) => {
+const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: string }> = ({ task, colsOrder, groupColor }) => {
+
+    const { updateTask } = useContext(BoardContext)
+    const { cols, createdAt, id, groupId } = task
+
+    const updateTaskHandler = (newCol: Col) => {
+        // const colIdx = '1'
+        const idx = {
+            groupId,
+            taskId: id,
+
+        }
 
 
-    const { cols, createdAt } = props.task
-
+        // const idx = { task.id: string, }
+        updateTask(newCol, idx)
+    }
 
     return (
         <div className={classes['board-content-group-row']}>
@@ -33,7 +47,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[] }> = (props) => {
                     <div className={classes['row-menu']}>
                         <div className={classes['row-menu-icon']}></div>
                     </div>
-                    <div className={classes['border']}></div>
+                    <div className={classes['border']} style={{ backgroundColor: groupColor ? groupColor : '' }}></div>
                     <div className={classes['item-select']}>
                         <div className={classes['checkbox']}></div>
                     </div>
@@ -58,12 +72,15 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[] }> = (props) => {
                 </div>
             </div>
             {
-                props.colsOrder.slice(1).map((col, index) => (
+                colsOrder.slice(1).map((col, index) => (
                     < div className={classes.col}
                         key={index} >
                         <DynamicColComponent
                             col={col}
-                            taskCol={cols.find((c: Col) => c.type === col.type) || { type: 'error', value: 'error' }} />
+                            taskCol={cols.find((c: Col) => c.type === col.type)
+                                || { type: 'error', value: 'error' }}
+                            updateTask={updateTaskHandler}
+                        />
                     </div>
                 ))}
 

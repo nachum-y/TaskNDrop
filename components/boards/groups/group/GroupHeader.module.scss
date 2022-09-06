@@ -1,0 +1,85 @@
+
+.group-title-action {
+    width: 400px;
+    background-color: white;
+    position: sticky;
+    left: 0rem;
+
+}
+
+.group-header-title {
+    display: flex;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 25rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+    cursor: text;
+    height: 26px;
+    padding: 0px 4px;
+    font-weight: 500;
+    align-items: center;
+
+}
+
+.group-header-title:hover:not(:focus) {
+    outline-offset: 2px;
+    outline: 1px solid #d0d4e4;
+    border-radius: 4px;
+
+}
+
+.background-hider {
+    width: 2.25rem;
+    height: 4.2rem;
+    box-shadow: none;
+    left: -2.3rem;
+    top: -2px;
+    position: absolute;
+    background-color: white;
+    display: none;
+}
+
+.group-header-title:focus {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
+
+.group-title-action {
+    display: flex;
+    padding: 0.625rem 0;
+    padding-inline-start: 0.875rem;
+    align-items: center;
+}
+
+.collapsable-icon-button {
+    transform-origin: center center;
+    transform: rotate(180deg);
+    transition: transform .2s;
+    font-size: 0.75rem;
+    outline: none;
+    margin-inline-end: 0.625rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.isColapse .collapsable-icon-button {
+    transform: rotate(90deg);
+}
+
+.color-indicator-gh {
+    display: none;
+}
+
+.group-header-title:focus .color-indicator-gh {
+    display: inline-block;
+
+}
+
+.group-header-title:focus {
+    padding-inline-start: 1.5rem;
+
+}
+
+
+

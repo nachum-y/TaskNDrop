@@ -1,15 +1,15 @@
 import { useContext } from 'react'
 
-import { Col, ColsOrder, Labels, Member } from '../../../../service/type'
-import classes from './PersonCmp.module.scss'
-import { BoardContext } from '../../../../store/board'
+import { Col, ColsOrder, Labels, Member } from '../../../service/type'
+import classes from './Person.module.scss'
+import { BoardContext } from '../../../store/board'
 
 
 
 
-const PersonCmp: React.FC<{ taskCol: Col }> = (props) => {
+const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void }> = ({ taskCol, updateCol }) => {
 
-    const { value } = props.taskCol
+    const { value } = taskCol
 
 
     let persons: Member[] | [] | undefined
@@ -40,4 +40,4 @@ const PersonCmp: React.FC<{ taskCol: Col }> = (props) => {
     )
 }
 
-export default PersonCmp
+export default Person

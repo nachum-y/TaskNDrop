@@ -1,33 +1,45 @@
-import { useEffect, useState, Fragment, useContext } from 'react'
+import { useEffect, useState, Fragment, useContext, ReactEventHandler } from 'react'
 import classes from './Layout.module.scss'
 import AppNavigation from '../app-navigation/AppNavigation'
 import AppSideControler from '../app-navigation/AppSideControler'
 import { BoardContext } from '../../store/board'
-import SkeletonGroup from '../skeletons/SkeletonGroup'
-import SkeletonBoardHeader from '../skeletons/SkeletonBoardHeader'
+import SkeletonGroup from '../UI/skeletons/SkeletonGroup'
+import SkeletonBoardHeader from '../UI/skeletons/SkeletonBoardHeader'
+// import useContextMenu from '../../hooks/useContextMenu'
+import MenuDialog from '../UI/menu/MenuDialog'
+import Button from '@mui/material/Button'
 
 type Props = { children: React.ReactNode }
+
+type Pos = {
+    left: string
+    top: string
+}
 
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad } = useContext(BoardContext)
+    const { board, onAppLoad, anchorEl, onCloseDialogMenu } = useContext(BoardContext)
+    // const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
+    const id = 'simple-popover'
 
     useEffect(() => {
-        // setTimeout(() => {
-        //     onAppLoad()
-        // }, 50000)
         onAppLoad()
-        // async function fetchData() {
-        //     const res = await fetch('http://127.0.0.1:3000/api/boards')
-        //     const json = await res.json()
-        //     const loadBoard = json[0]
-        //     setInitialBoard(loadBoard)
-        //     boardCtx.loadBoard(loadBoard)
-        // }
-        // fetchData()
     }, [])
+
+    // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    //     setAnchorEl(event.currentTarget)
+    //     console.log(event.currentTarget)
+
+    // }
+
+    const handleClose = () => {
+        // setAnchorEl(null)
+        onCloseDialogMenu()
+    }
+
+    // const { xPos, yPos, showMenu } = useContextMenu()
 
     if (!board) {
         return (
@@ -60,6 +72,10 @@ const Layout: React.FC<Props> = (props) => {
                 <div className={classes['first-level-content']}>
                     {props.children}
                 </div>
+                {anchorEl && <MenuDialog
+                    anchorElement={anchorEl}
+                    onClose={handleClose}
+                />}
             </main>
         </Fragment>
     )

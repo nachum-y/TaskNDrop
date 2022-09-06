@@ -53,9 +53,17 @@ const GroupContent = dynamic(() => import("./group/GroupContent"), { ssr: false 
 const GroupList = () => {
 
     const [groups, setGroups] = useState<Group[]>([])
-    const { board, setBoard, colsOrderBoard } = useContext(BoardContext)
-    console.log(colsOrderBoard)
+    const { board, setBoard, colsOrderBoard, onSaveGroup, boardGroup, removeGroup } = useContext(BoardContext)
 
+
+    const addGroupHandler = () => {
+        onSaveGroup()
+    }
+
+
+    const removeGroupHandler = (id: string) => {
+        removeGroup(id)
+    }
 
     useEffect(() => {
 
@@ -89,9 +97,10 @@ const GroupList = () => {
         }
 
         setBoard(newBoardData)
-        console.log(newBoardData)
 
     }
+
+
 
 
     return (
@@ -99,23 +108,31 @@ const GroupList = () => {
 
             <DragDropContext onDragEnd={onDragEnd}>
                 {
-                    groups.map((group) => {
+                    boardGroup.map((group) => {
                         return (
                             < GroupContent
                                 key={group.id}
                                 group={group}
                                 colsOrder={board!.colsOrder}
+                                removeGroup={removeGroupHandler}
                             />
                         )
                     })}
             </DragDropContext>
 
-            <button type='button' className={`${classes.btn} ${classes['add-group-btn']}`}>
+            <button
+                type='button'
+                className={`${classes.btn} ${classes['add-group-btn']}`}
+                onClick={addGroupHandler}
+            >
                 <div className={classes['add-group-icon-holder']}>
                     <div className={classes['add-group-icon']}></div>
                 </div>
-                <div className={classes['add-group-btn-txt']}>
-                    Add new group
+                <div
+                    className={classes['add-group-btn-txt']}>
+                    <span>
+                        Add new group
+                    </span>
                 </div>
             </button>
         </div >

@@ -58,7 +58,7 @@ export type LocationCol = {
 
 export type Col = {
     type: string
-    value: string | LocationCol | Member[] | undefined
+    value: string | LocationCol | Member[] | number | undefined
 }
 
 
@@ -92,17 +92,35 @@ export type Board = {
     colsOrder: ColsOrder[]
     groups: Group[]
 }
+
+
+
+export type Idx = {
+    groupId: string,
+    taskId: string,
+    // colIdx: string
+}
+
+
+
+
+
 export type BoardContextState = {
     board: null | Board,
+    boardGroup: Group[]
     colsOrderBoard: ColsOrder[] | undefined
     statusValueBoard: Labels[]
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
+    anchorEl: HTMLDivElement | null
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
     onAppLoad: () => void
-
+    removeGroup: (groupId: string) => void
+    updateTask: (newCol: Col, idx: Idx) => void
+    onOpenDialogMenu: (el: HTMLDivElement) => void
+    onCloseDialogMenu: () => void
 
 }
 

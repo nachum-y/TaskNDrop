@@ -1,32 +1,47 @@
+import { useContext } from 'react'
 import GroupAddTask from './GroupAddTask'
 import GroupFooter from './GroupFooter'
 import GroupHeader from './GroupHeader'
 import GroupRow from './GroupRow'
 import RowHeader from './RowHeader'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { BoardContext } from '../../../../store/board'
 
 
 
-
-
-
-type DroppableMode = 'standard' | 'virtual'
-type Direction = 'horizontal' | 'vertical'
 
 import classes from '../GroupList.module.scss'
 import { ColsOrder, Group } from '../../../../service/type'
 
-const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[] }> = (props) => {
+const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void }> = ({ group, colsOrder, removeGroup }) => {
 
+    const { onOpenDialogMenu } = useContext(BoardContext)
 
-    const { title, tasks, id } = props.group
+    const { title, tasks, id, color } = group
+
+    const removeGroupHandler = () => {
+        removeGroup(id)
+    }
+
+    const groupTitleHandler = () => {
+
+    }
+
+    const openMenuHandler = (el: HTMLDivElement) => {
+        onOpenDialogMenu(el)
+    }
 
     return (
         <div className={classes['board-content-group']}>
             <GroupHeader
-                title={title} />
+                title={title}
+                removeGroup={removeGroupHandler}
+                groupColor={color}
+                openMenu={openMenuHandler}
+            />
             <RowHeader
-                colsOrder={props.colsOrder}
+                colsOrder={colsOrder}
+                groupColor={color}
             />
 
             <Droppable droppableId={id}>
@@ -57,7 +72,9 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[] }> = (props)
                                         <GroupRow
                                             key={task.id}
                                             task={task}
-                                            colsOrder={props.colsOrder} />
+                                            colsOrder={colsOrder}
+                                            groupColor={color}
+                                        />
                                     </div>
                                 )}
                             </Draggable>
@@ -65,7 +82,9 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[] }> = (props)
                     </div>
                 )}
             </Droppable>
-            < GroupAddTask />
+            < GroupAddTask
+                groupColor={color}
+            />
             <GroupFooter />
         </div >
 

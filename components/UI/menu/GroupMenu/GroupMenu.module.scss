@@ -1,0 +1,48 @@
+@import '../../../../styles/setup/icons';
+@import '../../../../styles/setup/vars';
+
+.content-title-content-wrapper {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    font-size: 14px;
+
+    .icon {
+        color: var(--icon-color);
+        margin-right: 0.5rem;
+        width: 1rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        font-size: 14px;
+
+
+        font-family: "dapulse";
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        line-height: 10px;
+        text-decoration: inherit;
+        text-rendering: optimizeLegibility;
+        text-transform: none;
+    }
+
+
+}
+
+.menu-item {
+    cursor: pointer;
+
+    &:hover {
+        background-color: $--primary-background-hover-color
+    }
+
+
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}

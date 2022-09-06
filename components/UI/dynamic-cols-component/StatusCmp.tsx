@@ -1,8 +1,8 @@
 import { useContext } from "react"
 
-import { Col, ColsOrder, Labels } from "../../../../service/type"
+import { Col, ColsOrder, Labels } from "../../../service/type"
 import classes from './StatusCmp.module.scss'
-import { BoardContext } from "../../../../store/board"
+import { BoardContext } from "../../../store/board"
 
 
 type labelsStatus = {
@@ -11,7 +11,7 @@ type labelsStatus = {
     priority: Labels[]
 }
 
-const StatusCmp: React.FC<{ taskCol: Col }> = (props) => {
+const StatusCmp: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void }> = ({ taskCol, updateCol }) => {
 
     const { statusValueBoard: status, labelsValueBoard: labelCmp, priorityValueBoard: priority } = useContext(BoardContext)
 
@@ -21,7 +21,7 @@ const StatusCmp: React.FC<{ taskCol: Col }> = (props) => {
         priority
     }
 
-    const { type, value } = props.taskCol
+    const { type, value } = taskCol
 
     const key = type as string
     let title: string | undefined

@@ -1,0 +1,25 @@
+.task-creationLog {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    .person-bullet {
+        width: 2rem;
+        height: 2rem;
+        margin: auto;
+        position: relative;
+        display: flex;
+        margin: 0 -0.5rem;
+        left: 13%;
+        top: 2px;
+
+        img {
+            border-radius: 50%;
+            border: 2px solid #f5f6f8;
+        }
+    }
+
+    p {
+        margin: auto;
+    }
+}

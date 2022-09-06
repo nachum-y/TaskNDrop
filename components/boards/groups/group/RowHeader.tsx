@@ -1,7 +1,7 @@
 import { ColsOrder } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 
-const RowHeader: React.FC<{ colsOrder: ColsOrder[] }> = (props) => {
+const RowHeader: React.FC<{ colsOrder: ColsOrder[], groupColor: string }> = ({ colsOrder, groupColor }) => {
 
     return (
         <div className={classes['board-content-group-row-header']}>
@@ -10,7 +10,7 @@ const RowHeader: React.FC<{ colsOrder: ColsOrder[] }> = (props) => {
                     <div className={classes['row-menu']}>
                         <div className={classes['row-menu-icon']}></div>
                     </div>
-                    <div className={classes['border header']}></div>
+                    <div className={`${classes['border']} ${classes['header']}`} style={{ backgroundColor: groupColor }}></div>
                     <div className={classes['item-select']}>
                         <div className={classes['checkbox']}></div>
                     </div>
@@ -18,22 +18,12 @@ const RowHeader: React.FC<{ colsOrder: ColsOrder[] }> = (props) => {
                 </div>
             </div>
             {
-                props.colsOrder.slice(1).map((col, index) => (
+                colsOrder.slice(1).map((col, index) => (
                     < div className={`${classes['header-col']} ${classes['item']}`}
                         key={index} >
                         <span>{col.title}</span>
                     </div>
                 ))}
-
-
-            {/* <div className={`${classes['header-col']} ${classes['item']}`}><span>date</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>status</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>Text</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>person</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>label</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>priority</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>creation log</span></div>
-            <div className={`${classes['header-col']} ${classes.item}`}><span>location</span></div> */}
         </div>
     )
 }

@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "dapulse";
+    src: url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.eot");
+    src: url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.eot?#iefix") format("embedded-opentype"),
+        url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.woff") format("woff"),
+        url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.ttf") format("truetype"),
+        url("https://cdn.monday.com/fonts/dapulse_4a4d5ddd47bdfd8e46cdadf9860f69ff.svg#dapulse") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+.icon-v2-checkbox {}
+
+.icon-v2-checkbox::before {
+    content: "\f46d";
+}
+
+
+.icon-v2-delete-line::before {
+    content: "\f2ff";
+}
