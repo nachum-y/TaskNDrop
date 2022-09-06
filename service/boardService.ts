@@ -53,7 +53,7 @@ export const boardService = {
     //     // saveGroups,
     //     // getTaskById,
     //     // saveTask,
-    updateTask,
+    // updateTask,
     //     // saveGroupsRows,
     //     // duplicateTasks,
     //     // conversionAdd,
@@ -169,30 +169,30 @@ async function removeGroup(groupId: string, boardId: string) {
 //     return task
 // }
 
-async function updateTask(data: Col, boardId: string) {
-    try {
-        // const { groupId, taskId, newCol } = data
-        // let board = await _getBoardById(boardId)
-        // const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-        // const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-        // const colIdx = board.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
-        // board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
-        // const savedBoard = await httpService.put(`boards/${boardId}`, board)
-        // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
-        // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
+// async function updateTask(data: Col, boardId: string) {
+//     try {
+//         // const { groupId, taskId, newCol } = data
+//         // let board = await _getBoardById(boardId)
+//         // const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+//         // const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+//         // const colIdx = board.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
+//         // board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
+//         // const savedBoard = await httpService.put(`boards/${boardId}`, board)
+//         // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
+//         // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
 
-        return { groupIdx, taskIdx, colIdx }
-    }
-    catch (error) {
-        throw new Error('Cannot update task')
-    }
-}
+//         // return { groupIdx, taskIdx, colIdx }
+//     }
+//     catch (error) {
+//         throw new Error('Cannot update task')
+//     }
+// }
 
-async function _getBoardById(boardId) {
+// async function _getBoardById(boardId) {
 
-    const board = await httpService.get(`boards/${boardId}`)
-    return board
-}
+//     const board = await httpService.get(`boards/${boardId}`)
+//     return board
+// }
 
 // function _getEmptyTask(colOrder, title) {
 //     let cols = []
