@@ -18,7 +18,7 @@ export default async (req, res) => {
             })
             return
         } catch (err) {
-            logger.error(`cannot update board ${board._id}`, err)
+            console.log(`cannot update board ${updatedBoard._id}`, err)
             throw err
         }
     }
