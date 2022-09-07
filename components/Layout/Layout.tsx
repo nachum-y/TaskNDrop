@@ -5,41 +5,26 @@ import AppSideControler from '../app-navigation/AppSideControler'
 import { BoardContext } from '../../store/board'
 import SkeletonGroup from '../UI/skeletons/SkeletonGroup'
 import SkeletonBoardHeader from '../UI/skeletons/SkeletonBoardHeader'
-// import useContextMenu from '../../hooks/useContextMenu'
 import MenuDialog from '../UI/menu/MenuDialog'
-import Button from '@mui/material/Button'
-
-type Props = { children: React.ReactNode }
-
-type Pos = {
-    left: string
-    top: string
-}
+import { Props } from '../../service/type'
 
 
 const Layout: React.FC<Props> = (props) => {
 
     const { board, onAppLoad, anchorEl, onCloseDialogMenu } = useContext(BoardContext)
-    // const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-    const id = 'simple-popover'
+
 
     useEffect(() => {
         onAppLoad()
     }, [])
 
-    // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     setAnchorEl(event.currentTarget)
-    //     console.log(event.currentTarget)
 
-    // }
 
     const handleClose = () => {
-        // setAnchorEl(null)
         onCloseDialogMenu()
     }
 
-    // const { xPos, yPos, showMenu } = useContextMenu()
 
     if (!board) {
         return (

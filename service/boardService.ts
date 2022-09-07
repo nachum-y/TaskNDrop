@@ -8,7 +8,7 @@ import { Task, Board, Group, Col } from "./type.js"
 
 const dev = process.env.NODE_ENV !== 'production'
 
-export const server = dev ? 'http://localhost:3000' : 'https://task-n-drop.vercel.app/'
+export const server = dev ? 'http://127.0.0.1:3000/' : 'https://task-n-drop.vercel.app/'
 
 
 
@@ -65,7 +65,6 @@ export const boardService = {
 }
 
 
-query()
 
 async function query() {
     const res = await fetch(`${server}/api/boards`)

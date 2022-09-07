@@ -39,8 +39,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
 
 
-
-
     useEffect(() => {
         if (board) {
             const { colsOrder } = board
