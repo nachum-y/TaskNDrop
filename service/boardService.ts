@@ -6,7 +6,9 @@ import { Task, Board, Group, Col } from "./type.js"
 
 // const BOARD_KEY = 'board_db'
 
+const dev = process.env.NODE_ENV !== 'production'
 
+export const server = dev ? 'http://localhost:3000' : 'https://task-n-drop.vercel.app/'
 
 
 
@@ -66,7 +68,7 @@ export const boardService = {
 query()
 
 async function query() {
-    const res = await fetch('/api/boards')
+    const res = await fetch(`${server}/api/boards`)
     const json = await res.json()
     return json
 }
@@ -81,7 +83,7 @@ function getEmptyGroup() {
 
 async function saveGroup(group: Group | undefined, boardId: string) {
     // const board = await httpService.get(`boards/${boardId}`)
-    const res = await fetch('/api/boards')
+    const res = await fetch(`${server}/api/boards`)
     const boards = await res.json()
     const board: Board = boards[0]
     if (group && boardId && group.id) {
@@ -99,7 +101,7 @@ async function saveGroup(group: Group | undefined, boardId: string) {
         }
         board.groups.push(newGroup)
 
-        const response = await fetch(`/api/boards/${boardId}`, {
+        const response = await fetch(`${server}/api/boards/${boardId}`, {
             method: 'POST',
             body: JSON.stringify(board),
             headers: { 'Content-Type': 'application/json' }
@@ -114,7 +116,7 @@ async function saveGroup(group: Group | undefined, boardId: string) {
 
 
 async function removeGroup(groupId: string, boardId: string) {
-    const res = await fetch('/api/boards')
+    const res = await fetch(`${server}/api/boards`)
     const boards = await res.json()
     const board: Board = boards[0]
     if (board) {
@@ -124,7 +126,7 @@ async function removeGroup(groupId: string, boardId: string) {
         const groupName = board.groups[idx].title
         board.groups.splice(idx, 1)
         console.log(board)
-        const response = await fetch(`/api/boards/${boardId}`, {
+        const response = await fetch(`${server}/api/boards/${boardId}`, {
             method: 'POST',
             body: JSON.stringify(board),
             headers: { 'Content-Type': 'application/json' }
