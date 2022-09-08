@@ -1,6 +1,6 @@
 import { Col, ColsOrder } from "../../../service/type"
 
-const Test2: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void }> = ({ taskCol, updateCol }) => {
+const Test2: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol }) => {
 
 
 

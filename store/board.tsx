@@ -2,12 +2,11 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx } from '../service/type'
-
-
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel } from '../service/type'
 
 
 const contextDefaultValues: BoardContextState = {
+    initialBoardId: undefined,
     board: null,
     boardGroup: [],
     colsOrderBoard: undefined,
@@ -15,6 +14,7 @@ const contextDefaultValues: BoardContextState = {
     labelsValueBoard: [],
     priorityValueBoard: [],
     anchorEl: null,
+    anchorElCel: null,
     loadBoard: () => { },
     setBoard: () => { },
     onSaveGroup: () => { },
@@ -22,7 +22,9 @@ const contextDefaultValues: BoardContextState = {
     removeGroup: () => { },
     updateTask: () => { },
     onOpenDialogMenu: () => { },
+    onOpenCelMenu: () => { },
     onCloseDialogMenu: () => { },
+    onClickDialogMenu: () => { },
 }
 
 export const BoardContext = createContext<BoardContextState>(
@@ -30,6 +32,8 @@ export const BoardContext = createContext<BoardContextState>(
 )
 
 const BoardProvider: FC<Props> = ({ children }) => {
+
+    const [initialBoardId, setInitialBoardId] = useState<undefined | string>('63132d01e209b84db1bb4f4a')
     const [board, setBoard] = useState<Board | null>(contextDefaultValues.board)
     const [boardGroup, setBoardGroup] = useState<Group[]>([])
     const [colsOrderBoard, setColsOrder] = useState<ColsOrder[] | undefined>(undefined)
@@ -37,6 +41,12 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
+    const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
+    const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
+    const [anchorElCelIdx, setAnchorElCelIdx] = useState<IdxOpt | null>(null)
+
+
+
 
 
     useEffect(() => {
@@ -57,6 +67,14 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setStatusValueBoard(initialBoard.status)
         setLabelsValueBoard(initialBoard.labels)
         setPriorityValueBoard(initialBoard.priority)
+        // router.replace(`/boards/${initialBoard._id}`)
+    }
+
+    const getInitialBoardId = async () => {
+        const boardIdInitial = await boardService.initialBoardId()
+        setInitialBoardId(boardIdInitial)
+        console.log(boardIdInitial)
+
     }
 
     const onSaveGroup = (group?: Group) => {
@@ -76,6 +94,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
     }
 
+
     const removeGroup = async (groupId: string) => {
         try {
             setBoardGroup((preveState) => preveState.filter((group: Group) => group.id !== groupId))
@@ -91,23 +110,17 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const updateTask = async (newCol: Col, idxs: Idx) => {
         const { groupId, taskId } = idxs
-        console.log('here')
-
-
+        const data = { groupId, taskId, newCol }
+        const boardId = board!._id.toString()
         try {
-            // const idxs = await boardService.updateTask(newCol, board!._id.toString())
-
-            console.log(groupId)
+            const idxs = await boardService.updateTask(data, boardId)
 
             const groupIdx = board!.groups.findIndex((group) => group.id === groupId)
             const taskIdx = board!.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
             const colIdx = board!.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
             board!.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
-
             const updatedGroups = board!.groups
             setBoardGroup(() => updatedGroups)
-
-
         } catch (error) {
             console.log(error)
         }
@@ -125,19 +138,63 @@ const BoardProvider: FC<Props> = ({ children }) => {
     // },
 
 
-    const onOpenDialogMenu = (el: HTMLDivElement) => {
+
+
+    const onClickDialogMenu = (actionType: string) => {
+
+        const key = actionType as string
+        if (anchorElIdx && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
+            setAnchorEl(null)
+            menuDialogAction[key as keyof menuDialogActionMap](anchorElIdx)
+        }
+    }
+
+
+
+    const onOpenDialogMenu = (el: HTMLDivElement, idx?: IdxOpt) => {
+        setAnchorEl(null)
+        setAnchorElCel(null)
+
         setAnchorEl(el)
+
+        if (idx) setAnchorElIdx(idx)
+    }
+
+    const onOpenCelMenu = (el: HTMLSpanElement, idx?: IdxOpt, typeClick?: string) => {
+        // setAnchorEl(null)
+        // setAnchorElCel(null)
+
+        setTimeout(() => {
+            if (typeof typeClick === 'string' && el && idx) {
+                const set: AnchorElCel = {
+                    anchorElCel: el,
+                    typeClick,
+                    idx: idx
+                }
+                setAnchorElCel(() => set)
+
+            }
+        }, 0)
+        if (idx) setAnchorElCelIdx(idx)
     }
 
 
     const onCloseDialogMenu = () => {
-        setAnchorEl(null)
+        setAnchorEl((prev) => null)
+        setAnchorElCel((prev) => null)
+    }
+
+
+
+    const menuDialogAction: menuDialogActionMap = {
+        deleteThisGroup: (idx: IdxOpt) => idx.groupId ? removeGroup(idx.groupId) : console.log('error')
     }
 
     return (
         <BoardContext.Provider
             value={{
                 onAppLoad,
+                initialBoardId,
                 board,
                 boardGroup,
                 colsOrderBoard,
@@ -145,12 +202,15 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 labelsValueBoard,
                 priorityValueBoard,
                 anchorEl,
+                anchorElCel,
                 setBoard,
                 loadBoard,
                 onSaveGroup,
                 removeGroup,
                 updateTask,
                 onOpenDialogMenu,
+                onOpenCelMenu,
+                onClickDialogMenu,
                 onCloseDialogMenu
             }}
         >

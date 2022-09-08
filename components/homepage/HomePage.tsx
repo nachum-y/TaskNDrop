@@ -2,9 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import homePageImg from '../../assets/images/home-page-new.png'
 import classes from './HomePage.module.scss'
-
+import { useContext } from 'react'
+import { BoardContext } from '../../store/board'
 
 const HomePage = () => {
+    const { initialBoardId } = useContext(BoardContext)
+    console.log(initialBoardId)
+
+
     return (
         <div className={classes['home-page']}>
             <div className={classes['first-layout']}>
@@ -12,7 +17,7 @@ const HomePage = () => {
                 <h3 className={classes['sub-line']}>What would you like to manage with taskndrop.com Work OS?</h3>
                 <div className={classes['comet-underline']}></div>
                 <div className={classes['btn-container']}>
-                    <Link href={'/boards'}>
+                    <Link href={`/boards/${initialBoardId}`}>
                         <a className={classes.start}>  Get Started</a>
                     </Link>
                 </div>

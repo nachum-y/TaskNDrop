@@ -76,7 +76,8 @@ export type Group = {
     title: string
     color: string
     tasks: Task[]
-    id: string
+    id: string,
+    isCollapse: boolean
 }
 
 export type Board = {
@@ -102,24 +103,42 @@ export type Idx = {
 }
 
 
+export type IdxOpt = {
+    groupId?: string
+    taskId?: string,
+}
+
+
+export type menuDialogActionMap = {
+    deleteThisGroup: (groupId: IdxOpt) => void
+}
+export type AnchorElCel = {
+    anchorElCel: HTMLSpanElement | null,
+    typeClick: string,
+    idx: IdxOpt
+}
 
 
 
 export type BoardContextState = {
+    initialBoardId: undefined | string
     board: null | Board,
     boardGroup: Group[]
     colsOrderBoard: ColsOrder[] | undefined
     statusValueBoard: Labels[]
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
-    anchorEl: HTMLDivElement | null
+    anchorEl: HTMLDivElement | null,
+    anchorElCel: AnchorElCel | null,
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
     onAppLoad: () => void
     removeGroup: (groupId: string) => void
     updateTask: (newCol: Col, idx: Idx) => void
-    onOpenDialogMenu: (el: HTMLDivElement) => void
+    onOpenDialogMenu: (el: HTMLDivElement, idx?: IdxOpt) => void
+    onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, typeClick?: string) => void
+    onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
 
 }

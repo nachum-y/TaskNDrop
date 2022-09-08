@@ -1,0 +1,66 @@
+.menu-dialog {
+    z-index: 100000;
+    top: 0.25rem !important;
+}
+
+
+.status-picker-view-title.task-label-display {
+    color: #fff;
+}
+
+.status-picker-view {
+    background-color: #fff;
+    color: #000;
+    opacity: 1;
+    padding: 1rem 1.5rem 0.5rem;
+    border-radius: 8px;
+}
+
+.status-picker-view-title {
+    width: 9.5rem;
+    height: 2rem;
+    padding: 0 0.375rem;
+    margin-bottom: 0.5rem;
+}
+
+.group-labels-actions-menu:hover {
+    z-index: 100;
+    background-color: #fff;
+}
+
+
+.status-picker-view {
+    display: block;
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    -o-transition: left 150ms cubic-bezier(0, 0, 0.35, 1);
+    transition: left 150ms cubic-bezier(0, 0, 0.35, 1);
+    box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
+    box-shadow: 0 8px 16px 0 rgb(0 0 0 / 32%);
+    font-size: 14px;
+    transition: width .1s;
+    pointer-events: all;
+
+}
+
+.status-picker-view:before,
+.status-picker-view:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 100%;
+    width: 0;
+    height: 0;
+}
+
+.status-picker-view:before {
+    left: 92px;
+    border: 0.5rem solid transparent;
+    border-bottom-color: #ddd;
+}
+
+.status-picker-view:after {
+    left: 93px;
+    border: 0.5rem solid transparent;
+    border-bottom-color: #fff;
+}

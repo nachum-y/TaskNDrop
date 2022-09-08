@@ -2,7 +2,7 @@
 import { utilService } from './util.service.js'
 
 import { type } from "os"
-import { Task, Board, Group, Col } from "./type.js"
+import { Task, Board, Group, Col, Idx } from "./type.js"
 
 // const BOARD_KEY = 'board_db'
 
@@ -11,26 +11,8 @@ const dev = process.env.NODE_ENV !== 'production'
 export const server = dev ? 'http://127.0.0.1:3000/' : 'https://task-n-drop.vercel.app/'
 
 
-
-class GroupTest {
-    title: string
-    color: string
-    tasks: Task[]
-    id: string
-
-
-
-    constructor(groupTitle: string, groupColor: string, groupTask: Task[], groupId: string) {
-        this.color = groupColor
-        this.title = groupTitle
-        this.tasks = groupTask
-        this.id = groupId
-    }
-
-
-}
-
 type boardService = {
+    initialBoardId: () => {}
     query: () => {}
     getEmptyGroup: () => {}
     saveGroup: () => {}
@@ -41,10 +23,12 @@ type EmptyGroup = {
     title: string
     color: string
     tasks: Task[]
+    isCollapse: boolean
 }
 
 
 export const boardService = {
+    initialBoardId,
     query,
     getEmptyGroup,
     saveGroup,
@@ -55,7 +39,7 @@ export const boardService = {
     //     // saveGroups,
     //     // getTaskById,
     //     // saveTask,
-    // updateTask,
+    updateTask,
     //     // saveGroupsRows,
     //     // duplicateTasks,
     //     // conversionAdd,
@@ -64,10 +48,14 @@ export const boardService = {
 
 }
 
-
+async function initialBoardId() {
+    const res = await fetch(`${server}/api/boards`)
+    const json = await res.json()
+    return json
+}
 
 async function query() {
-    const res = await fetch(`${server}/api/boards`)
+    const res = await fetch(`${server}/api/boards/`)
     const json = await res.json()
     return json
 }
@@ -76,7 +64,8 @@ function getEmptyGroup() {
     return ({
         title: "new group",
         color: utilService.getColor(),
-        tasks: []
+        tasks: [],
+        isCollapse: false
     })
 }
 
@@ -170,30 +159,31 @@ async function removeGroup(groupId: string, boardId: string) {
 //     return task
 // }
 
-// async function updateTask(data: Col, boardId: string) {
-//     try {
-//         // const { groupId, taskId, newCol } = data
-//         // let board = await _getBoardById(boardId)
-//         // const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-//         // const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-//         // const colIdx = board.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
-//         // board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
-//         // const savedBoard = await httpService.put(`boards/${boardId}`, board)
-//         // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
-//         // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
+async function updateTask(data: { groupId: string, taskId: string, newCol: Col }, boardId: string) {
+    try {
+        const { groupId, taskId, newCol } = data
+        let board = await _getBoardById(boardId)
+        console.log(board)
 
-//         // return { groupIdx, taskIdx, colIdx }
-//     }
-//     catch (error) {
-//         throw new Error('Cannot update task')
-//     }
-// }
+        // const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+        // const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+        // const colIdx = board.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
+        // board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
+        // const savedBoard = await httpService.put(`boards/${boardId}`, board)
+        // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
+        // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
 
-// async function _getBoardById(boardId) {
+        // return { groupIdx, taskIdx, colIdx }
+    }
+    catch (error) {
+        throw new Error('Cannot update task')
+    }
+}
 
-//     const board = await httpService.get(`boards/${boardId}`)
-//     return board
-// }
+async function _getBoardById(boardId: string) {
+    const board = await fetch(`${server}/api/boards/${boardId}`)
+    return board
+}
 
 // function _getEmptyTask(colOrder, title) {
 //     let cols = []

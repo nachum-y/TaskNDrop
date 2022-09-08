@@ -24,7 +24,7 @@ const Components = {
 
 const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: string }> = ({ task, colsOrder, groupColor }) => {
 
-    const { updateTask } = useContext(BoardContext)
+    const { updateTask, onOpenCelMenu } = useContext(BoardContext)
     const { cols, createdAt, id, groupId } = task
 
     const updateTaskHandler = (newCol: Col) => {
@@ -38,6 +38,18 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
         // const idx = { task.id: string, }
         updateTask(newCol, idx)
+    }
+
+
+    const celClickHandler = (el: HTMLSpanElement, typeClick: string) => {
+        const idx = {
+            groupId,
+            taskId: id,
+
+        }
+
+        onOpenCelMenu(el, idx, typeClick)
+
     }
 
     return (
@@ -80,6 +92,8 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                             taskCol={cols.find((c: Col) => c.type === col.type)
                                 || { type: 'error', value: 'error' }}
                             updateTask={updateTaskHandler}
+                            onCelClick={celClickHandler}
+                            id={id}
                         />
                     </div>
                 ))}

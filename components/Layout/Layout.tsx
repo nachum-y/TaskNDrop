@@ -7,11 +7,14 @@ import SkeletonGroup from '../UI/skeletons/SkeletonGroup'
 import SkeletonBoardHeader from '../UI/skeletons/SkeletonBoardHeader'
 import MenuDialog from '../UI/menu/MenuDialog'
 import { Props } from '../../service/type'
+import StatusMenu from '../UI/menu/cel-menu/StatusMenu'
+import { positions } from '@mui/system'
+import CelMenu from '../UI/menu/cel-menu/CelMenu'
 
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad, anchorEl, onCloseDialogMenu } = useContext(BoardContext)
+    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu } = useContext(BoardContext)
 
 
 
@@ -60,6 +63,11 @@ const Layout: React.FC<Props> = (props) => {
                 {anchorEl && <MenuDialog
                     anchorElement={anchorEl}
                     onClose={handleClose}
+                />}
+                {anchorElCel?.anchorElCel && <CelMenu
+                    anchorElement={anchorElCel.anchorElCel}
+                    onClose={handleClose}
+                    menuType={anchorElCel.typeClick}
                 />}
             </main>
         </Fragment>

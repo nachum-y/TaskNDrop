@@ -7,7 +7,7 @@ import Person from "../../../UI/dynamic-cols-component/Person"
 import CreationLog from "../../../UI/dynamic-cols-component/CreationLog"
 import Text from "../../../UI/dynamic-cols-component/Text"
 
-type Cmp = React.FC<{ taskCol: Col, id: string, updateCol: (newCol: Col) => void }>
+type Cmp = React.FC<{ taskCol: Col, id: string, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }>
 
 type ComponentMap = {
     item: Cmp,
@@ -37,17 +37,9 @@ const keysToComponentMap: ComponentMap = {
 
 
 
-// const stylesMap = (styles) => {
-//     let mappedStyles = {}
-//     styles.forEach((style) => {
-//         mappedStyles[style.name] = style.value
-//     })
-//     return mappedStyles
-// }
 
 
-const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: (col: Col) => void }> = ({ col, taskCol, updateTask }) => {
-    // const { updateTask } = useContext(BoardContext)
+const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: (col: Col) => void, id: string, onCelClick: (el: HTMLSpanElement, typeClick: string) => void }> = ({ col, taskCol, updateTask, onCelClick }) => {
 
     const { title, type } = col
     const key = type as string
@@ -55,11 +47,15 @@ const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: 
 
 
     const updateTaskHandler = (newCol: Col) => {
-        console.log('updateTaskHandler')
         updateTask(newCol)
 
     }
 
+
+    const clickHandler = (el: HTMLSpanElement) => {
+        const typeClick = taskCol.type
+        onCelClick(el, typeClick)
+    }
 
     if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {
         return React.createElement(
@@ -68,7 +64,8 @@ const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: 
                 id: title,
                 key: title,
                 taskCol: taskCol,
-                updateCol: updateTaskHandler
+                updateCol: updateTaskHandler,
+                onCelClick: clickHandler
             },
             // config.children &&
             // (typeof config.children === 'string'

@@ -11,7 +11,7 @@ import { BoardContext } from '../../../../store/board'
 
 
 import classes from '../GroupList.module.scss'
-import { ColsOrder, Group } from '../../../../service/type'
+import { ColsOrder, Group, IdxOpt } from '../../../../service/type'
 
 const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void }> = ({ group, colsOrder, removeGroup }) => {
 
@@ -28,7 +28,11 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
     }
 
     const openMenuHandler = (el: HTMLDivElement) => {
-        onOpenDialogMenu(el)
+        const idx: IdxOpt = {
+            groupId: id,
+        }
+
+        onOpenDialogMenu(el, idx)
     }
 
     return (

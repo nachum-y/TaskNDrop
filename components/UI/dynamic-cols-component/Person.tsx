@@ -7,7 +7,7 @@ import { BoardContext } from '../../../store/board'
 
 
 
-const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void }> = ({ taskCol, updateCol }) => {
+const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void,onCelClick: (el:HTMLSpanElement) => void }> = ({ taskCol, updateCol }) => {
 
     const { value } = taskCol
 

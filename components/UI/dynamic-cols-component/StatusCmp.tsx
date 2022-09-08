@@ -11,7 +11,7 @@ type labelsStatus = {
     priority: Labels[]
 }
 
-const StatusCmp: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void }> = ({ taskCol, updateCol }) => {
+const StatusCmp: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol, onCelClick }) => {
 
     const { statusValueBoard: status, labelsValueBoard: labelCmp, priorityValueBoard: priority } = useContext(BoardContext)
 
@@ -38,12 +38,16 @@ const StatusCmp: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void }> = 
 
     }
 
+    const clickHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
+        onCelClick(event.currentTarget)
+    }
+
 
 
 
 
     return (
-        <span className={classes['task-status-cmp-display']} style={{ backgroundColor: color }}>
+        <span onClick={clickHandler} className={classes['task-status-cmp-display']} style={{ backgroundColor: color }}>
             {title}
         </span>
     )
