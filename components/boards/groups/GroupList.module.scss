@@ -120,6 +120,8 @@
                 &.fixed {
                     @include fixed-col-style;
                     @include color-border(white);
+                    background-color: #fffffff7;
+
                 }
             }
 
