@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember } from '../service/type'
 
 
 const contextDefaultValues: BoardContextState = {
@@ -13,6 +13,7 @@ const contextDefaultValues: BoardContextState = {
     statusValueBoard: [],
     labelsValueBoard: [],
     priorityValueBoard: [],
+    boardMembers: [],
     anchorEl: null,
     anchorElCel: null,
     loadBoard: () => { },
@@ -40,6 +41,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [statusValueBoard, setStatusValueBoard] = useState<Labels[]>([])
     const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
+    const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
@@ -67,6 +69,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setStatusValueBoard(initialBoard.status)
         setLabelsValueBoard(initialBoard.labels)
         setPriorityValueBoard(initialBoard.priority)
+        setBoardMembers(initialBoard.members)
         // router.replace(`/boards/${initialBoard._id}`)
     }
 
@@ -160,15 +163,12 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (idx) setAnchorElIdx(idx)
     }
 
-    const onOpenCelMenu = (el: HTMLSpanElement, idx?: IdxOpt, typeClick?: string) => {
-        // setAnchorEl(null)
-        // setAnchorElCel(null)
-
+    const onOpenCelMenu = (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => {
         setTimeout(() => {
-            if (typeof typeClick === 'string' && el && idx) {
+            if (taskCol && typeof taskCol.type === 'string' && el && idx) {
                 const set: AnchorElCel = {
                     anchorElCel: el,
-                    typeClick,
+                    taskCol,
                     idx: idx
                 }
                 setAnchorElCel(() => set)
@@ -201,6 +201,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 statusValueBoard,
                 labelsValueBoard,
                 priorityValueBoard,
+                boardMembers,
                 anchorEl,
                 anchorElCel,
                 setBoard,

@@ -7,7 +7,7 @@ import { BoardContext } from '../../../store/board'
 
 
 
-const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void,onCelClick: (el:HTMLSpanElement) => void }> = ({ taskCol, updateCol }) => {
+const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol, onCelClick }) => {
 
     const { value } = taskCol
 
@@ -18,10 +18,12 @@ const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void,onCelCli
         persons = value
     }
 
+    const clickHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
+        onCelClick(event.currentTarget)
+    }
 
     return (
-        <div className={classes['task-person']} >
-
+        <div onClick={clickHandler} className={classes['task-person']} >
             <div className={classes['task-person']}>
                 <div className={classes['icon-dapulse-addbtn']}>
                 </div>

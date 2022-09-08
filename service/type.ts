@@ -114,8 +114,8 @@ export type menuDialogActionMap = {
 }
 export type AnchorElCel = {
     anchorElCel: HTMLSpanElement | null,
-    typeClick: string,
     idx: IdxOpt
+    taskCol: Col,
 }
 
 
@@ -128,8 +128,9 @@ export type BoardContextState = {
     statusValueBoard: Labels[]
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
-    anchorEl: HTMLDivElement | null,
-    anchorElCel: AnchorElCel | null,
+    boardMembers: FullMember[]
+    anchorEl: HTMLDivElement | null
+    anchorElCel: AnchorElCel | null
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -137,7 +138,7 @@ export type BoardContextState = {
     removeGroup: (groupId: string) => void
     updateTask: (newCol: Col, idx: Idx) => void
     onOpenDialogMenu: (el: HTMLDivElement, idx?: IdxOpt) => void
-    onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, typeClick?: string) => void
+    onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
 

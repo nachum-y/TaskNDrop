@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { positions } from '@mui/system'
 import { ClickAwayListener, Popper } from '@mui/material'
 
 import classes from './CelMenu.module.scss'
-import DynamicColComponent from '../../../boards/groups/group/DynamicColComponent'
 import DynamicCelMenu from './DynamicCelMenu'
+import { Col } from '../../../../service/type'
 
 
 type Style = {
@@ -15,7 +14,7 @@ type Style = {
 
 
 
-const CelMenu: React.FC<{ anchorElement: HTMLSpanElement, onClose: () => void, menuType: string }> = ({ anchorElement, onClose, menuType }) => {
+const CelMenu: React.FC<{ anchorElement: HTMLSpanElement, onClose: () => void, menuType: Col }> = ({ anchorElement, onClose, menuType }) => {
 
     const [anchorElCel, setAnchorElCel] = React.useState<HTMLSpanElement | null>(anchorElement)
 

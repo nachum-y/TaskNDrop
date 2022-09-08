@@ -39,7 +39,7 @@ const keysToComponentMap: ComponentMap = {
 
 
 
-const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: (col: Col) => void, id: string, onCelClick: (el: HTMLSpanElement, typeClick: string) => void }> = ({ col, taskCol, updateTask, onCelClick }) => {
+const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: (col: Col) => void, id: string, onCelClick: (el: HTMLSpanElement, taskCol: Col) => void }> = ({ col, taskCol, updateTask, onCelClick }) => {
 
     const { title, type } = col
     const key = type as string
@@ -53,8 +53,7 @@ const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: 
 
 
     const clickHandler = (el: HTMLSpanElement) => {
-        const typeClick = taskCol.type
-        onCelClick(el, typeClick)
+        onCelClick(el, taskCol)
     }
 
     if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {

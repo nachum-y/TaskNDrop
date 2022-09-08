@@ -16,8 +16,6 @@ const Layout: React.FC<Props> = (props) => {
 
     const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu } = useContext(BoardContext)
 
-
-
     useEffect(() => {
         onAppLoad()
     }, [])
@@ -67,7 +65,7 @@ const Layout: React.FC<Props> = (props) => {
                 {anchorElCel?.anchorElCel && <CelMenu
                     anchorElement={anchorElCel.anchorElCel}
                     onClose={handleClose}
-                    menuType={anchorElCel.typeClick}
+                    menuType={anchorElCel.taskCol}
                 />}
             </main>
         </Fragment>

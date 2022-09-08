@@ -41,14 +41,13 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     }
 
 
-    const celClickHandler = (el: HTMLSpanElement, typeClick: string) => {
+    const celClickHandler = (el: HTMLSpanElement, taskCol: Col) => {
         const idx = {
             groupId,
             taskId: id,
 
         }
-
-        onOpenCelMenu(el, idx, typeClick)
+        if (idx && taskCol && el) onOpenCelMenu(el, idx, taskCol)
 
     }
 

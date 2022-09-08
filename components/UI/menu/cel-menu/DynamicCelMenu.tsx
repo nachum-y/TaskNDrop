@@ -1,7 +1,8 @@
 import React, { useContext } from "react"
-import { Labels } from "../../../../service/type"
+import { Col, FullMember, Labels, Member } from "../../../../service/type"
 import { BoardContext } from "../../../../store/board"
 import StatusMenu from "./StatusMenu"
+import PersonMenu from "./PersonMenu"
 
 
 // import BoardCont
@@ -9,13 +10,13 @@ import StatusMenu from "./StatusMenu"
 
 type Cmp = React.FC<{
     onMenuClick: (actionId: string) => void,
-    statusList: Labels[]
+    menuObj: { boardList: any, celValue: any }
 }>
 
 type ComponentMap = {
     // GroupMenu: Cmp,
     // textCmp: Cmp,
-    // person: Cmp,
+    person: Cmp,
     // date: Cmp,
     labelCmp: Cmp,
     status: Cmp,
@@ -27,7 +28,7 @@ type ComponentMap = {
 const keysToComponentMap: ComponentMap = {
     // GroupMenu: GroupMenu,
     // textCmp: Text,
-    // person: Person,
+    person: PersonMenu,
     // date: Test2,
     labelCmp: StatusMenu,
     status: StatusMenu,
@@ -41,27 +42,42 @@ const keysToComponentMap: ComponentMap = {
 type labelsStatus = {
     status: Labels[]
     labelCmp: Labels[]
-    priority: Labels[]
+    priority: Labels[],
+    person: FullMember[]
 }
 
 
 
 
-const DynamicCelMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
+const DynamicCelMenu: React.FC<{ menuType: Col }> = ({ menuType }) => {
 
-    const { onClickDialogMenu, statusValueBoard: status, labelsValueBoard: labelCmp, priorityValueBoard: priority } = useContext(BoardContext)
-    const key = menuType as string
+    const { onClickDialogMenu,
+        statusValueBoard: status,
+        labelsValueBoard: labelCmp,
+        priorityValueBoard: priority,
+        boardMembers: person,
+    } = useContext(BoardContext)
+    const { type, value } = menuType
+
+
 
     const labelsVal: labelsStatus = {
         status,
         labelCmp,
-        priority
+        priority,
+        person
     }
 
 
-    const statusKey = menuType as string
-    const currStatus: Labels[] = labelsVal[statusKey as keyof labelsStatus]
+    const statusKey = type as string
+    const currStatus: Labels[] | FullMember[] = labelsVal[statusKey as keyof labelsStatus]
 
+    console.log(statusKey)
+
+    const menuObj = {
+        boardList: currStatus,
+        celValue: value
+    }
 
     const onClickHandler = (actionType: string) => {
         // onClickDialogMenu(actionType)
@@ -69,16 +85,16 @@ const DynamicCelMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
 
     }
 
-    
 
 
-    if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {
+
+    if (typeof keysToComponentMap[statusKey as keyof ComponentMap] !== 'undefined') {
         return React.createElement(
-            keysToComponentMap[key as keyof ComponentMap],
+            keysToComponentMap[statusKey as keyof ComponentMap],
             {
-                key: menuType,
+                key: type,
                 onMenuClick: onClickHandler,
-                statusList: currStatus
+                menuObj: menuObj
             },
         )
     }
