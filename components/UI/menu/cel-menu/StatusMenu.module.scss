@@ -21,6 +21,11 @@
     height: 2rem;
     padding: 0 0.375rem;
     margin-bottom: 0.5rem;
+
+    &:hover {
+        opacity: .85;
+        cursor: pointer;
+    }
 }
 
 .group-labels-actions-menu:hover {
@@ -40,6 +45,8 @@
     font-size: 14px;
     transition: width .1s;
     pointer-events: all;
+
+
 
 }
 
@@ -63,4 +70,26 @@
     left: 50%;
     border: 0.5rem solid transparent;
     border-bottom-color: #fff;
+}
+
+
+
+.task-label {
+    height: 100%;
+
+    &-display {
+        height: 100%;
+        display: flex;
+        color: #fff;
+        justify-content: center;
+        align-items: center;
+
+
+    }
+
+    &:active {
+        border: 1px solid blue;
+    }
+
+
 }
