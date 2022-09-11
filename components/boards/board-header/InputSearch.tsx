@@ -22,7 +22,12 @@ const InputSearch = () => {
                 <div className={`${classes['icon']} ${classes['icon-v2-search']}`}></div>
                 <div className={classes['board-filter-input-wrapper']}>
                     <div className={classes['icon-and-input-wrapper']}>
-                        <input type="text" placeholder='Search' onFocus={() => setExpandable(true)} onBlur={() => setExpandable(false)} />
+                        <input
+                            type="text"
+                            placeholder='Search'
+                            onFocus={() => setExpandable(true)}
+                            onBlur={() => setExpandable(false)}
+                        />
                     </div>
                 </div>
             </div>

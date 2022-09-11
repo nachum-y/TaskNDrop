@@ -11,11 +11,10 @@ const BoardFilter = () => {
     const { onSearchInput } = useContext(BoardContext)
     const [focused, setFocused] = useState(false)
     const [expandable, setExpandable] = useState(false)
-    const [enteredInput, setEnteredInput] = useState('')
+    // const [enteredInput, setEnteredInput] = useState('')
 
-    const onChangeHandler = (ev) => {
-        setEnteredInput(ev.target.value)
-        onSearchInput(enteredInput)
+    const onChangeHandler = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        onSearchInput(ev.target.value)
 
     }
 
@@ -24,9 +23,7 @@ const BoardFilter = () => {
         setExpandable((preveState) => !preveState)
     }
 
-    useEffect(() => {
 
-    }, [enteredInput])
 
 
 
@@ -37,7 +34,6 @@ const BoardFilter = () => {
                 <div className={classes['board-filter-input-wrapper']}>
                     <div className={classes['icon-and-input-wrapper']}>
                         <input type="text"
-                            value={enteredInput}
                             onChange={onChangeHandler}
                             placeholder='Search'
                             onFocus={() => setExpandable(true)}

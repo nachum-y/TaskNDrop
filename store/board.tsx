@@ -149,19 +149,27 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     // },
 
-    const onSearchInput = (inputTxt: string) => {
-        let updatedFilter = { ...activeFilterParam }
-        updatedFilter.txt = new RegExp(inputTxt, 'i')
-        setActiveFilterParam(updatedFilter)
 
+    useEffect(() => {
         onFilterGroup()
+    }, [activeFilterParam])
+
+    const onSearchInput = (inputTxt: string) => {
+        let updatedFilter = {
+            ...activeFilterParam,
+            txt: new RegExp(inputTxt, 'i')
+        }
+        setActiveFilterParam(() => updatedFilter)
+
     }
 
 
     const onFilterGroup = () => {
-        if (boardGroup) {
+        console.log(activeFilterParam)
 
-            const NewBoardGroup = boardGroup.map((g) => {
+        if (board?.groups) {
+
+            const NewBoardGroup = board?.groups.map((g) => {
                 let { tasks, color, title, id, isCollapse } = g
                 tasks = tasks.filter((t, index) => {
                     if (typeof t.cols[0].value === 'string' && typeof t.cols[index].type === 'string') {
@@ -175,6 +183,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
                 return ({ tasks, color, title, id, isCollapse })
             })
+
             if (NewBoardGroup) {
                 const gNew = NewBoardGroup.filter((g) => g.tasks.length > 0)
                 setBoardGroup(gNew)
