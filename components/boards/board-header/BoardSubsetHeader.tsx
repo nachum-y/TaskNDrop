@@ -1,6 +1,6 @@
 import BoardFilter from "./BoardFilter"
 
-import classes from './BoardSubsterHeader.module.scss'
+import classes from './BoardSubHeader.module.scss'
 function BoardSubsterHeader() {
     return (
         <div className={classes['board-sub-header']}>

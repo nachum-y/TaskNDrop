@@ -6,6 +6,9 @@ import dynamic from "next/dynamic"
 
 import classes from './GroupList.module.scss'
 import { DragDropContext } from 'react-beautiful-dnd'
+import Message from '../../UI/message/Message'
+
+import searchEmptyImg from '../../../assets/images/search_empty_state.svg'
 
 type Id = string
 type TypeId = Id
@@ -102,7 +105,7 @@ const GroupList = () => {
     }
 
     const onDragUpdate = () => {
-      
+
 
     }
 
@@ -125,22 +128,28 @@ const GroupList = () => {
                         )
                     })}
             </DragDropContext>
-
-            <button
-                type='button'
-                className={`${classes.btn} ${classes['add-group-btn']}`}
-                onClick={addGroupHandler}
-            >
-                <div className={classes['add-group-icon-holder']}>
-                    <div className={classes['add-group-icon']}></div>
-                </div>
-                <div
-                    className={classes['add-group-btn-txt']}>
-                    <span>
-                        Add new group
-                    </span>
-                </div>
-            </button>
+            {boardGroup.length === 0 && <Message
+                image={searchEmptyImg}
+                title='No results found in this board'
+                instruction='Try using a different search term or use ”Search Everything” to<br>search across the entire account'
+            />}
+            {boardGroup.length !== 0 && (
+                <button
+                    type='button'
+                    className={`${classes.btn} ${classes['add-group-btn']}`}
+                    onClick={addGroupHandler}
+                >
+                    <div className={classes['add-group-icon-holder']}>
+                        <div className={classes['add-group-icon']}></div>
+                    </div>
+                    <div
+                        className={classes['add-group-btn-txt']}>
+                        <span>
+                            Add new group
+                        </span>
+                    </div>
+                </button>
+            )}
         </div >
     )
 }

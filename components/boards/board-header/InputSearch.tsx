@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import classes from './BoardSubsterHeader.module.scss'
+import classes from './BoardSubHeader.module.scss'
 
 
 
@@ -13,7 +13,6 @@ const InputSearch = () => {
         setFocused((preveState) => !preveState)
         setExpandable((preveState) => !preveState)
     }
-
 
 
     return (

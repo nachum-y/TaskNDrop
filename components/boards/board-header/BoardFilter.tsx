@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { BoardContext } from '../../../store/board'
-import classes from './BoardSubsterHeader.module.scss'
+import classes from './BoardSubHeader.module.scss'
 import InputSearch from './InputSearch'
 
 

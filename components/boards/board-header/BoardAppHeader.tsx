@@ -1,7 +1,4 @@
 import classes from './BoardAppHeader.module.scss'
-
-import SvgIcon from '../../UI/svgIcon/SvgIcon'
-import { boardHeaderIcon } from '../../../service/svgIcon'
 import BoardHeaderTop from './boardHeaderTop'
 import BoardSubsterHeader from './BoardSubsetHeader'
 const BoardAppHeader = () => {
