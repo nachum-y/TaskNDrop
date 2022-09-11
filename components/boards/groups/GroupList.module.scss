@@ -597,8 +597,8 @@
                 border-radius: 2px;
 
                 &:hover {
-
-                    background-color: $--primary-background-hover-color;
+                    cursor: pointer;
+                    // background-color: $--primary-background-hover-color;
                 }
             }
         }

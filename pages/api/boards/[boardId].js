@@ -4,7 +4,7 @@ import { connectToDatabase } from "../../../util/mongodb"
 export default async (req, res) => {
     const boardId = req.query.boardId
     const { db } = await connectToDatabase()
-    const boardCollection = db.collection('boards')
+    // const boardCollection = await db
 
 
     if (req.method === 'POST') {
@@ -12,7 +12,9 @@ export default async (req, res) => {
             const updatedBoard = req.body
             const id = ObjectId(updatedBoard._id)
             delete updatedBoard._id
-            await boardCollection.updateOne({ _id: id }, { $set: { ...updatedBoard } })
+            const boards = await db
+                .collection('boards')
+                .updateOne({ _id: id }, { $set: { ...updatedBoard } })
             res.status(200).json({
                 message: "board updated successfully",
             })
@@ -27,7 +29,9 @@ export default async (req, res) => {
 
     if (boardId) {
         try {
-            const board = boardCollection.findOne({ _id: ObjectId(boardId) })
+            const board = await db
+                .collection('boards')
+                .findOne({ _id: ObjectId(boardId) })
             res.json(board)
         } catch (err) {
             console.error('while finding board , err/')

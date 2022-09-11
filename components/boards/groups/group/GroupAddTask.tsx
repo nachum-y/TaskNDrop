@@ -1,11 +1,12 @@
+import { useRef } from 'react'
 import classes from '../GroupList.module.scss'
 
 type BackgrounStyle = {
     backgroundColor: string
 }
-const GroupAddTask: React.FC<{ groupColor: string }> = ({ groupColor }) => {
+const GroupAddTask: React.FC<{ groupColor: string, onAddTask: (title: string) => void }> = ({ groupColor, onAddTask }) => {
 
-
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const lightColor = () => {
         if (typeof groupColor === 'string' && groupColor.length >= 3) {
@@ -17,6 +18,15 @@ const GroupAddTask: React.FC<{ groupColor: string }> = ({ groupColor }) => {
             }
         }
         return { backgroundColor: '#fff' }
+    }
+
+    const onSubmitHandler = (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault()
+        const enteredInput = inputRef.current?.value
+        if (enteredInput && enteredInput.trim().length > 0) {
+            onAddTask(enteredInput)
+            inputRef.current.value = ''
+        }
     }
 
 
@@ -31,8 +41,12 @@ const GroupAddTask: React.FC<{ groupColor: string }> = ({ groupColor }) => {
                     </div>
                     <div className={classes['add-item-input']}>
                         <div className={`${classes['border']} ${classes['add-item']}`} style={lightColor()}></div>
-                        <form>
-                            <input name="title" placeholder="+ Add Task" />
+                        <form onSubmit={onSubmitHandler}>
+                            <input
+                                name="title"
+                                placeholder="+ Add Task"
+                                ref={inputRef}
+                            />
                         </form>
                     </div>
                 </div>

@@ -9,6 +9,7 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import Message from '../../UI/message/Message'
 
 import searchEmptyImg from '../../../assets/images/search_empty_state.svg'
+import BoardActionsMenu from './BoardActionsMenu'
 
 type Id = string
 type TypeId = Id
@@ -56,7 +57,14 @@ const GroupContent = dynamic(() => import("./group/GroupContent"), { ssr: false 
 const GroupList = () => {
 
     const [groups, setGroups] = useState<Group[]>([])
-    const { board, setBoard, colsOrderBoard, onSaveGroup, boardGroup, removeGroup } = useContext(BoardContext)
+    const { board,
+        updateBoard,
+        colsOrderBoard,
+        onSaveGroup,
+        boardGroup,
+        removeGroup,
+        selectedTasks
+    } = useContext(BoardContext)
 
     const [placeholderProps, setPlaceholderProps] = useState({})
 
@@ -81,7 +89,7 @@ const GroupList = () => {
         const { destination, source } = result
         if (!destination) return
         if (!board) return
-        let newBoardData = board
+        let newBoardData = { ...board }
         const sourceIdx = board!.groups.findIndex((group) => group.id === source.droppableId)
         const destinationIdx = board!.groups.findIndex((group) => group.id === destination.droppableId)
 
@@ -100,8 +108,8 @@ const GroupList = () => {
             dragItem.groupId = destination.droppableId
         }
 
-        setBoard(newBoardData)
-
+        // setBoard(newBoardData)
+        updateBoard(newBoardData)
     }
 
     const onDragUpdate = () => {
@@ -114,6 +122,9 @@ const GroupList = () => {
     return (
         <div className={classes['board-content-component']}>
 
+            {selectedTasks.length > 0 && < BoardActionsMenu
+                selectedTasks={selectedTasks}
+            />}
             <DragDropContext onDragEnd={onDragEnd}
                 onDragUpdate={onDragUpdate}>
                 {

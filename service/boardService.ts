@@ -1,8 +1,10 @@
 // import { storageService } from './async-storage-service.js'
 import { utilService } from './util.service.js'
+import { userService } from './userService'
 
 import { type } from "os"
-import { Task, Board, Group, Col, Idx } from "./type.js"
+import { Task, Board, Group, Col, Idx, ColsOrder } from "./type.js"
+import { stringify } from 'querystring'
 
 // const BOARD_KEY = 'board_db'
 
@@ -15,7 +17,9 @@ type boardService = {
     query: () => {}
     getEmptyGroup: () => {}
     saveGroup: () => {}
+    addTask: () => {}
     updateTask: () => {}
+    updateBoard: () => {}
 }
 
 type EmptyGroup = {
@@ -33,7 +37,7 @@ export const boardService = {
     saveGroup,
     removeGroup,
     //     // updateGroup,
-    //     // addTask,
+    addTask,
     //     // removeTasks,
     //     // saveGroups,
     //     // getTaskById,
@@ -44,6 +48,7 @@ export const boardService = {
     //     // conversionAdd,
     //     // conversionRemove,
     //     // saveColsOrder
+    updateBoard,
 
 }
 
@@ -140,39 +145,75 @@ async function removeGroup(groupId: string, boardId: string) {
 //     return groupToEdit
 // }
 
-// async function addTask(title, groupId, boardId) {
-//     let board = await _getBoardById(boardId)
-//     console.log(board)
-//     let groupToEdit = board.groups.find((g) => g.id === groupId)
-//     const colOrder = board.colsOrder
-//     let task = _getEmptyTask(colOrder, title)
-//     task.isDone = false
-//     task.createdAt = Date.now()
-//     task.createdBy = await userService.getActiveMember()
-//     task.groupId = groupId
-//     groupToEdit.tasks.push(task)
-//     const savedBoard = await httpService.put(`boards/${boardId}`, board)
-//     // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
-//     // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
+async function addTask(title: string, groupId: string, boardId: string) {
+    let res = await _getBoardById(boardId)
+    const board: Board = await res.json()
+    try {
+        if (board) {
+            let groupToEdit = board.groups.find((g) => g.id === groupId)
+            if (!groupToEdit) throw new Error("ERROR")
+            const { colsOrder } = board
+            const { id, cols } = _getEmptyTask(colsOrder, title)
+            let task: Task = {
+                id: id,
+                cols: cols,
+                isDone: false,
+                createdAt: Date.now(),
+                createdBy: await userService.getActiveMember(),
+                groupId: groupId,
+            }
 
-//     return task
-// }
+            groupToEdit.tasks.push(task)
+            const response = await fetch(`${server}/api/boards/${boardId}`, {
+                method: 'POST',
+                body: JSON.stringify(board),
+                headers: { 'Content-Type': 'application/json' }
+            })
+          
+
+
+        }
+
+    } catch (error) {
+        console.log(error)
+
+    }
+    // let groupToEdit = board.groups.find((g) => g.id === groupId)
+    // const colOrder = board.colsOrder
+    // let task = _getEmptyTask(colOrder, title)
+    // task.isDone = false
+    // task.createdAt = Date.now()
+    // task.createdBy = await userService.getActiveMember()
+    // task.groupId = groupId
+    // groupToEdit.tasks.push(task)
+    // const savedBoard = await httpService.put(`boards/${boardId}`, board)
+    // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
+    // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
+
+    return board
+}
 
 async function updateTask(data: { groupId: string, taskId: string, newCol: Col }, boardId: string) {
     try {
         const { groupId, taskId, newCol } = data
-        let board = await _getBoardById(boardId)
-        console.log(board)
+        const res = await _getBoardById(boardId)
+        let board: Board = await res.json()
 
-        // const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-        // const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-        // const colIdx = board.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
-        // board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
-        // const savedBoard = await httpService.put(`boards/${boardId}`, board)
+        const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+        const colIdx = board.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
+        board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
+        // const savedBoard = await fetch(`${server}/api/boards/${boardId}`)
+        const response = await fetch(`${server}/api/boards/${boardId}`, {
+            method: 'POST',
+            body: JSON.stringify(board),
+            headers: { 'Content-Type': 'application/json' }
+        })
+
         // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
         // socketService.emit(SOCKET_EVENT_BOARD_CHANGE, savedBoard)
+        return board
 
-        // return { groupIdx, taskIdx, colIdx }
     }
     catch (error) {
         throw new Error('Cannot update task')
@@ -184,19 +225,31 @@ async function _getBoardById(boardId: string) {
     return board
 }
 
-// function _getEmptyTask(colOrder, title) {
-//     let cols = []
-//     colOrder.forEach(col => {
-//         let emptyCol = { type: col.type, value: null }
-//         if (col.type === 'item') emptyCol.value = title
-//         if (col.type === 'priority') emptyCol.value = 'pDefault'
-//         if (col.type === 'status') emptyCol.value = 'sDefault'
-//         if (col.type === 'labelCmp') emptyCol.value = 'lDefault'
-//         if (col.type === 'creationLog') emptyCol.value = Date.now()
-//         cols.push(emptyCol)
-//     })
-//     return { id: utilService.makeId(), cols }
-// }
+async function updateBoard(board: Board) {
+    const { _id: boardId } = board
+    const response = await fetch(`${server}/api/boards/${boardId}`, {
+        method: 'POST',
+        body: JSON.stringify(board),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    return response
+}
+function _getEmptyTask(colOrder: ColsOrder[], title: string) {
+    let cols: Col[] = []
+    colOrder.forEach(col => {
+        let emptyCol = {
+            type: col.type,
+            value: ''
+        }
+        if (col.type === 'item') emptyCol.value = title
+        if (col.type === 'priority') emptyCol.value = 'pDefault'
+        if (col.type === 'status') emptyCol.value = 'sDefault'
+        if (col.type === 'labelCmp') emptyCol.value = 'lDefault'
+        if (col.type === 'creationLog') emptyCol.value = Date.now().toString()
+        cols.push(emptyCol)
+    })
+    return { id: utilService.makeId(), cols }
+}
 
 // async function removeTasks(idsToRemove, boardId) {
 //     let board = await _getBoardById(boardId)

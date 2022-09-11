@@ -1,31 +1,19 @@
-import { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Col, ColsOrder, Idx, Task } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 import DynamicColComponent from './DynamicColComponent'
 import { BoardContext } from "../../../../store/board"
 
 // import Test from './dynamic-component/Test'
-import Test2 from "../../../UI/dynamic-cols-component/Test2"
 
-const Components = {
-    // Test,
-    Test2
-}
 
-// export default block => {
-//     // component does exist
-//     if (typeof Components[block.component] !== "undefined") {
-//         return React.createElement(Components[block.component], {
-//             key: block._uid,
-//             block: block
-//         })
-//     }
-// }
 
 const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: string }> = ({ task, colsOrder, groupColor }) => {
 
-    const { updateTask, onOpenCelMenu } = useContext(BoardContext)
+    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks } = useContext(BoardContext)
     const { cols, createdAt, id, groupId } = task
+    const inputRef = useRef<HTMLInputElement>(null)
+
 
     const updateTaskHandler = (newCol: Col) => {
         // const colIdx = '1'
@@ -34,8 +22,6 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
             taskId: id,
 
         }
-
-
         // const idx = { task.id: string, }
         updateTask(newCol, idx)
     }
@@ -51,6 +37,31 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
     }
 
+    const onSubmitHandler = (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault()
+        handleBlur()
+    }
+
+    const handleBlur = () => {
+        const newCol = {
+            type: 'item',
+            value: inputRef.current?.value
+        }
+        updateTaskHandler(newCol)
+
+    }
+
+
+    const toggleSelectionHandler = () => {
+        toggleSelection(task.id)
+        console.log('here!');
+        
+        
+    }
+
+
+    
+
     return (
         <div className={classes['board-content-group-row']}>
             <div className={`${classes.col} ${classes.fixed}`}>
@@ -59,16 +70,22 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                         <div className={classes['row-menu-icon']}></div>
                     </div>
                     <div className={classes['border']} style={{ backgroundColor: groupColor ? groupColor : '' }}></div>
-                    <div className={classes['item-select']}>
-                        <div className={classes['checkbox']}></div>
+                    <div
+                        className={classes['item-select']}
+                        onClick={toggleSelectionHandler}
+                    >
+                        <div className={selectedTasks.includes(task.id) ? classes['checkbox-selected'] : classes['checkbox']}></div>
                     </div>
                     <div className={classes['item-title']}>
                         <div className={classes['input-holder']}>
-                            <form>
+                            <form onSubmit={onSubmitHandler}>
                                 <input
+                                    onBlur={handleBlur}
                                     className={classes['title-input']}
                                     type='text'
-                                    placeholder={cols[0].value?.toString()} />
+                                    ref={inputRef}
+                                    placeholder={cols[0].value?.toString()}
+                                />
                             </form>
                         </div>
                         <div className={classes['open-icon-holder']}>
@@ -95,7 +112,8 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                             id={id}
                         />
                     </div>
-                ))}
+                ))
+            }
 
         </div >
     )

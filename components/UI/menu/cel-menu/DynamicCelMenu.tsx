@@ -56,6 +56,8 @@ const DynamicCelMenu: React.FC<{ menuType: Col }> = ({ menuType }) => {
         labelsValueBoard: labelCmp,
         priorityValueBoard: priority,
         boardMembers: person,
+        updateTask,
+        anchorElCel
     } = useContext(BoardContext)
     const { type, value } = menuType
 
@@ -79,9 +81,13 @@ const DynamicCelMenu: React.FC<{ menuType: Col }> = ({ menuType }) => {
         celValue: value
     }
 
-    const onClickHandler = (actionType: string) => {
-        // onClickDialogMenu(actionType)
-        console.log(actionType)
+    const onClickHandler = (value: string) => {
+        if (anchorElCel && anchorElCel.idx.groupId && anchorElCel.idx.taskId) {
+            const { groupId, taskId } = anchorElCel.idx
+            const idx = { groupId, taskId }
+            const newCol = { type, value }
+            updateTask(newCol, idx)
+        }
 
     }
 

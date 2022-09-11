@@ -33,8 +33,8 @@ export type FullMember = {
     name: string
     email: string
     isAdmin: boolean
-    joinedAt: Double
-    lastSeen: Double
+    joinedAt: Double | number
+    lastSeen: Double | number
     imgUrl: string
     color: string
 
@@ -66,7 +66,7 @@ export type Task = {
     id: string
     cols: Col[]
     isDone: boolean
-    createdAt: Double
+    createdAt: Double | number
     createdBy: FullMember
     groupId: string
 }
@@ -137,6 +137,7 @@ export type BoardContextState = {
     priorityValueBoard: Labels[]
     boardMembers: FullMember[]
     activeFilterParam: activeFilterParam
+    selectedTasks: string[]
     anchorEl: HTMLDivElement | null
     anchorElCel: AnchorElCel | null
     setBoard: (board: Board) => void
@@ -144,7 +145,10 @@ export type BoardContextState = {
     onSaveGroup: (group?: Group) => void
     onAppLoad: () => void
     removeGroup: (groupId: string) => void
+    updateBoard: (board: Board) => void
     updateTask: (newCol: Col, idx: Idx) => void
+    addTask: (groupId: string, title: string) => void
+    toggleSelection: (taskId: string) => void
     onSearchInput: (input: string) => void
     onOpenDialogMenu: (el: HTMLDivElement, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void

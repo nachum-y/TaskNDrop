@@ -15,7 +15,10 @@ import { ColsOrder, Group, IdxOpt } from '../../../../service/type'
 
 const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void }> = ({ group, colsOrder, removeGroup }) => {
 
-    const { onOpenDialogMenu } = useContext(BoardContext)
+    const { onOpenDialogMenu,
+        addTask
+
+    } = useContext(BoardContext)
 
     const { title, tasks, id, color } = group
 
@@ -33,6 +36,12 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
         }
 
         onOpenDialogMenu(el, idx)
+    }
+
+    const addTaskHandler = (title: string) => {
+        const groupId = id
+        addTask(groupId, title)
+        
     }
 
     return (
@@ -93,6 +102,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
                         < GroupAddTask
                             groupColor={color}
+                            onAddTask={addTaskHandler}
                         />
                         <GroupFooter />
                     </div>

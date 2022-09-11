@@ -3,6 +3,7 @@ import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
 import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam } from '../service/type'
+import { title } from "process"
 
 
 const contextDefaultValues: BoardContextState = {
@@ -21,14 +22,18 @@ const contextDefaultValues: BoardContextState = {
         status: [],
         priority: []
     },
+    selectedTasks: [],
     anchorEl: null,
     anchorElCel: null,
     loadBoard: () => { },
     setBoard: () => { },
+    updateBoard: () => { },
     onSaveGroup: () => { },
     onAppLoad: () => { },
     removeGroup: () => { },
     updateTask: () => { },
+    addTask: () => { },
+    toggleSelection: () => { },
     onSearchInput: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
@@ -51,6 +56,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
     const [activeFilterParam, setActiveFilterParam] = useState<activeFilterParam>(contextDefaultValues.activeFilterParam)
+    const [selectedTasks, setSelectedTasks] = useState<string[]>(contextDefaultValues.selectedTasks)
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
@@ -122,17 +128,32 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const updateTask = async (newCol: Col, idxs: Idx) => {
         const { groupId, taskId } = idxs
-        const data = { groupId, taskId, newCol }
-        const boardId = board!._id.toString()
+        // const data = { groupId, taskId, newCol }
+        // const boardId = board!._id.toString()
         try {
-            const idxs = await boardService.updateTask(data, boardId)
+            if (board) {
+                const newBoard = {
+                    ...board
 
-            const groupIdx = board!.groups.findIndex((group) => group.id === groupId)
-            const taskIdx = board!.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-            const colIdx = board!.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
-            board!.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
-            const updatedGroups = board!.groups
-            setBoardGroup(() => updatedGroups)
+                }
+                const groupIdx = board!.groups.findIndex((group) => group.id === groupId)
+                const taskIdx = board!.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+                const colIdx = board!.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
+                newBoard.groups[groupIdx].tasks[taskIdx].cols.splice(colIdx, 1, newCol)
+
+                setBoard(() => newBoard)
+                setAnchorEl(null)
+                setAnchorElCel(null)
+                await boardService.updateBoard(newBoard)
+            }
+
+
+            // const updatedGroups = newBoard.groups
+
+            // setBoardGroup(() => updatedGroups)
+            // const newBoard = await boardService.updateTask(data, boardId)
+            // setBoard(newBoard)
+
         } catch (error) {
             console.log(error)
         }
@@ -149,6 +170,19 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     // },
 
+    const addTask = async (groupId: string, title: string) => {
+        if (board) {
+            const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
+            const { groups } = updatedBoard
+            setBoardGroup(() => groups)
+
+        }
+
+    }
+
+    const updateBoard = async (newBoard: Board) => {
+        await boardService.updateBoard(newBoard)
+    }
 
     useEffect(() => {
         onFilterGroup()
@@ -161,6 +195,14 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
         setActiveFilterParam(() => updatedFilter)
 
+    }
+
+    const toggleSelection = (taskId: string) => {
+        const idx = selectedTasks.findIndex(id => id === taskId)
+        if (idx === -1) setSelectedTasks((prevState) => prevState.concat(taskId))
+        else {
+            setSelectedTasks((state) => state.filter((id, index) => index !== idx))
+        }
     }
 
 
@@ -224,7 +266,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
                     idx: idx
                 }
                 setAnchorElCel(() => set)
-
             }
         }, 0)
         if (idx) setAnchorElCelIdx(idx)
@@ -255,13 +296,17 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 priorityValueBoard,
                 boardMembers,
                 activeFilterParam,
+                selectedTasks,
                 anchorEl,
                 anchorElCel,
                 setBoard,
                 loadBoard,
+                updateBoard,
                 onSaveGroup,
                 removeGroup,
                 updateTask,
+                addTask,
+                toggleSelection,
                 onSearchInput,
                 onOpenDialogMenu,
                 onOpenCelMenu,
