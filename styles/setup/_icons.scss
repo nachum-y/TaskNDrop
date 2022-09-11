@@ -9,6 +9,8 @@
     font-style: normal;
 }
 
+@import './styles/setup/vars';
+
 
 
 
@@ -21,4 +23,10 @@
 
 .icon-v2-delete-line::before {
     content: "\f2ff";
+}
+
+
+
+.icon-v2-search:before {
+    content: "\f3aa";
 }

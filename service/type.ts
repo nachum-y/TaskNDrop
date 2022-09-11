@@ -118,6 +118,13 @@ export type AnchorElCel = {
     taskCol: Col,
 }
 
+export type activeFilterParam = {
+    label: string[],
+    txt: RegExp,
+    person: string[],
+    status: string[],
+    priority: string[]
+}
 
 
 export type BoardContextState = {
@@ -129,6 +136,7 @@ export type BoardContextState = {
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
     boardMembers: FullMember[]
+    activeFilterParam: activeFilterParam
     anchorEl: HTMLDivElement | null
     anchorElCel: AnchorElCel | null
     setBoard: (board: Board) => void
@@ -137,6 +145,7 @@ export type BoardContextState = {
     onAppLoad: () => void
     removeGroup: (groupId: string) => void
     updateTask: (newCol: Col, idx: Idx) => void
+    onSearchInput: (input: string) => void
     onOpenDialogMenu: (el: HTMLDivElement, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onClickDialogMenu: (actionType: string) => void

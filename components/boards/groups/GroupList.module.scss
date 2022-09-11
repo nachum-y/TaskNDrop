@@ -901,3 +901,16 @@
     padding: 0;
     outline: 0;
 }
+
+.empty-row {
+    flex-grow: 1;
+    height: 2rem;
+}
+
+
+
+.floating-header-row-component {
+    background-color: #fff;
+    border: none;
+    outline: none;
+}

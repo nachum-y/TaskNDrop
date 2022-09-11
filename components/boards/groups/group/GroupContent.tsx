@@ -37,27 +37,30 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
     return (
         <div className={classes['board-content-group']}>
-            <GroupHeader
-                title={title}
-                removeGroup={removeGroupHandler}
-                groupColor={color}
-                openMenu={openMenuHandler}
-            />
-            <RowHeader
-                colsOrder={colsOrder}
-                groupColor={color}
-            />
-
             <Droppable droppableId={id}>
                 {(droppableProvided, droppableSnapshot) => (
                     <div
-
+                        className={droppableSnapshot.isDraggingOver ? classes['row-back-drop'] : ''}
                         ref={droppableProvided.innerRef}
                         {...droppableProvided.droppableProps}
+                        data-is-dragging-over={droppableSnapshot.isDraggingOver}
                     >
+                        <div className={classes['floating-header-row-component']}>
+                            <GroupHeader
+                                title={title}
+                                removeGroup={removeGroupHandler}
+                                groupColor={color}
+                                openMenu={openMenuHandler}
+                            />
+                            <RowHeader
+                                colsOrder={colsOrder}
+                                groupColor={color}
+                            />
+
+                        </div>
                         {tasks.map((task, index) => (
                             <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
-                                {(draggableProvided, draggableSnapshot) => (
+                                {(draggableProvided: any, draggableSnapshot) => (
                                     <div
                                         // outlineColor={
                                         //     draggableSnapshot.isDragging
@@ -79,17 +82,22 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                                             colsOrder={colsOrder}
                                             groupColor={color}
                                         />
+                                        {draggableProvided.placeholder}
+
                                     </div>
                                 )}
                             </Draggable>
+
                         ))}
+                        {droppableSnapshot.isDraggingOver && <div className={classes['empty-row']}></div>}
+
+                        < GroupAddTask
+                            groupColor={color}
+                        />
+                        <GroupFooter />
                     </div>
                 )}
             </Droppable>
-            < GroupAddTask
-                groupColor={color}
-            />
-            <GroupFooter />
         </div >
 
     )

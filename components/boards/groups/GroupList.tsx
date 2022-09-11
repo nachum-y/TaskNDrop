@@ -55,6 +55,7 @@ const GroupList = () => {
     const [groups, setGroups] = useState<Group[]>([])
     const { board, setBoard, colsOrderBoard, onSaveGroup, boardGroup, removeGroup } = useContext(BoardContext)
 
+    const [placeholderProps, setPlaceholderProps] = useState({})
 
     const addGroupHandler = () => {
         onSaveGroup()
@@ -100,13 +101,18 @@ const GroupList = () => {
 
     }
 
+    const onDragUpdate = () => {
+      
+
+    }
 
 
 
     return (
         <div className={classes['board-content-component']}>
 
-            <DragDropContext onDragEnd={onDragEnd}>
+            <DragDropContext onDragEnd={onDragEnd}
+                onDragUpdate={onDragUpdate}>
                 {
                     boardGroup.map((group) => {
                         return (

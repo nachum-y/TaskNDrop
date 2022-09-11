@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam } from '../service/type'
 
 
 const contextDefaultValues: BoardContextState = {
@@ -14,6 +14,13 @@ const contextDefaultValues: BoardContextState = {
     labelsValueBoard: [],
     priorityValueBoard: [],
     boardMembers: [],
+    activeFilterParam: {
+        label: [],
+        txt: new RegExp(''),
+        person: [],
+        status: [],
+        priority: []
+    },
     anchorEl: null,
     anchorElCel: null,
     loadBoard: () => { },
@@ -22,6 +29,7 @@ const contextDefaultValues: BoardContextState = {
     onAppLoad: () => { },
     removeGroup: () => { },
     updateTask: () => { },
+    onSearchInput: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
     onCloseDialogMenu: () => { },
@@ -42,6 +50,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
+    const [activeFilterParam, setActiveFilterParam] = useState<activeFilterParam>(contextDefaultValues.activeFilterParam)
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
@@ -140,6 +149,40 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     // },
 
+    const onSearchInput = (inputTxt: string) => {
+        let updatedFilter = { ...activeFilterParam }
+        updatedFilter.txt = new RegExp(inputTxt, 'i')
+        setActiveFilterParam(updatedFilter)
+
+        onFilterGroup()
+    }
+
+
+    const onFilterGroup = () => {
+        if (boardGroup) {
+
+            const NewBoardGroup = boardGroup.map((g) => {
+                let { tasks, color, title, id, isCollapse } = g
+                tasks = tasks.filter((t, index) => {
+                    if (typeof t.cols[0].value === 'string' && typeof t.cols[index].type === 'string') {
+                        return (!activeFilterParam.txt || activeFilterParam.txt.test(t.cols[0].value))
+                        // &&(activeFilterParam.status.length === 0 || activeFilterParam.status.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'status')].value))
+                        // && (activeFilterParam.label.length === 0 || activeFilterParam.label.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'labelCmp')].value))
+                        // && (activeFilterParam.priority.length === 0 || activeFilterParam.priority.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'priority')].value))
+
+                    }
+                })
+
+                return ({ tasks, color, title, id, isCollapse })
+            })
+            if (NewBoardGroup) {
+                const gNew = NewBoardGroup.filter((g) => g.tasks.length > 0)
+                setBoardGroup(gNew)
+            }
+
+
+        }
+    }
 
 
 
@@ -202,6 +245,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 labelsValueBoard,
                 priorityValueBoard,
                 boardMembers,
+                activeFilterParam,
                 anchorEl,
                 anchorElCel,
                 setBoard,
@@ -209,6 +253,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onSaveGroup,
                 removeGroup,
                 updateTask,
+                onSearchInput,
                 onOpenDialogMenu,
                 onOpenCelMenu,
                 onClickDialogMenu,

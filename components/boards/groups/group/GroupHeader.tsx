@@ -1,7 +1,5 @@
 import { useState, useEffect, ReactEventHandler, MouseEventHandler, useRef } from 'react'
-import useContextMenu from '../../../../hooks/useContextMenu'
 import InlineEdit from '../../../UI/inline-edit/InlineEdit'
-import MenuDialog from '../../../UI/menu/MenuDialogOld'
 
 import classes from '../GroupList.module.scss'
 
