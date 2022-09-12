@@ -6,12 +6,6 @@ import DynamicCelMenu from './DynamicCelMenu'
 import { Col } from '../../../../service/type'
 
 
-type Style = {
-    position: string
-
-}
-
-
 
 
 const CelMenu: React.FC<{ anchorElement: HTMLSpanElement, onClose: () => void, menuType: Col }> = ({ anchorElement, onClose, menuType }) => {
@@ -24,12 +18,17 @@ const CelMenu: React.FC<{ anchorElement: HTMLSpanElement, onClose: () => void, m
         onClose()
     }
 
+
     const open = Boolean(anchorElCel)
+    const canBeOpen = open && Boolean(anchorElCel)
+    const id = canBeOpen ? 'transition-popper' : undefined
+    
+
 
     return (
 
         < ClickAwayListener onClickAway={handleClose} >
-            <Popper open={open} anchorEl={anchorElCel} placement={'bottom'} className={classes['menu-dialog']} >
+            <Popper id={id} open={open} anchorEl={anchorElCel} placement={'bottom'} className={classes['menu-dialog']} >
                 <div className={classes['status-picker-view']}>
                     <DynamicCelMenu menuType={menuType} />
                 </div >

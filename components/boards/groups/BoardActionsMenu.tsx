@@ -1,13 +1,13 @@
 import classes from './BoardActionsMenu.module.scss'
 
-const BoardActionsMenu: React.FC<{ selectedTasks: string[] }> = ({ selectedTasks }) => {
+const BoardActionsMenu: React.FC<{ selectedTasks: string[], onRemoveTasks: () => void, onDuplicateTasks: () => void }> = ({ selectedTasks, onRemoveTasks, onDuplicateTasks }) => {
 
     const removeTasks = () => {
-
+        onRemoveTasks()
     }
 
     const duplicateTasks = () => {
-
+        onDuplicateTasks()
     }
 
     return (

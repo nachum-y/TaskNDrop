@@ -8,24 +8,30 @@ import { FullMember, Labels, Member } from '../../../../service/type'
 
 
 
-const PersonMenu: React.FC<{ onMenuClick: (actionId: string) => void, menuObj: { boardList: FullMember[], celValue: Member[] } }> = ({ onMenuClick, menuObj }) => {
+const PersonMenu: React.FC<{ onMenuClick: (actionId: string | number | Member[]) => void, menuObj: { boardList: FullMember[], celValue: Member[] } }> = ({ onMenuClick, menuObj }) => {
 
 
 
     const [showInvite, setShowInvite] = React.useState(false)
+    const [suggestedMember, setSuggestedMember] = React.useState<FullMember[]>([])
 
     const onClickHandle = (status: string) => {
         onMenuClick(status)
     }
-    // boardMembers: Array,
-    //     taskMembers: Array,
-
-
-
 
     const boardMembers = menuObj.boardList
     const taskMembers = menuObj.celValue
-    console.log(boardMembers)
+
+    React.useEffect(() => {
+        setSuggestedMember(() => boardMembers.filter((member) => !taskMembers.find((m) => m.id === member.id)))
+        console.log(suggestedMember)
+
+    }, [boardMembers, taskMembers])
+
+
+
+
+    console.log(taskMembers)
 
     // const userToDisplay = () => {
     //     if (boardMembers && taskMembers) {
@@ -38,19 +44,30 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string) => void, menuObj: {
     // }
     // userToDisplay()
 
-    const selectPerson = (member: FullMember) => {
-
-    }
 
 
     const showInvitation = () => {
         setShowInvite((prevState) => !prevState)
     }
 
-    const suggestedMember = boardMembers.filter((member) => !taskMembers.find((m) => m.id === member.id))
-    console.log(suggestedMember)
-    // const tr = taskMembers.filter((m) => m.id)
-    // console.log(tr)
+    const onRemovePersonHandler = (memberToRemove: Member) => {
+        let updatedTaskMembers: Member[] = JSON.parse(JSON.stringify(taskMembers))
+        updatedTaskMembers = taskMembers.filter(member => member.id !== memberToRemove.id)
+        onMenuClick(updatedTaskMembers)
+    }
+
+    const onAddPersonHandler = (member: FullMember) => {
+        const memberToAdd = {
+            id: member.id,
+            fullname: member.name,
+            imgUrl: member.imgUrl
+        }
+        let updatedTaskMembers: Member[] = JSON.parse(JSON.stringify(taskMembers))
+        updatedTaskMembers.push(memberToAdd)
+
+        onMenuClick(updatedTaskMembers)
+    }
+  
 
 
     return (
@@ -69,7 +86,7 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string) => void, menuObj: {
                                             <img className={classes['person-bullet-mini']} src={member.imgUrl} />
                                         </div>
                                         <span>{member.fullname}</span>
-                                        <div className={classes['remove-btn-holder']} onClick={() => console.log('click')}>
+                                        <div className={classes['remove-btn-holder']} onClick={() => onRemovePersonHandler(member)}>
                                             <div className={classes['remove-person-btn']}></div>
                                         </div>
                                     </div>))}
@@ -86,14 +103,13 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string) => void, menuObj: {
 
                             <div className={classes['suggested-members']}>
                                 <h3>Suggested people</h3>
-                                {suggestedMember.map((member) => (<div
+                                {suggestedMember && suggestedMember.map((member) => (<div
                                     key={member.id}
-                                    onClick={() => selectPerson(member)}
+                                    onClick={() => onAddPersonHandler(member)}
                                     className={classes['member-holder']}
                                 >
-
                                     <div className={classes['person-bullet-menu']}>
-                                        <img src={member.imgUrl} alt='' />
+                                        <img src={member.imgUrl} alt={member.name} />
                                     </div>
                                     <span className={classes['memeber-name']}>{member.name}</span>
                                 </div>)

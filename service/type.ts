@@ -1,4 +1,5 @@
 import { Double, Int32, ObjectId } from "mongodb"
+import { type } from "os"
 
 export type Props = {
     children: React.ReactNode
@@ -126,6 +127,11 @@ export type activeFilterParam = {
     priority: string[]
 }
 
+export type EmptyCol = {
+    type: string
+    value: string | number | undefined | []
+}
+
 
 export type BoardContextState = {
     initialBoardId: undefined | string
@@ -149,6 +155,8 @@ export type BoardContextState = {
     updateTask: (newCol: Col, idx: Idx) => void
     addTask: (groupId: string, title: string) => void
     toggleSelection: (taskId: string) => void
+    removeTasks: (tasksIds: string | undefined) => void
+    duplicateTasks: (tasksIds: string | undefined) => void
     onSearchInput: (input: string) => void
     onOpenDialogMenu: (el: HTMLDivElement, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void

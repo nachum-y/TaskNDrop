@@ -8,7 +8,7 @@ import { Col, FullMember, Labels, Member } from '../../../../service/type'
 
 
 
-const StatusMenu: React.FC<{ onMenuClick: (actionId: string) => void, menuObj: { boardList: Labels[], celValue: string } }> = ({ onMenuClick, menuObj }) => {
+const StatusMenu: React.FC<{ onMenuClick: (actionId: string | number | Member[]) => void, menuObj: { boardList: Labels[], celValue: string } }> = ({ onMenuClick, menuObj }) => {
 
 
 

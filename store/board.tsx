@@ -34,6 +34,8 @@ const contextDefaultValues: BoardContextState = {
     updateTask: () => { },
     addTask: () => { },
     toggleSelection: () => { },
+    removeTasks: () => { },
+    duplicateTasks: () => { },
     onSearchInput: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
@@ -175,7 +177,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
             const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
             const { groups } = updatedBoard
             setBoardGroup(() => groups)
-
+            console.log(board);
+            
         }
 
     }
@@ -202,6 +205,35 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (idx === -1) setSelectedTasks((prevState) => prevState.concat(taskId))
         else {
             setSelectedTasks((state) => state.filter((id, index) => index !== idx))
+        }
+    }
+
+
+    const removeTasks = async (id: string | undefined) => {
+        let tasksIds
+        if (id) tasksIds = id
+        else if (!id && selectedTasks.length > 0) {
+            tasksIds = selectedTasks
+            setSelectedTasks(() => [])
+        }
+        else return
+        if (board && tasksIds) {
+            const updatedBoard = await boardService.removeTasks(tasksIds, board._id.toString())
+            const updatedGroups = updatedBoard.groups
+            setBoardGroup(() => updatedGroups)
+        }
+    }
+    const duplicateTasks = async (id: string | undefined) => {
+        let tasksIds
+        if (id) tasksIds = id
+        else if (!id && selectedTasks.length > 0) {
+            tasksIds = selectedTasks
+            setSelectedTasks(() => [])
+        }
+        else return
+        if (board && tasksIds) {
+            const updatedGroups = await boardService.duplicateTasks(tasksIds, board._id.toString())
+            setBoardGroup(() => updatedGroups)
         }
     }
 
@@ -307,6 +339,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 updateTask,
                 addTask,
                 toggleSelection,
+                removeTasks,
+                duplicateTasks,
                 onSearchInput,
                 onOpenDialogMenu,
                 onOpenCelMenu,

@@ -3,7 +3,7 @@ import { utilService } from './util.service.js'
 import { userService } from './userService'
 
 import { type } from "os"
-import { Task, Board, Group, Col, Idx, ColsOrder } from "./type.js"
+import { Task, Board, Group, Col, Idx, ColsOrder, EmptyCol } from "./type.js"
 import { stringify } from 'querystring'
 
 // const BOARD_KEY = 'board_db'
@@ -18,8 +18,11 @@ type boardService = {
     getEmptyGroup: () => {}
     saveGroup: () => {}
     addTask: () => {}
+    removeTasks: () => {}
+    duplicateTasks: () => {}
     updateTask: () => {}
     updateBoard: () => {}
+
 }
 
 type EmptyGroup = {
@@ -38,7 +41,8 @@ export const boardService = {
     removeGroup,
     //     // updateGroup,
     addTask,
-    //     // removeTasks,
+    removeTasks,
+    duplicateTasks,
     //     // saveGroups,
     //     // getTaskById,
     //     // saveTask,
@@ -164,12 +168,11 @@ async function addTask(title: string, groupId: string, boardId: string) {
             }
 
             groupToEdit.tasks.push(task)
-            const response = await fetch(`${server}/api/boards/${boardId}`, {
-                method: 'POST',
-                body: JSON.stringify(board),
-                headers: { 'Content-Type': 'application/json' }
-            })
-          
+
+
+            const response = await _updateBoard(board, boardId)
+            console.log(response)
+
 
 
         }
@@ -237,52 +240,58 @@ async function updateBoard(board: Board) {
 function _getEmptyTask(colOrder: ColsOrder[], title: string) {
     let cols: Col[] = []
     colOrder.forEach(col => {
-        let emptyCol = {
+        let emptyCol: EmptyCol = {
             type: col.type,
-            value: ''
+            value: undefined
         }
         if (col.type === 'item') emptyCol.value = title
         if (col.type === 'priority') emptyCol.value = 'pDefault'
         if (col.type === 'status') emptyCol.value = 'sDefault'
         if (col.type === 'labelCmp') emptyCol.value = 'lDefault'
-        if (col.type === 'creationLog') emptyCol.value = Date.now().toString()
+        if (col.type === 'creationLog') emptyCol.value = Date.now()
+        if (col.type === 'person') emptyCol.value = []
         cols.push(emptyCol)
     })
     return { id: utilService.makeId(), cols }
 }
 
-// async function removeTasks(idsToRemove, boardId) {
-//     let board = await _getBoardById(boardId)
-//     board.groups.map(group => {
-//         // let groupToUpdate = board.groups.find(g => g.id === group.id)
-//         group.tasks = group.tasks.filter(task => !idsToRemove.includes(task.id))
-//     })
-//     const savedBoard = await httpService.put(`boards/${boardId}`, board)
-//     // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
-//     return board.groups
-// }
-// async function duplicateTasks(idsToDup, boardId) {
-//     let board = await _getBoardById(boardId)
-//     const activeUser = await userService.getActiveMember()
-//     board.groups.forEach(group => {
-//         group.tasks.forEach((task) => {
-//             if (idsToDup.includes(task.id)) {
-//                 let newTask = JSON.parse(JSON.stringify(task))
-//                 newTask.cols[board.colsOrder.findIndex(col => col.type === 'creationLog')].value = Date.now()
-//                 newTask.id = utilService.makeId()
-//                 newTask.createdAt = Date.now()
-//                 newTask.createdBy = activeUser
-//                 const idx = board.groups.findIndex(group => group.id === task.groupId)
-//                 board.groups[idx].tasks.push(newTask)
-//             }
-//         })
-//     })
-//     const savedBoard = await httpService.put(`boards/${boardId}`, board)
-//     // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
-//     return board.groups
+async function removeTasks(idsToRemove: string[] | string, boardId: string) {
+    const res = await _getBoardById(boardId)
+    let board: Board = await res.json()
+
+    board.groups.map(group => {
+        group.tasks = group.tasks.filter(task => !idsToRemove.includes(task.id))
+    })
 
 
-// }
+    const response = await _updateBoard(board, boardId)
+    return board
+}
+
+
+async function duplicateTasks(idsToDup: string[] | string, boardId: string) {
+    const res = await _getBoardById(boardId)
+    let board: Board = await res.json()
+    const activeUser = await userService.getActiveMember()
+    board.groups.forEach(group => {
+        group.tasks.forEach((task) => {
+            if (idsToDup.includes(task.id)) {
+                let newTask = JSON.parse(JSON.stringify(task))
+                newTask.cols[board.colsOrder.findIndex(col => col.type === 'creationLog')].value = Date.now()
+                newTask.id = utilService.makeId()
+                newTask.createdAt = Date.now()
+                newTask.createdBy = activeUser
+                const idx = board.groups.findIndex(group => group.id === task.groupId)
+                board.groups[idx].tasks.push(newTask)
+            }
+        })
+    })
+
+    const response = await _updateBoard(board, boardId)
+    // const savedBoard = await httpService.put(`boards/${boardId}`, board)
+    // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
+    return board.groups
+}
 // async function saveGroups(groups, boardId) {
 //     let board = await _getBoardById(boardId)
 //     board.groups = groups
@@ -385,6 +394,15 @@ function _getEmptyTask(colOrder: ColsOrder[], title: string) {
 //     return updatedConversion
 // }
 
+async function _updateBoard(board: Board, boardId: string) {
+    const response = await fetch(`${server}/api/boards/${boardId}`, {
+        method: 'POST',
+        body: JSON.stringify(board),
+        headers: { 'Content-Type': 'application/json' }
+    })
+
+    return response
+}
 
 // function _getColor() {
 //     const colors = [

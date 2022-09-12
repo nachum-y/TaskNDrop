@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, KeyboardEvent } from 'react'
 import { BoardContext } from '../../../store/board'
 import { Group } from '../../../service/type'
 // import GroupContent from './group/GroupContent'
@@ -63,7 +63,9 @@ const GroupList = () => {
         onSaveGroup,
         boardGroup,
         removeGroup,
-        selectedTasks
+        selectedTasks,
+        removeTasks,
+        duplicateTasks
     } = useContext(BoardContext)
 
     const [placeholderProps, setPlaceholderProps] = useState({})
@@ -118,12 +120,28 @@ const GroupList = () => {
     }
 
 
+    const onKeyPressHandler = (ev: KeyboardEvent<HTMLInputElement>) => {
+        console.log(ev)
+        // "ShiftRight"
+
+        if (ev.type === 'keydown' && ev.key === "Shift") {
+            // setIsShitPress(() => true)
+
+        }
+        if (ev.type === 'keyup' && ev.key === "Shift") {
+            // setIsShitPress(() => false)
+        }
+
+    }
+
 
     return (
         <div className={classes['board-content-component']}>
 
             {selectedTasks.length > 0 && < BoardActionsMenu
                 selectedTasks={selectedTasks}
+                onRemoveTasks={() => removeTasks(undefined)}
+                onDuplicateTasks={() => duplicateTasks(undefined)}
             />}
             <DragDropContext onDragEnd={onDragEnd}
                 onDragUpdate={onDragUpdate}>

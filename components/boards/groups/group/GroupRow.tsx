@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Col, ColsOrder, Idx, Task } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 import DynamicColComponent from './DynamicColComponent'
 import { BoardContext } from "../../../../store/board"
+import { boardService } from '../../../../service/boardService'
 
 // import Test from './dynamic-component/Test'
 
@@ -13,6 +14,17 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks } = useContext(BoardContext)
     const { cols, createdAt, id, groupId } = task
     const inputRef = useRef<HTMLInputElement>(null)
+
+    const [isShitPress, setIsShitPress] = useState(false)
+
+    useEffect(() => {
+        if (isShitPress) {
+           console.log(isShitPress);
+           
+
+        }
+
+    }, [isShitPress])
 
 
     const updateTaskHandler = (newCol: Col) => {
@@ -43,6 +55,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     }
 
     const handleBlur = () => {
+        if (inputRef.current?.value.trim().length === 0) return
         const newCol = {
             type: 'item',
             value: inputRef.current?.value
@@ -53,14 +66,15 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
 
     const toggleSelectionHandler = () => {
+       
+
         toggleSelection(task.id)
-        console.log('here!');
-        
-        
     }
 
 
-    
+
+
+
 
     return (
         <div className={classes['board-content-group-row']}>
