@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam, SelectedTask } from '../service/type'
 import { title } from "process"
 
 
@@ -23,6 +23,7 @@ const contextDefaultValues: BoardContextState = {
         priority: []
     },
     selectedTasks: [],
+    selectedGroups: [],
     anchorEl: null,
     anchorElCel: null,
     loadBoard: () => { },
@@ -34,6 +35,7 @@ const contextDefaultValues: BoardContextState = {
     updateTask: () => { },
     addTask: () => { },
     toggleSelection: () => { },
+    toggleAll: () => { },
     removeTasks: () => { },
     duplicateTasks: () => { },
     onSearchInput: () => { },
@@ -58,7 +60,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
     const [activeFilterParam, setActiveFilterParam] = useState<activeFilterParam>(contextDefaultValues.activeFilterParam)
-    const [selectedTasks, setSelectedTasks] = useState<string[]>(contextDefaultValues.selectedTasks)
+    const [selectedTasks, setSelectedTasks] = useState<SelectedTask[]>(contextDefaultValues.selectedTasks)
+    const [selectedGroups, setSelectedGroups] = useState<string[]>(contextDefaultValues.selectedGroups)
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
@@ -177,8 +180,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
             const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
             const { groups } = updatedBoard
             setBoardGroup(() => groups)
-            console.log(board);
-            
+            console.log(board)
+
         }
 
     }
@@ -200,20 +203,55 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     }
 
-    const toggleSelection = (taskId: string) => {
-        const idx = selectedTasks.findIndex(id => id === taskId)
-        if (idx === -1) setSelectedTasks((prevState) => prevState.concat(taskId))
-        else {
-            setSelectedTasks((state) => state.filter((id, index) => index !== idx))
+    const toggleSelection = (selectedTask: SelectedTask) => {
+        if (selectedTask) {
+            const idx = selectedTasks.findIndex(selected => selected.taskId === selectedTask.taskId)
+            if (idx === -1) setSelectedTasks((prevState) => prevState.concat(selectedTask).sort(_compare))
+            else {
+                setSelectedTasks((state) => state.filter((id, index) => index !== idx))
+            }
+            if (selectedGroups.includes(selectedTask.groupId)) {
+                setSelectedGroups((state) => state.filter((id, index) => id !== selectedTask.groupId))
+            }
         }
+
     }
 
+    const _compare = (a: SelectedTask, b: SelectedTask) => {
+        if (a.groupId < b.groupId) {
+            return -1
+        }
+        if (a.groupId > b.groupId) {
+            return 1
+        }
+
+        return 0
+    }
+
+    const toggleAll = (group: Group) => {
+        const idx = selectedGroups.findIndex(id => id === group.id)
+        if (idx === -1) {
+            if (group.tasks.length === 0) return
+            setSelectedGroups((prevState) => prevState.concat(group.id))
+            let newSelectedTask: SelectedTask[] = JSON.parse(JSON.stringify(selectedTasks))
+            group.tasks.forEach(task => newSelectedTask.push({ taskId: task.id, groupId: group.id, color: group.color }))
+            // // newSelectedTask = [...new Set(newSelectedTask)]
+            setSelectedTasks(() => newSelectedTask)
+
+        }
+        else {
+            const idsToRemove = group.tasks.map(task => task.id)
+            setSelectedTasks((state) => state.filter((selected, index) => !idsToRemove.includes(selected.taskId)))
+            setSelectedGroups((state) => state.filter((id, index) => index !== idx))
+
+        }
+    }
 
     const removeTasks = async (id: string | undefined) => {
         let tasksIds
         if (id) tasksIds = id
         else if (!id && selectedTasks.length > 0) {
-            tasksIds = selectedTasks
+            tasksIds = selectedTasks.map((selected) => selected.taskId)
             setSelectedTasks(() => [])
         }
         else return
@@ -223,11 +261,12 @@ const BoardProvider: FC<Props> = ({ children }) => {
             setBoardGroup(() => updatedGroups)
         }
     }
+
     const duplicateTasks = async (id: string | undefined) => {
         let tasksIds
         if (id) tasksIds = id
         else if (!id && selectedTasks.length > 0) {
-            tasksIds = selectedTasks
+            tasksIds = selectedTasks.map((selected) => selected.taskId)
             setSelectedTasks(() => [])
         }
         else return
@@ -312,7 +351,20 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const menuDialogAction: menuDialogActionMap = {
-        deleteThisGroup: (idx: IdxOpt) => idx.groupId ? removeGroup(idx.groupId) : console.log('error')
+        deleteThisGroup: (idx: IdxOpt) => idx.groupId ? removeGroup(idx.groupId) : console.log('error'),
+        selectAllItems: (idx: IdxOpt) => {
+            if (!idx.groupId) return
+            const groupiId = idx.groupId
+            if (selectedGroups.includes(groupiId)) return
+            setSelectedGroups((prevState) => prevState.concat(groupiId))
+            const group = board!.groups.find((g) => g.id === groupiId)
+            if (group) {
+                let newSelectedTask: SelectedTask[] = JSON.parse(JSON.stringify(selectedTasks))
+                group.tasks.forEach(task => newSelectedTask.push({ taskId: task.id, groupId: group.id, color: group.color }))
+                return setSelectedTasks(() => newSelectedTask)
+            }
+        }
+
     }
 
     return (
@@ -329,6 +381,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 boardMembers,
                 activeFilterParam,
                 selectedTasks,
+                selectedGroups,
                 anchorEl,
                 anchorElCel,
                 setBoard,
@@ -339,6 +392,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 updateTask,
                 addTask,
                 toggleSelection,
+                toggleAll,
                 removeTasks,
                 duplicateTasks,
                 onSearchInput,

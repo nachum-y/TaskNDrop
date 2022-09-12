@@ -6,13 +6,13 @@ const MenuSection: React.FC<{ title: string, onClickHandler: (actionType: string
         <div className={`${classes['menu-item']} ${['menu-item-relative']}`}
             onClick={() => onClickHandler(type)}
         >
-    <div className={classes['content-wrapper']}>
-        <div className={classes['content-title-content-wrapper']}>
-            {icon && <i className={classes.icon} dangerouslySetInnerHTML={{ __html: icon }} />}
-            {classIcon && (<i className={`${classes.icon} ${classes[classIcon]}`}></i>)}
-            <span className={classes['title']}>{title}</span>
-        </div>
-    </div>
+            <div className={classes['content-wrapper']}>
+                <div className={classes['content-title-content-wrapper']}>
+                    {icon && <i className={classes.icon} dangerouslySetInnerHTML={{ __html: icon }} />}
+                    {classIcon && (<i className={`${classes.icon} ${classes[classIcon]}`}></i>)}
+                    <span className={classes['title']}>{title}</span>
+                </div>
+            </div>
         </div >
 
     )

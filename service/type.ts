@@ -112,6 +112,7 @@ export type IdxOpt = {
 
 export type menuDialogActionMap = {
     deleteThisGroup: (groupId: IdxOpt) => void
+    selectAllItems: (groupId: IdxOpt) => void
 }
 export type AnchorElCel = {
     anchorElCel: HTMLSpanElement | null,
@@ -132,6 +133,11 @@ export type EmptyCol = {
     value: string | number | undefined | []
 }
 
+export type SelectedTask = {
+    taskId: string
+    groupId: string
+    color: string
+}
 
 export type BoardContextState = {
     initialBoardId: undefined | string
@@ -143,7 +149,8 @@ export type BoardContextState = {
     priorityValueBoard: Labels[]
     boardMembers: FullMember[]
     activeFilterParam: activeFilterParam
-    selectedTasks: string[]
+    selectedTasks: SelectedTask[]
+    selectedGroups: string[]
     anchorEl: HTMLDivElement | null
     anchorElCel: AnchorElCel | null
     setBoard: (board: Board) => void
@@ -154,7 +161,8 @@ export type BoardContextState = {
     updateBoard: (board: Board) => void
     updateTask: (newCol: Col, idx: Idx) => void
     addTask: (groupId: string, title: string) => void
-    toggleSelection: (taskId: string) => void
+    toggleSelection: (selectedTask: SelectedTask) => void
+    toggleAll: (group: Group) => void
     removeTasks: (tasksIds: string | undefined) => void
     duplicateTasks: (tasksIds: string | undefined) => void
     onSearchInput: (input: string) => void

@@ -1,6 +1,7 @@
+import { SelectedTask } from '../../../service/type'
 import classes from './BoardActionsMenu.module.scss'
 
-const BoardActionsMenu: React.FC<{ selectedTasks: string[], onRemoveTasks: () => void, onDuplicateTasks: () => void }> = ({ selectedTasks, onRemoveTasks, onDuplicateTasks }) => {
+const BoardActionsMenu: React.FC<{ selectedTasks: SelectedTask[], onRemoveTasks: () => void, onDuplicateTasks: () => void }> = ({ selectedTasks, onRemoveTasks, onDuplicateTasks }) => {
 
     const removeTasks = () => {
         onRemoveTasks()
@@ -18,13 +19,14 @@ const BoardActionsMenu: React.FC<{ selectedTasks: string[], onRemoveTasks: () =>
                 </div>
                 <div className={classes['board-actions-menu-selected-items-title']}>
                     <div className={classes['selected-items-title']}>Items Selected</div>
-                    <div className={classes['dots']}>
+                    <div className={classes['dots']} >
                         {
                             selectedTasks.map((task, index) => {
                                 return (
                                     <div
                                         key={index}
                                         className={classes.dot}
+                                        style={{ backgroundColor: selectedTasks[index].color }}
                                     >
                                     </div>
                                 )

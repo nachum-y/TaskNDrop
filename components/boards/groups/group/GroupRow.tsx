@@ -19,12 +19,17 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
     useEffect(() => {
         if (isShitPress) {
-           console.log(isShitPress);
-           
+            console.log(isShitPress)
+
 
         }
 
     }, [isShitPress])
+
+
+    useEffect(() => {
+        // selectedTasks
+    }, [selectedTasks])
 
 
     const updateTaskHandler = (newCol: Col) => {
@@ -66,9 +71,14 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
 
     const toggleSelectionHandler = () => {
-       
 
-        toggleSelection(task.id)
+        const selectedTask = {
+            taskId: task.id,
+            groupId: groupId,
+            color: groupColor
+        }
+
+        toggleSelection(selectedTask)
     }
 
 
@@ -88,7 +98,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                         className={classes['item-select']}
                         onClick={toggleSelectionHandler}
                     >
-                        <div className={selectedTasks.includes(task.id) ? classes['checkbox-selected'] : classes['checkbox']}></div>
+                        <div className={selectedTasks.find((selected) => selected.taskId.includes(task.id)) ? classes['checkbox-selected'] : classes['checkbox']}></div>
                     </div>
                     <div className={classes['item-title']}>
                         <div className={classes['input-holder']}>

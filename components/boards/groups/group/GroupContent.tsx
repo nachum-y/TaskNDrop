@@ -15,8 +15,11 @@ import { ColsOrder, Group, IdxOpt } from '../../../../service/type'
 
 const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void }> = ({ group, colsOrder, removeGroup }) => {
 
-    const { onOpenDialogMenu,
-        addTask
+    const {
+        onOpenDialogMenu,
+        addTask,
+        toggleAll,
+        selectedGroups,
 
     } = useContext(BoardContext)
 
@@ -41,8 +44,10 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
     const addTaskHandler = (title: string) => {
         const groupId = id
         addTask(groupId, title)
-        
+
     }
+
+
 
     return (
         <div className={classes['board-content-group']}>
@@ -64,6 +69,9 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                             <RowHeader
                                 colsOrder={colsOrder}
                                 groupColor={color}
+                                onToggleAll={() => toggleAll(group)}
+                                selectedGroups={selectedGroups}
+                                groupId={id}
                             />
 
                         </div>
