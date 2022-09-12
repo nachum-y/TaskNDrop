@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { BoardContext } from "../../../store/board"
 import GroupMenu from "./GroupMenu/GroupMenu"
+import TaskMenu from "./TaskMenu/TaskMenu"
 
 // import BoardCont
 
@@ -9,6 +10,7 @@ type Cmp = React.FC<{ onMenuClick: (actionType: string) => void }>
 
 type ComponentMap = {
     GroupMenu: Cmp,
+    TaskMenu: Cmp,
     // textCmp: Cmp,
     // person: Cmp,
     // date: Cmp,
@@ -21,6 +23,7 @@ type ComponentMap = {
 
 const keysToComponentMap: ComponentMap = {
     GroupMenu: GroupMenu,
+    TaskMenu: TaskMenu,
     // textCmp: Text,
     // person: Person,
     // date: Test2,

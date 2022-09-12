@@ -119,6 +119,11 @@ export type AnchorElCel = {
     idx: IdxOpt
     taskCol: Col,
 }
+export type AnchorEl = {
+    anchorEl: HTMLSpanElement | null,
+    menuType: string,
+    idx: IdxOpt
+}
 
 export type activeFilterParam = {
     label: string[],
@@ -151,7 +156,7 @@ export type BoardContextState = {
     activeFilterParam: activeFilterParam
     selectedTasks: SelectedTask[]
     selectedGroups: string[]
-    anchorEl: HTMLDivElement | null
+    anchorEl: AnchorEl | null
     anchorElCel: AnchorElCel | null
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
@@ -166,7 +171,7 @@ export type BoardContextState = {
     removeTasks: (tasksIds: string | undefined) => void
     duplicateTasks: (tasksIds: string | undefined) => void
     onSearchInput: (input: string) => void
-    onOpenDialogMenu: (el: HTMLDivElement, idx?: IdxOpt) => void
+    onOpenDialogMenu: (el: HTMLDivElement, idx: IdxOpt, menuType: string) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void

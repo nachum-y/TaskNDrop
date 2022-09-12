@@ -89,7 +89,6 @@ const DynamicCelMenu: React.FC<{ menuType: Col }> = ({ menuType }) => {
             const { groupId, taskId } = anchorElCel.idx
             const idx = { groupId, taskId }
             const newCol = { type, value }
-            console.log(newCol);
             updateTask(newCol, idx)
         }
 

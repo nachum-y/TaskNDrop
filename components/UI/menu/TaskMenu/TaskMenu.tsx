@@ -6,18 +6,18 @@ import classes from '../MenuDialog.module.scss'
 
 const ActionsMenuGroup = [
     {
-        title: 'Collapse this group',
-        type: 'colapseThisGroup',
+        title: 'Open',
+        type: 'openTask',
         icon: groupMenuIcon.colapseThisGroup
     },
     {
-        title: 'Collapse all groups',
-        type: 'colapseAllGroups',
+        title: 'Duplicate',
+        type: 'duplicateTask',
         icon: groupMenuIcon.colapseThisGroup
     },
     {
-        title: 'Select all items',
-        type: 'selectAllItems',
+        title: 'Copy name',
+        type: 'copyTaskName',
         classIcon: 'icon-v2-checkbox'
     },
 
@@ -26,14 +26,14 @@ const ActionsMenuGroup = [
 const ActionsMenuGroupEdit = [
     {
         title: 'Delete',
-        type: 'deleteThisGroup',
+        type: 'deleteThisTask',
         classIcon: 'icon-v2-delete-line'
     },
 
 ]
 
 
-const GroupMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ onMenuClick }) => {
+const TaskMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ onMenuClick }) => {
 
     const clickHandler = (actionTypeMenu: string) => {
         onMenuClick(actionTypeMenu)
@@ -76,4 +76,4 @@ const GroupMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ on
     )
 }
 
-export default GroupMenu
+export default TaskMenu

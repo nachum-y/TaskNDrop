@@ -11,7 +11,7 @@ import { boardService } from '../../../../service/boardService'
 
 const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: string }> = ({ task, colsOrder, groupColor }) => {
 
-    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks } = useContext(BoardContext)
+    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks, onOpenDialogMenu } = useContext(BoardContext)
     const { cols, createdAt, id, groupId } = task
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -82,7 +82,16 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     }
 
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const idx = {
+            groupId,
+            taskId: id,
 
+        }
+        const el = event.currentTarget
+        const type = 'TaskMenu'
+        onOpenDialogMenu(el, idx, type)
+    }
 
 
 
@@ -91,7 +100,10 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
             <div className={`${classes.col} ${classes.fixed}`}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}>
-                        <div className={classes['row-menu-icon']}></div>
+                        <div
+                            className={classes['row-menu-icon']}
+                            onClick={handleClick}>
+                        </div>
                     </div>
                     <div className={classes['border']} style={{ backgroundColor: groupColor ? groupColor : '' }}></div>
                     <div

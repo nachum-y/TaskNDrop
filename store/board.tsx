@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam, SelectedTask } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam, SelectedTask, AnchorEl } from '../service/type'
 import { title } from "process"
 
 
@@ -62,7 +62,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [activeFilterParam, setActiveFilterParam] = useState<activeFilterParam>(contextDefaultValues.activeFilterParam)
     const [selectedTasks, setSelectedTasks] = useState<SelectedTask[]>(contextDefaultValues.selectedTasks)
     const [selectedGroups, setSelectedGroups] = useState<string[]>(contextDefaultValues.selectedGroups)
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
+    const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
     const [anchorElCelIdx, setAnchorElCelIdx] = useState<IdxOpt | null>(null)
@@ -319,13 +319,25 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-    const onOpenDialogMenu = (el: HTMLDivElement, idx?: IdxOpt) => {
+    const onOpenDialogMenu = (el: HTMLDivElement, idx: IdxOpt, menuType: string) => {
+
         setAnchorEl(null)
         setAnchorElCel(null)
 
-        setAnchorEl(el)
+        setTimeout(() => {
+            if (el && menuType && idx) {
+                const set: AnchorEl = {
+                    anchorEl: el,
+                    menuType,
+                    idx
+                }
+                setAnchorEl(() => set)
+            }
+        }, 0)
 
-        if (idx) setAnchorElIdx(idx)
+
+
+        // if (idx) setAnchorElIdx(idx)
     }
 
     const onOpenCelMenu = (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => {

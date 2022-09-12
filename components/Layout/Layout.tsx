@@ -58,9 +58,10 @@ const Layout: React.FC<Props> = (props) => {
                 <div className={classes['first-level-content']}>
                     {props.children}
                 </div>
-                {anchorEl && <MenuDialog
-                    anchorElement={anchorEl}
+                {anchorEl?.anchorEl && <MenuDialog
+                    anchorElement={anchorEl.anchorEl}
                     onClose={handleClose}
+                    menuType={anchorEl.menuType}
                 />}
                 {anchorElCel?.anchorElCel && <CelMenu
                     anchorElement={anchorElCel.anchorElCel}

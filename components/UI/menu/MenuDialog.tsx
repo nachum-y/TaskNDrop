@@ -11,9 +11,9 @@ interface MyAppProps extends Props {
 
 }
 
-const MenuDialogNew: React.FC<{ anchorElement: HTMLDivElement, onClose: () => void }> = ({ anchorElement, onClose, }) => {
+const MenuDialogNew: React.FC<{ anchorElement: HTMLDivElement | HTMLSpanElement, onClose: () => void, menuType: string }> = ({ anchorElement, onClose, menuType}) => {
 
-    const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(anchorElement)
+    const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | HTMLSpanElement | null>(anchorElement)
 
 
 
@@ -30,7 +30,7 @@ const MenuDialogNew: React.FC<{ anchorElement: HTMLDivElement, onClose: () => vo
             <Popper open={open} anchorEl={anchorEl} placement={'bottom-start'} className={classes['menu-dialog']} >
                 <div className={classes['dialog-content-wrapper']}>
                     <div className={classes['menu-dialog-inner']}>
-                        <DynamicMenuComponent menuType={'GroupMenu'} />
+                        <DynamicMenuComponent menuType={menuType} />
                     </div>
                 </div>
             </Popper>

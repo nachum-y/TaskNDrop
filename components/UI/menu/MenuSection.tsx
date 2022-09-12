@@ -1,4 +1,4 @@
-import classes from './GroupMenu.module.scss'
+import classes from './MenuSection.module.scss'
 
 const MenuSection: React.FC<{ title: string, onClickHandler: (actionType: string) => void, icon?: string, classIcon?: string, type: string }> = ({ title, onClickHandler, icon, classIcon, type }) => {
 
