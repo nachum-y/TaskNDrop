@@ -112,8 +112,8 @@
                 }
             }
 
-            &:focus-within >*{
-                
+            &:focus-within>* {
+
                 background-color: #cde4ff !important;
             }
 
@@ -123,12 +123,27 @@
 
             .col {
                 @extend %col-style;
+                position: relative;
 
                 &.fixed {
                     @include fixed-col-style;
                     @include color-border(white);
                     background-color: #fffffff7;
 
+                }
+
+                &:focus-within {
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        pointer-events: none;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        border-color: $--primary-color !important;
+                        border: solid 1px;
+                    }
                 }
 
             }
