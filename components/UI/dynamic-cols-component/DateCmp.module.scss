@@ -1,8 +1,97 @@
-.task-date {
-    cursor: pointer;
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
+@import '../../../styles/setup/icons';
 
+
+
+.task-date {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    position: relative;
+
+    cursor: text;
+    &:focus-within {
+        border: 1px solid #0073ea;
+    }
+
+}
+
+.span.MuiCircularProgress {
+    width: 16px;
+}
+
+.task-date-wraper {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+
+    &:hover .icon {
+        opacity: 1;
+
+        &:hover {
+            cursor: pointer;
+            color: #777;
+        }
+    }
+}
+
+
+
+.date-cell-component {
+    line-height: 24px;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+
+    flex-basis: 100%;
+    width: 100%;
+    height: 100%;
+
+    &:not(:focus) {
+        &:hover:before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            right: 5px;
+            bottom: 4px;
+            left: 5px;
+            border: 1px solid;
+            border-color: var(--ui-border-color);
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+
+
+}
+
+
+.icon {
+    color: #c4c4c4;
+    margin-right: 0.5rem;
+    width: 1rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    font-size: 14px;
+    opacity: 0;
+
+    font-family: "dapulse";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 10px;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
 }

@@ -10,6 +10,7 @@ import { BoardContext } from '../../../store/board'
 const CreationLog: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol }) => {
 
     const { value: date } = taskCol
+
     // Add created By to the Task CreationLog!!!
 
 

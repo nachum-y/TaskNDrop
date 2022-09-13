@@ -67,10 +67,6 @@ const DynamicColComponent: React.FC<{ col: ColsOrder, taskCol: Col, updateTask: 
                 updateCol: updateTaskHandler,
                 onCelClick: clickHandler
             },
-            // config.children &&
-            // (typeof config.children === 'string'
-            //     ? config.children
-            //     : config.children.map((c) => renderComponent(c)))
         )
     }
     return (

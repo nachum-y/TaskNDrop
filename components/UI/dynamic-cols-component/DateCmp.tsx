@@ -5,6 +5,7 @@ import classes from './DateCmp.module.scss'
 
 import { Col } from '../../../service/type'
 import { useEffect, useState } from 'react'
+import Progress from './Progress'
 
 
 
@@ -42,13 +43,33 @@ const DateCmp: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void ,onCelC
         const clickHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
             onCelClick(event.currentTarget)
         }
+
+        const clearValue = (event:React.MouseEvent)=>{
+            event.stopPropagation()        
+
+            const newCol = { type,
+                 value :undefined
+                }
+                 updateCol(newCol)
+        }
     
-      
         
     return (
-        <span onClick={clickHandler}  className={classes['task-date']}>
-                {dateValue && <span>{dateValue}</span>}
-        </span>
+        <div onClick={clickHandler} tabIndex={0} className={classes['task-date']}>
+             <div tabIndex={0} className={classes['date-cell-component']}>
+                {dateValue && date && (
+                    <div className={classes['task-date-wraper']}>
+                        <Progress
+                            date={date}/>
+                        <span>{dateValue}</span>
+                        <i 
+                        className={`${classes['icon']} ${classes['icon-dapulse-close']}`}
+                        onClick={clearValue}
+                        ></i>
+                    </div>
+                    )}
+                </div>
+        </div>
     )
 }
 
