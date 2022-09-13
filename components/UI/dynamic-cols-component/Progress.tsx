@@ -24,8 +24,8 @@ const Progress: React.FC<{ date: number }> = ({ date }) => {
 
     return (
         <CircularProgress variant="determinate" style={{
-            width: '16px',
-            height: '16px',
+            width: '14px',
+            height: '14px',
             color: 'rgb(93, 99, 135)',
         }} value={dateValue} />
 

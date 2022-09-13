@@ -48,6 +48,8 @@
                 border-bottom: none;
             }
 
+
+
         }
 
         .group-header-menu {
@@ -110,6 +112,11 @@
                 }
             }
 
+            &:focus-within >*{
+                
+                background-color: #cde4ff !important;
+            }
+
             &.selected-row {
                 background-color: #cbe5ff;
             }
@@ -123,6 +130,7 @@
                     background-color: #fffffff7;
 
                 }
+
             }
 
             &-header {
