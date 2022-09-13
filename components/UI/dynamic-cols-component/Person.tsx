@@ -4,19 +4,21 @@ import { Col, ColsOrder, Labels, Member } from '../../../service/type'
 import classes from './Person.module.scss'
 import { BoardContext } from '../../../store/board'
 
-
+import Image from 'next/image'
 
 
 const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol, onCelClick }) => {
 
     const { value } = taskCol
 
-
+    
+    
     let persons: Member[] | [] | undefined
-
+    
     if (Array.isArray(value)) {
         persons = value
     }
+    console.log(persons);
 
     const clickHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
         onCelClick(event.currentTarget)
@@ -33,7 +35,7 @@ const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelCl
                             className={classes['person-bullet']}
                             key={person.id}
                         >
-                            <img src={person.imgUrl} />
+                            <Image src={person.imgUrl} width={'30px'} height={'30px'} />
                         </div>
                     )))}
                 </div>

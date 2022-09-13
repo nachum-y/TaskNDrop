@@ -112,9 +112,13 @@
                 }
             }
 
-            &:focus-within>* {
+            &:focus-within {
 
                 background-color: #cde4ff !important;
+
+                &>* {
+                    background-color: #cde4ff !important;
+                }
             }
 
             &.selected-row {
@@ -132,7 +136,8 @@
 
                 }
 
-                &:focus-within {
+                &:focus {
+
                     &::before {
                         position: absolute;
                         content: "";
@@ -141,9 +146,11 @@
                         left: 0;
                         width: 100%;
                         height: 100%;
-                        border-color: $--primary-color !important;
+                        border-color: $--primary-color  !important;
                         border: solid 1px;
                     }
+
+                    
                 }
 
             }

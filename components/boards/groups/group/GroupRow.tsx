@@ -96,7 +96,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
 
     return (
-        <div className={classes['board-content-group-row']} tabIndex={0}>
+        <div className={classes['board-content-group-row']} tabIndex={-1}>
             <div className={`${classes.col} ${classes.fixed}`}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}>
