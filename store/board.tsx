@@ -78,6 +78,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (board) {
             const { colsOrder } = board
             setColsOrder(colsOrder)
+            setBoardGroup(() => board.groups)
 
         }
     }, [colsOrderBoard, board])
@@ -145,7 +146,20 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const toggleCollapseGroup = (groupId: string) => {
-        console.log('toggleCollapseGroup')
+        if (!board) return
+        const idx = board.groups.findIndex(g => g.id === groupId)
+        const groupToEdit = board.groups[idx]
+        let updatedGroup = {
+            ...groupToEdit,
+            isCollapse: !groupToEdit.isCollapse
+        }
+        console.log(updatedGroup)
+
+        let update: Board = JSON.parse(JSON.stringify(board))
+        update.groups.splice(idx, 1, updatedGroup)
+        console.log(update.groups[idx])
+
+        setBoard(() => update)
     }
 
     const updateTask = async (newCol: Col, idxs: Idx) => {

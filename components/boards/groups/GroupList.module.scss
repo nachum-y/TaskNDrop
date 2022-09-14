@@ -39,7 +39,8 @@
         margin-bottom: 1rem;
         box-shadow: $--box-shadow-xs;
         border-radius: 4px;
-        height: 59px;
+        height: auto;
+        display: inline-flex;
 
         &>* {
             display: inline-flex;
@@ -82,7 +83,7 @@
 
         .floating-header-row-component {
             display: grid;
-            grid-template-columns: 0 22rem;
+            grid-template-columns: 3rem 22rem 100%;
             align-self: flex-start;
             height: 100%;
             flex-basis: 400px;
@@ -909,7 +910,7 @@
 
 }
 
-.group-header-title:hover:not(:focus) {
+.group-header-title-txt:hover:not(:focus) {
     outline-offset: 2px;
     outline: 1px solid #d0d4e4;
     border-radius: 4px;
@@ -1036,4 +1037,19 @@
 
 .footer-col:not(:first-child) {
     padding: 0.3rem;
+}
+
+.group-summary-data {
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 22px;
+    color: $--secondary-text-color;
+    margin-left: 0.25rem;
+}
+
+.group-header-title-wraper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
 }

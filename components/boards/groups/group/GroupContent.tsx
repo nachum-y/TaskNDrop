@@ -21,6 +21,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
         toggleAll,
         selectedGroups,
         boardGroupsByLabel,
+        toggleCollapseGroup,
 
     } = useContext(BoardContext)
 
@@ -44,6 +45,9 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
     }
 
+    const handleTogalleCollapse = () => {
+        toggleCollapseGroup(id)
+    }
 
 
 
@@ -64,6 +68,8 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                                 groupColor={color}
                                 openMenu={openMenuHandler}
                                 isCollapse={group.isCollapse}
+                                toggaleCollapseGroup={handleTogalleCollapse}
+                                gropTaskLength={group.tasks.length}
                             />
                             {!isCollapse && (<RowHeader
                                 colsOrder={colsOrder}
