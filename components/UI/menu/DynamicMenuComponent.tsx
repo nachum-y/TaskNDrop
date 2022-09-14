@@ -46,6 +46,7 @@ const DynamicMenuComponent: React.FC<{ menuType: string }> = ({ menuType }) => {
 
     const onClickHandler = (actionType: string) => {
         onClickDialogMenu(actionType)
+        
     }
 
 

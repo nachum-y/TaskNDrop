@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ColsOrder, GroupByLabels, Labels, ListLabels, Status } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
-import GroupfooterPrc from './GroupfooterPrc'
+import GroupfooterPrc from './GroupFooterPrc'
 
 
 

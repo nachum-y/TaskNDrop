@@ -79,11 +79,9 @@ function getEmptyGroup() {
 
 async function saveGroup(group: Group | undefined, boardId: string) {
     // const board = await httpService.get(`boards/${boardId}`)
-    const res = await fetch(`${server}/api/boards`)
-    const boards = await res.json()
-    const board: Board = boards[0]
+    let res = await _getBoardById(boardId)
+    const board: Board = await res.json()
     if (group && boardId && group.id) {
-        console.log('here')
         const idx = board.groups.findIndex((g) => g.id === group.id)
         board.groups.splice(idx, 1, group)
         return group
@@ -97,11 +95,9 @@ async function saveGroup(group: Group | undefined, boardId: string) {
         }
         board.groups.push(newGroup)
 
-        const response = await fetch(`${server}/api/boards/${boardId}`, {
-            method: 'POST',
-            body: JSON.stringify(board),
-            headers: { 'Content-Type': 'application/json' }
-        })
+        const response = await _updateBoard(board, boardId)
+        console.log(response)
+       
         console.log(response)
         // board.groups.push(newGroup)
         return newGroup

@@ -37,6 +37,7 @@ const GroupMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ on
 
     const clickHandler = (actionTypeMenu: string) => {
         onMenuClick(actionTypeMenu)
+        
     }
 
     return (

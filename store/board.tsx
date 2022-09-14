@@ -5,6 +5,7 @@ import React, { createContext, useState, FC, useEffect } from "react"
 import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels } from '../service/type'
 import { title } from "process"
 import { group } from "console"
+import { json } from "stream/consumers"
 
 
 const contextDefaultValues: BoardContextState = {
@@ -88,9 +89,26 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     useEffect(() => {
         if (board && boardGroup) {
+            console.log('here?')
+            // let updatedGroup = JSON.parse(JSON.stringify(board.groups))
             setBoardGroupsByLabel(getGroupsByLabels)
+            // setBoardGroup(() => updatedGroup)
+            console.log(board.groups)
+            console.log(boardGroup)
+
         }
     }, [board, boardGroup])
+
+
+    useEffect(() => {
+        if (board && boardGroup) {
+            console.log('here?2')
+            setBoardGroup(() => board.groups)
+            console.log(board.groups)
+
+
+        }
+    }, [board])
 
     const loadBoard = (loadedBoard: Board) => setBoard(() => loadedBoard)
 
@@ -123,16 +141,18 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
     const addGroupHandler = async () => {
-        const newGroup = await boardService.saveGroup(undefined, '63132d01e209b84db1bb4f4a')
-        setBoardGroup((preveState) => preveState?.concat(newGroup))
-        if (board && boardGroup) {
-            board.groups = boardGroup
-            // setBoard(()=>{})
+        const newGroup: Group = await boardService.saveGroup(undefined, '63132d01e209b84db1bb4f4a')
+        // setBoardGroup((preveState) => preveState?.concat(newGroup))
+        if (board && newGroup) {
+            let newBoard: Board = JSON.parse(JSON.stringify(board))
+            newBoard.groups.concat(newGroup)
+            setBoard((prev) => newBoard)
         }
     }
 
 
     const removeGroup = async (groupId: string) => {
+
         try {
             setBoardGroup((preveState) => preveState.filter((group: Group) => group.id !== groupId))
             const updatedGroups = await boardService.removeGroup(groupId, '63132d01e209b84db1bb4f4a')
@@ -454,9 +474,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const onClickDialogMenu = (actionType: string) => {
 
         const key = actionType as string
-        if (anchorElIdx && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
+
+        if (anchorEl && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
+            menuDialogAction[key as keyof menuDialogActionMap](anchorEl.idx)
             setAnchorEl(null)
-            menuDialogAction[key as keyof menuDialogActionMap](anchorElIdx)
         }
     }
 
