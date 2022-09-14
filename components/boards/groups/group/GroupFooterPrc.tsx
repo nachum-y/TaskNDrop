@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { ColsOrder, GroupByLabels, Labels, ListLabels, Status } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 
 
@@ -10,6 +8,8 @@ type LabelObjPrc = {
 
 
 const GroupfooterPrc: React.FC<{ LabelObjPrc: LabelObjPrc, gropTaskLength: number }> = ({ LabelObjPrc, gropTaskLength }) => {
+
+
 
     let prcDiv = ((LabelObjPrc.count / gropTaskLength) * 100)
     return (

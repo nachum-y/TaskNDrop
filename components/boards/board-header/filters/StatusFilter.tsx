@@ -18,7 +18,7 @@ const StatusFilter: React.FC<{ setFilter: (type: string, val: string) => void }>
 
 
     const setFilerHandler = () => {
-        // setFilter('status', 's101')
+        setFilter('status', 's101')
     }
 
     return (

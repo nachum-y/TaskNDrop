@@ -14,7 +14,7 @@ type Uniqs = {
     id?: LabelObjPrc
 }
 
-const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number }> = ({ colsOrder, groupByLabel, gropTaskLength }) => {
+const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse }) => {
 
 
     const getPrcLabel = (colType: string) => {
@@ -104,16 +104,21 @@ const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels |
                             key={col.type}
                         >
                             {uniq && (
-                                <div className={classes['prc-label-container']} >
-                                    {
-                                        Object.keys(uniq).map(id =>
-                                            <GroupfooterPrc
-                                                key={id}
-                                                LabelObjPrc={uniq![id as keyof Uniqs] as LabelObjPrc}
-                                                gropTaskLength={gropTaskLength}
-                                            />
-                                        )
-                                    }
+                                <div className={classes['status-wrap']}>
+                                    {isCollapse && (<span>{col.title}</span>)}
+                                    <div className={classes['prc-label-container']} >
+                                        {
+                                            Object.keys(uniq).map(id => (
+
+                                                <GroupfooterPrc
+                                                    key={id}
+                                                    LabelObjPrc={uniq![id as keyof Uniqs] as LabelObjPrc}
+                                                    gropTaskLength={gropTaskLength}
+                                                />
+                                            )
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -122,14 +127,7 @@ const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels |
             }
 
 
-            {/* <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div>
-            <div className={classes['footer-col']}></div> */}
+
         </div >
 
     )

@@ -34,6 +34,7 @@ const contextDefaultValues: BoardContextState = {
     onSaveGroup: () => { },
     onAppLoad: () => { },
     removeGroup: () => { },
+    toggleCollapseGroup: () => { },
     updateTask: () => { },
     addTask: () => { },
     toggleSelection: () => { },
@@ -142,6 +143,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
     }
 
+
+    const toggleCollapseGroup = (groupId: string) => {
+        console.log('toggleCollapseGroup')
+    }
 
     const updateTask = async (newCol: Col, idxs: Idx) => {
         const { groupId, taskId } = idxs
@@ -356,15 +361,16 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const getGroupsByLabels = () => {
         console.log('getGroupsByLabels')
+        console.log(boardGroup)
 
-        if (board) {
+        if (boardGroup && board) {
             let groupByLabels: GroupByLabels = {}
-            board.groups.forEach(group => groupByLabels = { ...groupByLabels, [group.id]: {} })
+            boardGroup.forEach(group => groupByLabels = { ...groupByLabels, [group.id]: {} })
             for (const key in groupByLabels) {
-                const idx = board.groups.findIndex(g => g.id === key)
+                const idx = boardGroup.findIndex(g => g.id === key)
                 if (idx === -1) return
 
-                let statusMap = board.groups[idx].tasks.map((task) => {
+                let statusMap = boardGroup[idx].tasks.map((task) => {
 
                     const statusId = task.cols.find(col => {
                         if (col.type === 'status') {
@@ -378,7 +384,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
                 })
 
-                let labelMap = board.groups[idx].tasks.map((task) => {
+                let labelMap = boardGroup[idx].tasks.map((task) => {
                     const labelId = task.cols.find(col => {
                         if (col.type === 'labelCmp') {
                             return col.value as string
@@ -391,7 +397,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-                let priorityMap = board.groups[idx].tasks.map((task) => {
+                let priorityMap = boardGroup[idx].tasks.map((task) => {
                     const priorityId = task.cols.find(col => {
                         if (col.type === 'priority') {
                             return col.value as string
@@ -525,6 +531,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 updateBoard,
                 onSaveGroup,
                 removeGroup,
+                toggleCollapseGroup,
                 updateTask,
                 addTask,
                 toggleSelection,
