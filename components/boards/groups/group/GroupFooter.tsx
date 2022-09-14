@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ColsOrder, GroupByLabels, Labels, ListLabels, Status } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
-import GroupfooterPrc from './GroupFooterPrc'
+import GroupFooterPrc from './GroupFooterPrc'
 
 
 
@@ -110,7 +110,7 @@ const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels |
                                         {
                                             Object.keys(uniq).map(id => (
 
-                                                <GroupfooterPrc
+                                                <GroupFooterPrc
                                                     key={id}
                                                     LabelObjPrc={uniq![id as keyof Uniqs] as LabelObjPrc}
                                                     gropTaskLength={gropTaskLength}

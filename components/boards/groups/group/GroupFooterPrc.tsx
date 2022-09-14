@@ -7,7 +7,7 @@ type LabelObjPrc = {
 }
 
 
-const GroupfooterPrc: React.FC<{ LabelObjPrc: LabelObjPrc, gropTaskLength: number }> = ({ LabelObjPrc, gropTaskLength }) => {
+const GroupFooterPrc: React.FC<{ LabelObjPrc: LabelObjPrc, gropTaskLength: number }> = ({ LabelObjPrc, gropTaskLength }) => {
 
 
 
@@ -19,4 +19,4 @@ const GroupfooterPrc: React.FC<{ LabelObjPrc: LabelObjPrc, gropTaskLength: numbe
     )
 }
 
-export default GroupfooterPrc
+export default GroupFooterPrc
