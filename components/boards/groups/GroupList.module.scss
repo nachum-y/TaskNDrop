@@ -150,7 +150,7 @@
                         border: solid 1px;
                     }
 
-                    
+
                 }
 
             }
@@ -943,4 +943,38 @@
     background-color: #fff;
     border: none;
     outline: none;
+}
+
+
+
+.board-content-group-row-footer-corner {
+    width: 8px;
+    height: 2.25rem;
+    background-color: white;
+    position: absolute;
+    border-left: 1px solid #d0d4e4;
+    border-bottom: 1px solid #d0d4e4;
+    box-shadow: -1px 1px 1px rgb(0 0 0 / 10%);
+    border-bottom-left-radius: 4px;
+    left: 395px;
+}
+
+.collapseGroup .board-content-group-row-footer-corner {
+    display: none;
+}
+
+.prc-label {
+    display: inline-block;
+    transition: width 0.3s;
+
+}
+
+.prc-label-container {
+    height: 100%;
+    display: inline-flex;
+    width: 100%;
+}
+
+.footer-col:not(:first-child) {
+    padding: 0.3rem;
 }
