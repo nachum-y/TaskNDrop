@@ -27,6 +27,8 @@
             width: 190px;
             cursor: text;
         }
+
+
     }
 
     &-expandable {
@@ -77,12 +79,16 @@
         cursor: pointer;
         height: 28px;
 
-
+       
         &:focus {
             width: 190px;
             cursor: text;
             outline: none;
         }
+    }
+    ::-webkit-input-placeholder {
+        color: #323338;
+        font-size: 0.875rem;
     }
 
 }

@@ -11,7 +11,7 @@ import { BoardContext } from '../../../../store/board'
 
 
 import classes from '../GroupList.module.scss'
-import { ColsOrder, Group, IdxOpt } from '../../../../service/type'
+import { ColsOrder, Group, GroupByLabels, IdxOpt } from '../../../../service/type'
 
 const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void }> = ({ group, colsOrder, removeGroup }) => {
 
@@ -20,6 +20,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
         addTask,
         toggleAll,
         selectedGroups,
+        boardGroupsByLabel,
 
     } = useContext(BoardContext)
 
@@ -27,10 +28,6 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
     const removeGroupHandler = () => {
         removeGroup(id)
-    }
-
-    const groupTitleHandler = () => {
-
     }
 
     const openMenuHandler = (el: HTMLDivElement) => {
@@ -46,6 +43,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
         addTask(groupId, title)
 
     }
+
 
 
 
@@ -112,7 +110,11 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                             groupColor={color}
                             onAddTask={addTaskHandler}
                         />
-                        <GroupFooter />
+                        <GroupFooter
+                            colsOrder={colsOrder}
+                            groupByLabel={boardGroupsByLabel ? boardGroupsByLabel[group.id as keyof GroupByLabels] : undefined}
+                            gropTaskLength={group.tasks.length}
+                        />
                     </div>
                 )}
             </Droppable>

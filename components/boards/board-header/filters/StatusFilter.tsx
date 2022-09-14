@@ -18,7 +18,7 @@ const StatusFilter: React.FC<{ setFilter: (type: string, val: string) => void }>
 
 
     const setFilerHandler = () => {
-        setFilter('status', 's101')
+        // setFilter('status', 's101')
     }
 
     return (
@@ -26,7 +26,7 @@ const StatusFilter: React.FC<{ setFilter: (type: string, val: string) => void }>
             <div className={`${classes['icon']} ${classes['icon-v2-search']}`}></div>
             <div className={classes['board-filter-status-wrapper']}>
                 <span
-                    onClick={setFilerHandler}>filter</span>
+                    onClick={setFilerHandler}>Filter</span>
             </div>
         </div>
     )

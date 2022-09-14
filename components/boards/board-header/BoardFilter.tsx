@@ -10,16 +10,10 @@ import InputSearch from './InputSearch'
 
 const BoardFilter = () => {
 
-    const { onSearchInput, onSetActiveFilter } = useContext(BoardContext)
+    const { onSetActiveFilter } = useContext(BoardContext)
     const [focused, setFocused] = useState(false)
     const [expandable, setExpandable] = useState(false)
-    // const [enteredInput, setEnteredInput] = useState('')
 
-    const onChangeHandler = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        // onSearchInput(ev.target.value)
-        onSetActiveFilter('txt', ev.target.value)
-
-    }
 
     const setFilterParam = (type: string, val: string) => {
         onSetActiveFilter(type, val)

@@ -144,6 +144,21 @@ export type SelectedTask = {
     color: string
 }
 
+
+
+
+export type GroupByLabels = {
+    id?: ListLabels
+}
+
+export type ListLabels = {
+    status: Labels[]
+    label: Labels[]
+    priority: Labels[]
+}
+
+
+
 export type BoardContextState = {
     initialBoardId: undefined | string
     board: null | Board,
@@ -152,6 +167,7 @@ export type BoardContextState = {
     statusValueBoard: Labels[]
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
+    boardGroupsByLabel: undefined | GroupByLabels
     boardMembers: FullMember[]
     activeFilterParam: ActiveFilterParam
     selectedTasks: SelectedTask[]

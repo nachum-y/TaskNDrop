@@ -2,8 +2,9 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels } from '../service/type'
 import { title } from "process"
+import { group } from "console"
 
 
 const contextDefaultValues: BoardContextState = {
@@ -14,6 +15,7 @@ const contextDefaultValues: BoardContextState = {
     statusValueBoard: [],
     labelsValueBoard: [],
     priorityValueBoard: [],
+    boardGroupsByLabel: undefined,
     boardMembers: [],
     activeFilterParam: {
         label: [],
@@ -38,7 +40,6 @@ const contextDefaultValues: BoardContextState = {
     toggleAll: () => { },
     removeTasks: () => { },
     duplicateTasks: () => { },
-    // onSearchInput: () => { },
     onSetActiveFilter: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
@@ -59,6 +60,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [statusValueBoard, setStatusValueBoard] = useState<Labels[]>([])
     const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
+    const [boardGroupsByLabel, setBoardGroupsByLabel] = useState<undefined | GroupByLabels>(contextDefaultValues.boardGroupsByLabel)
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
     const [activeFilterParam, setActiveFilterParam] = useState<ActiveFilterParam>(contextDefaultValues.activeFilterParam)
     const [selectedTasks, setSelectedTasks] = useState<SelectedTask[]>(contextDefaultValues.selectedTasks)
@@ -71,7 +73,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-
     useEffect(() => {
         if (board) {
             const { colsOrder } = board
@@ -79,6 +80,15 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
         }
     }, [colsOrderBoard, board])
+
+
+
+
+    useEffect(() => {
+        if (board && boardGroup) {
+            setBoardGroupsByLabel(getGroupsByLabels)
+        }
+    }, [board, boardGroup])
 
     const loadBoard = (loadedBoard: Board) => setBoard(() => loadedBoard)
 
@@ -91,6 +101,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setLabelsValueBoard(initialBoard.labels)
         setPriorityValueBoard(initialBoard.priority)
         setBoardMembers(initialBoard.members)
+        setBoardGroupsByLabel(getGroupsByLabels)
         // router.replace(`/boards/${initialBoard._id}`)
     }
 
@@ -197,15 +208,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-
-    // const onSearchInput = (inputTxt: string) => {
-    //     let updatedFilter = {
-    //         ...activeFilterParam,
-    //         txt: new RegExp(inputTxt, 'i')
-    //     }
-    //     setActiveFilterParam(() => updatedFilter)
-
-    // }
 
 
 
@@ -347,17 +349,71 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
-    // type celValueString = {
-    //     value: string
-    //     type: string
-    // }
-    // const keysToCelMap: CelVal ={
-    //     // status
-    // }
 
-    // type CelVal = {
-    //     status: celValueString
-    // }
+
+
+
+
+    const getGroupsByLabels = () => {
+        console.log('getGroupsByLabels')
+
+        if (board) {
+            let groupByLabels: GroupByLabels = {}
+            board.groups.forEach(group => groupByLabels = { ...groupByLabels, [group.id]: {} })
+            for (const key in groupByLabels) {
+                const idx = board.groups.findIndex(g => g.id === key)
+                if (idx === -1) return
+
+                let statusMap = board.groups[idx].tasks.map((task) => {
+
+                    const statusId = task.cols.find(col => {
+                        if (col.type === 'status') {
+                            return col.value as string
+                        }
+                        return
+                    })
+                    let statusObj
+                    if (statusId) statusObj = board.status.find(s => s.id === statusId.value)
+                    return statusObj
+
+                })
+
+                let labelMap = board.groups[idx].tasks.map((task) => {
+                    const labelId = task.cols.find(col => {
+                        if (col.type === 'labelCmp') {
+                            return col.value as string
+                        }
+                        return
+                    })
+                    return (board.labels.find(l => l.id === labelId?.value))
+
+                })
+
+
+
+                let priorityMap = board.groups[idx].tasks.map((task) => {
+                    const priorityId = task.cols.find(col => {
+                        if (col.type === 'priority') {
+                            return col.value as string
+                        }
+                        return
+                    })
+
+                    return (board.priority.find(p => p.id === priorityId?.value))
+                })
+
+
+                groupByLabels[key as keyof GroupByLabels] = {
+                    status: statusMap as Status[],
+                    label: labelMap as Status[],
+                    priority: priorityMap as Status[],
+                }
+            }
+
+            return groupByLabels
+        }
+    }
+
 
 
     const _isActiveFilter = (task: Task, find: string) => {
@@ -457,6 +513,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 statusValueBoard,
                 labelsValueBoard,
                 priorityValueBoard,
+                boardGroupsByLabel,
                 boardMembers,
                 activeFilterParam,
                 selectedTasks,
@@ -474,7 +531,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 toggleAll,
                 removeTasks,
                 duplicateTasks,
-                // onSearchInput,
                 onSetActiveFilter,
                 onOpenDialogMenu,
                 onOpenCelMenu,
