@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, activeFilterParam, SelectedTask, AnchorEl } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam } from '../service/type'
 import { title } from "process"
 
 
@@ -38,7 +38,8 @@ const contextDefaultValues: BoardContextState = {
     toggleAll: () => { },
     removeTasks: () => { },
     duplicateTasks: () => { },
-    onSearchInput: () => { },
+    // onSearchInput: () => { },
+    onSetActiveFilter: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
     onCloseDialogMenu: () => { },
@@ -59,7 +60,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
-    const [activeFilterParam, setActiveFilterParam] = useState<activeFilterParam>(contextDefaultValues.activeFilterParam)
+    const [activeFilterParam, setActiveFilterParam] = useState<ActiveFilterParam>(contextDefaultValues.activeFilterParam)
     const [selectedTasks, setSelectedTasks] = useState<SelectedTask[]>(contextDefaultValues.selectedTasks)
     const [selectedGroups, setSelectedGroups] = useState<string[]>(contextDefaultValues.selectedGroups)
     const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
@@ -194,13 +195,52 @@ const BoardProvider: FC<Props> = ({ children }) => {
         onFilterGroup()
     }, [activeFilterParam])
 
-    const onSearchInput = (inputTxt: string) => {
-        let updatedFilter = {
-            ...activeFilterParam,
-            txt: new RegExp(inputTxt, 'i')
-        }
-        setActiveFilterParam(() => updatedFilter)
 
+
+
+    // const onSearchInput = (inputTxt: string) => {
+    //     let updatedFilter = {
+    //         ...activeFilterParam,
+    //         txt: new RegExp(inputTxt, 'i')
+    //     }
+    //     setActiveFilterParam(() => updatedFilter)
+
+    // }
+
+
+
+
+
+    const onSetActiveFilter = (filterType: string, filterParam: string) => {
+
+        const key = filterType as string
+        if (typeof activeFilterParam[key as keyof ActiveFilterParam] !== 'undefined') {
+
+            let newVal = JSON.parse(JSON.stringify(activeFilterParam[key as keyof ActiveFilterParam]))
+            if (Array.isArray(newVal)) {
+                if (!newVal.includes(filterParam)) {
+                    newVal.push(filterParam)
+                } else {
+                    newVal = newVal.filter((param) => param !== filterParam)
+                }
+
+                let updatedFilter: ActiveFilterParam = {
+                    ...activeFilterParam,
+                    [key]: newVal
+                }
+                setActiveFilterParam(() => updatedFilter)
+                return
+            }
+
+            if (filterType === 'txt') {
+                newVal = new RegExp(filterParam, 'i')
+                let updatedFilter: ActiveFilterParam = {
+                    ...activeFilterParam,
+                    [key]: newVal
+                }
+                setActiveFilterParam(() => updatedFilter)
+            }
+        }
     }
 
     const toggleSelection = (selectedTask: SelectedTask) => {
@@ -287,7 +327,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 tasks = tasks.filter((t, index) => {
                     if (typeof t.cols[0].value === 'string' && typeof t.cols[index].type === 'string') {
                         return (!activeFilterParam.txt || activeFilterParam.txt.test(t.cols[0].value))
-                        // &&(activeFilterParam.status.length === 0 || activeFilterParam.status.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'status')].value))
+                            && (activeFilterParam.status.length === 0 || _isActiveFilter(t, 'status'))
                         // && (activeFilterParam.label.length === 0 || activeFilterParam.label.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'labelCmp')].value))
                         // && (activeFilterParam.priority.length === 0 || activeFilterParam.priority.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'priority')].value))
 
@@ -304,6 +344,33 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
         }
+    }
+
+
+    // type celValueString = {
+    //     value: string
+    //     type: string
+    // }
+    // const keysToCelMap: CelVal ={
+    //     // status
+    // }
+
+    // type CelVal = {
+    //     status: celValueString
+    // }
+
+
+    const _isActiveFilter = (task: Task, find: string) => {
+
+
+        const idx = task.cols.findIndex((c) => c.type === find)
+        const key = idx as number
+
+
+        if (idx !== -1 && task.cols[idx].value && typeof task.cols[idx].value === 'string') {
+            return activeFilterParam.status.includes(task.cols[key].value!.toString())
+        }
+
     }
 
 
@@ -407,7 +474,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 toggleAll,
                 removeTasks,
                 duplicateTasks,
-                onSearchInput,
+                // onSearchInput,
+                onSetActiveFilter,
                 onOpenDialogMenu,
                 onOpenCelMenu,
                 onClickDialogMenu,

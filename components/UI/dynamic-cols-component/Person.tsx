@@ -18,7 +18,6 @@ const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelCl
     if (Array.isArray(value)) {
         persons = value
     }
-    console.log(persons);
 
     const clickHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
         onCelClick(event.currentTarget)

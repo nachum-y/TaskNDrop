@@ -125,7 +125,7 @@ export type AnchorEl = {
     idx: IdxOpt
 }
 
-export type activeFilterParam = {
+export type ActiveFilterParam = {
     label: string[],
     txt: RegExp,
     person: string[],
@@ -153,7 +153,7 @@ export type BoardContextState = {
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
     boardMembers: FullMember[]
-    activeFilterParam: activeFilterParam
+    activeFilterParam: ActiveFilterParam
     selectedTasks: SelectedTask[]
     selectedGroups: string[]
     anchorEl: AnchorEl | null
@@ -170,7 +170,8 @@ export type BoardContextState = {
     toggleAll: (group: Group) => void
     removeTasks: (tasksIds: string | undefined) => void
     duplicateTasks: (tasksIds: string | undefined) => void
-    onSearchInput: (input: string) => void
+    // onSearchInput: (input: string) => void
+    onSetActiveFilter: (filterType: string, filterParam: string) => void
     onOpenDialogMenu: (el: HTMLDivElement, idx: IdxOpt, menuType: string) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onClickDialogMenu: (actionType: string) => void

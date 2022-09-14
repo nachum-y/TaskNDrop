@@ -39,7 +39,29 @@
 }
 
 
+.filter-container {
+    display: flex;
+    align-items: center;
 
+    &-focused {
+        border: 1px solid;
+        border-color: #0073ea;
+        display: flex;
+        align-items: center;
+
+        input {
+            width: 190px;
+            cursor: text;
+        }
+    }
+
+    &-expandable {
+        transition: background-color .1s cubic-bezier(0, 0, 0.35, 1);
+        border-radius: 4px;
+
+    }
+
+}
 
 .icon-and-input-wrapper {
 
