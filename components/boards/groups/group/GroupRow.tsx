@@ -90,7 +90,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
         }
         const el = event.currentTarget
         const type = 'TaskMenu'
-        onOpenDialogMenu(el, idx, type)
+        onOpenDialogMenu(el, type, idx)
     }
 
 

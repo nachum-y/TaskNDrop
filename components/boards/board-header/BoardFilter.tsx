@@ -10,7 +10,7 @@ import InputSearch from './InputSearch'
 
 const BoardFilter = () => {
 
-    const { onSetActiveFilter } = useContext(BoardContext)
+    const { onSetActiveFilter, onOpenDialogMenu } = useContext(BoardContext)
     const [focused, setFocused] = useState(false)
     const [expandable, setExpandable] = useState(false)
 
@@ -24,6 +24,15 @@ const BoardFilter = () => {
         setExpandable((preveState) => !preveState)
     }
 
+    const openDialogMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+        const idx = {
+            groupId: '.',
+            taskId: '.'
+        }
+        onOpenDialogMenu(event.currentTarget, 'FilterMenu', idx)
+    }
+
+
 
 
 
@@ -33,7 +42,8 @@ const BoardFilter = () => {
             <SearchFilter
                 setFilter={setFilterParam} />
             <StatusFilter
-                setFilter={setFilterParam} />
+                setFilter={setFilterParam}
+                openMenu={openDialogMenu} />
         </div >
     )
 }

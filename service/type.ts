@@ -119,10 +119,11 @@ export type AnchorElCel = {
     idx: IdxOpt
     taskCol: Col,
 }
+
 export type AnchorEl = {
     anchorEl: HTMLSpanElement | null,
     menuType: string,
-    idx: IdxOpt
+    idx?: IdxOpt 
 }
 
 export type ActiveFilterParam = {
@@ -188,7 +189,7 @@ export type BoardContextState = {
     removeTasks: (tasksIds: string | undefined) => void
     duplicateTasks: (tasksIds: string | undefined) => void
     onSetActiveFilter: (filterType: string, filterParam: string) => void
-    onOpenDialogMenu: (el: HTMLDivElement, idx: IdxOpt, menuType: string) => void
+    onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void

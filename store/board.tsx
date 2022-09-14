@@ -369,8 +369,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
                     if (typeof t.cols[0].value === 'string' && typeof t.cols[index].type === 'string') {
                         return (!activeFilterParam.txt || activeFilterParam.txt.test(t.cols[0].value))
                             && (activeFilterParam.status.length === 0 || _isActiveFilter(t, 'status'))
-                        // && (activeFilterParam.label.length === 0 || activeFilterParam.label.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'labelCmp')].value))
-                        // && (activeFilterParam.priority.length === 0 || activeFilterParam.priority.includes(t.cols[t.cols.findIndex((typ) => typ.type === 'priority')].value))
+                            && (activeFilterParam.label.length === 0 || _isActiveFilter(t, 'labelCmp'))
+                            && (activeFilterParam.priority.length === 0 || _isActiveFilter(t, 'priority'))
 
                     }
                 })
@@ -457,14 +457,16 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const _isActiveFilter = (task: Task, find: string) => {
-
+        // if(find === 'La')
 
         const idx = task.cols.findIndex((c) => c.type === find)
         const key = idx as number
 
 
         if (idx !== -1 && task.cols[idx].value && typeof task.cols[idx].value === 'string') {
-            return activeFilterParam.status.includes(task.cols[key].value!.toString())
+            let index = find === 'labelCmp' ? 'label' : find
+            const findIdx = activeFilterParam[index as keyof ActiveFilterParam]
+            return Array.isArray(findIdx) ? findIdx.includes(task.cols[key].value!.toString()) : false
         }
 
     }
@@ -475,7 +477,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
         const key = actionType as string
 
-        if (anchorEl && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
+        if (anchorEl && anchorEl.idx && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
             menuDialogAction[key as keyof menuDialogActionMap](anchorEl.idx)
             setAnchorEl(null)
         }
@@ -483,7 +485,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-    const onOpenDialogMenu = (el: HTMLDivElement, idx: IdxOpt, menuType: string) => {
+    const onOpenDialogMenu = (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => {
 
         setAnchorEl(null)
         setAnchorElCel(null)

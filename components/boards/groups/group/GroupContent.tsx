@@ -36,7 +36,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
             groupId: id,
         }
         const type = 'GroupMenu'
-        onOpenDialogMenu(el, idx, type)
+        onOpenDialogMenu(el, type, idx)
     }
 
     const addTaskHandler = (title: string) => {
