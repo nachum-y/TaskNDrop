@@ -177,8 +177,11 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
         try {
             let updatedGroup = boardGroup.filter((group: Group) => group.id !== groupId)
-            setBoardGroup(updatedGroup)
-            const updatedGroups = await boardService.removeGroup(groupId, board!._id.toString())
+            // setBoardGroup(updatedGroup)
+            let updatedBoard: Board = JSON.parse(JSON.stringify(board))
+            updatedBoard.groups = updatedGroup
+            updateBoardState(updatedBoard)
+            // const updatedGroups = await boardService.removeGroup(groupId, board!._id.toString())
 
         } catch (error) {
             console.log(error)

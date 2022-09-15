@@ -10,7 +10,7 @@ import InputSearch from './InputSearch'
 
 const BoardFilter = () => {
 
-    const { onSetActiveFilter, onOpenDialogMenu } = useContext(BoardContext)
+    const { onSetActiveFilter, onOpenDialogMenu, activeFilterParam } = useContext(BoardContext)
     const [focused, setFocused] = useState(false)
     const [expandable, setExpandable] = useState(false)
 
@@ -43,7 +43,9 @@ const BoardFilter = () => {
                 setFilter={setFilterParam} />
             <StatusFilter
                 setFilter={setFilterParam}
-                openMenu={openDialogMenu} />
+                openMenu={openDialogMenu}
+                activeFilterParam={activeFilterParam}
+            />
         </div >
     )
 }

@@ -9,7 +9,7 @@ const RowHeader: React.FC<{ colsOrder: ColsOrder[], groupColor: string, onToggle
             <div className={`${classes['header-col']} ${classes.fixed}`}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}>
-                        <div className={classes['row-menu-icon']}></div>
+                        {/* <div className={classes['row-menu-icon']}></div> */}
                     </div>
                     <div className={`${classes['border']} ${classes['header']}`} style={{ backgroundColor: groupColor }}></div>
                     <div
