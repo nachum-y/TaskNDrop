@@ -286,7 +286,7 @@ async function duplicateTasks(idsToDup: string[] | string, boardId: string) {
     const response = await _updateBoard(board, boardId)
     // const savedBoard = await httpService.put(`boards/${boardId}`, board)
     // boardChannel.postMessage({ type: 'updateBoard', board: savedBoard })
-    return board.groups
+    return board
 }
 // async function saveGroups(groups, boardId) {
 //     let board = await _getBoardById(boardId)

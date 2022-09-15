@@ -98,7 +98,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-    const updateBoardState = (newBoard: Board) => {
+    const updateBoardState = (newBoard: Board, afterSave?: boolean) => {
         if (board) {
             setBoard((prev) => {
                 if (activeFilterParam.isActive) {
@@ -108,7 +108,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 setBoardGroup(() => newBoard.groups)
                 return newBoard
             })
-
+            if (!afterSave) updateBoard(newBoard)
         }
 
     }
@@ -374,8 +374,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         else return
         if (board && tasksIds) {
             const updatedBoard = await boardService.removeTasks(tasksIds, board._id.toString())
-            const updatedGroups = updatedBoard.groups
-            setBoardGroup(() => updatedGroups)
+            updateBoardState(updatedBoard, true)
         }
     }
 
@@ -388,8 +387,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
         else return
         if (board && tasksIds) {
-            const updatedGroups = await boardService.duplicateTasks(tasksIds, board._id.toString())
-            setBoardGroup(() => updatedGroups)
+            const updatedBoard: Board = await boardService.duplicateTasks(tasksIds, board._id.toString())
+            updateBoardState(updatedBoard, true)
         }
     }
 
@@ -419,8 +418,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
 
         updateBoardState(updateBoard)
-
-        // updateBoard(newBoardData)
 
     }
 
