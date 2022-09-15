@@ -84,6 +84,8 @@ async function saveGroup(group: Group | undefined, boardId: string) {
     if (group && boardId && group.id) {
         const idx = board.groups.findIndex((g) => g.id === group.id)
         board.groups.splice(idx, 1, group)
+        console.log(board);
+        
         return group
     }
     else {
@@ -96,10 +98,8 @@ async function saveGroup(group: Group | undefined, boardId: string) {
         board.groups.push(newGroup)
 
         const response = await _updateBoard(board, boardId)
-        console.log(response)
-       
-        console.log(response)
-        // board.groups.push(newGroup)
+        console.log(board);
+
         return newGroup
     }
     // httpService.put(`boards/${boardId}`, board)

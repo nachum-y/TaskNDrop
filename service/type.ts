@@ -111,8 +111,10 @@ export type IdxOpt = {
 
 
 export type menuDialogActionMap = {
-    deleteThisGroup: (groupId: IdxOpt) => void
-    selectAllItems: (groupId: IdxOpt) => void
+    deleteThisGroup: (groupId?: IdxOpt | undefined) => void
+    selectAllItems: (groupId?: IdxOpt | undefined) => void,
+    colapseThisGroup: (groupId?: IdxOpt | undefined) => void
+    colapseAllGroups: () => void
 }
 export type AnchorElCel = {
     anchorElCel: HTMLSpanElement | null,
@@ -123,10 +125,11 @@ export type AnchorElCel = {
 export type AnchorEl = {
     anchorEl: HTMLSpanElement | null,
     menuType: string,
-    idx?: IdxOpt 
+    idx?: IdxOpt
 }
 
 export type ActiveFilterParam = {
+    isActive: boolean
     label: string[],
     txt: RegExp,
     person: string[],
@@ -160,6 +163,42 @@ export type ListLabels = {
 
 
 
+
+export type Id = string
+export type TypeId = Id
+export type DroppableId = Id
+export type DraggableId = Id
+
+export type Combine = {
+    draggableId: DraggableId,
+    droppableId: DroppableId,
+}
+
+export type DraggableLocation = {
+    droppableId: DroppableId,
+    // the position of the droppable within a droppable
+    index: number,
+}
+
+export type DropResult = {
+    draggableId: DraggableId,
+    type: TypeId,
+    source: DraggableLocation,
+    mode: MovementMode,
+    // populated if in a reorder position
+    destination: DraggableLocation,
+    // populated if combining with another draggable
+    combine: Combine,
+    reason: DropReason,
+}
+
+export type MovementMode = 'FLUID' | 'SNAP'
+
+export type DropReason = 'DROP' | 'CANCEL'
+
+
+
+
 export type BoardContextState = {
     initialBoardId: undefined | string
     board: null | Board,
@@ -188,6 +227,7 @@ export type BoardContextState = {
     toggleAll: (group: Group) => void
     removeTasks: (tasksIds: string | undefined) => void
     duplicateTasks: (tasksIds: string | undefined) => void
+    onDragEnd: (result: DropResult) => void
     onSetActiveFilter: (filterType: string, filterParam: string) => void
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void

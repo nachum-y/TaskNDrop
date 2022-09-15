@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -19,6 +19,7 @@ const contextDefaultValues: BoardContextState = {
     boardGroupsByLabel: undefined,
     boardMembers: [],
     activeFilterParam: {
+        isActive: false,
         label: [],
         txt: new RegExp(''),
         person: [],
@@ -42,6 +43,7 @@ const contextDefaultValues: BoardContextState = {
     toggleAll: () => { },
     removeTasks: () => { },
     duplicateTasks: () => { },
+    onDragEnd: () => { },
     onSetActiveFilter: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
@@ -79,7 +81,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (board) {
             const { colsOrder } = board
             setColsOrder(colsOrder)
-            setBoardGroup(() => board.groups)
+            // setBoardGroup(() => board.groups)
 
         }
     }, [colsOrderBoard, board])
@@ -89,26 +91,40 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     useEffect(() => {
         if (board && boardGroup) {
-            console.log('here?')
-            // let updatedGroup = JSON.parse(JSON.stringify(board.groups))
             setBoardGroupsByLabel(getGroupsByLabels)
-            // setBoardGroup(() => updatedGroup)
-            console.log(board.groups)
-            console.log(boardGroup)
 
         }
     }, [board, boardGroup])
 
 
-    useEffect(() => {
-        if (board && boardGroup) {
-            console.log('here?2')
-            setBoardGroup(() => board.groups)
-            console.log(board.groups)
 
+    const updateBoardState = (newBoard: Board) => {
+        if (board) {
+            setBoard((prev) => {
+                if (activeFilterParam.isActive) {
+                    onFilterGroup(newBoard)
+                    return newBoard
+                }
+                setBoardGroup(() => newBoard.groups)
+                return newBoard
+            })
 
         }
-    }, [board])
+
+    }
+
+
+    const updateGroupdState = (newGroups: Group[]) => {
+        if (board) {
+            setBoardGroup(() => newGroups)
+            if (activeFilterParam.isActive) return
+            let updateedBoard: Board = JSON.parse(JSON.stringify(board))
+            updateedBoard.groups = newGroups
+            setBoard((prev) => updateedBoard)
+
+        }
+
+    }
 
     const loadBoard = (loadedBoard: Board) => setBoard(() => loadedBoard)
 
@@ -142,11 +158,16 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const addGroupHandler = async () => {
         const newGroup: Group = await boardService.saveGroup(undefined, '63132d01e209b84db1bb4f4a')
-        // setBoardGroup((preveState) => preveState?.concat(newGroup))
+
         if (board && newGroup) {
-            let newBoard: Board = JSON.parse(JSON.stringify(board))
-            newBoard.groups.concat(newGroup)
-            setBoard((prev) => newBoard)
+            // let newBoard: Board = JSON.parse(JSON.stringify(board))
+            // newBoard.groups.push(newGroup)
+            // const { groups: newGroups } = newBoard
+
+            setBoardGroup((prevState) => prevState.concat(newGroup))
+            let updatedBoard: Board = JSON.parse(JSON.stringify(board))
+            updatedBoard.groups.push(newGroup)
+            setBoard((prevState) => updatedBoard)
         }
     }
 
@@ -154,7 +175,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const removeGroup = async (groupId: string) => {
 
         try {
-            setBoardGroup((preveState) => preveState.filter((group: Group) => group.id !== groupId))
+            let updatedGroup = boardGroup.filter((group: Group) => group.id !== groupId)
+            setBoardGroup(updatedGroup)
             const updatedGroups = await boardService.removeGroup(groupId, '63132d01e209b84db1bb4f4a')
 
         } catch (error) {
@@ -173,14 +195,34 @@ const BoardProvider: FC<Props> = ({ children }) => {
             ...groupToEdit,
             isCollapse: !groupToEdit.isCollapse
         }
-        console.log(updatedGroup)
 
         let update: Board = JSON.parse(JSON.stringify(board))
         update.groups.splice(idx, 1, updatedGroup)
-        console.log(update.groups[idx])
 
-        setBoard(() => update)
+        updateBoardState(update)
     }
+
+    const toggleCollapseAllGroups = () => {
+        if (!board) return
+
+        const idx = board.groups.map(g => g.id)
+        let update: Board = JSON.parse(JSON.stringify(board))
+
+        idx.forEach(id => {
+            const index = board.groups.findIndex(g => g.id === id)
+            const groupToEdit = board.groups[index]
+            if (groupToEdit.isCollapse) return
+            let updatedGroup = {
+                ...groupToEdit,
+                isCollapse: true
+            }
+            update.groups.splice(index, 1, updatedGroup)
+        })
+
+        updateBoardState(update)
+    }
+
+
 
     const updateTask = async (newCol: Col, idxs: Idx) => {
         const { groupId, taskId } = idxs
@@ -188,50 +230,32 @@ const BoardProvider: FC<Props> = ({ children }) => {
         // const boardId = board!._id.toString()
         try {
             if (board) {
-                const newBoard = {
-                    ...board
-
-                }
-                const groupIdx = board!.groups.findIndex((group) => group.id === groupId)
-                const taskIdx = board!.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-                const colIdx = board!.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
+                let newBoard: Board = JSON.parse(JSON.stringify(board))
+                // let newGroups: Group[] = JSON.parse(JSON.stringify(boardGroup))
+                const groupIdx = newBoard.groups.findIndex((group) => group.id === groupId)
+                const taskIdx = newBoard.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+                const colIdx = newBoard.groups[groupIdx].tasks[taskIdx].cols.findIndex(col => col.type === newCol.type)
                 newBoard.groups[groupIdx].tasks[taskIdx].cols.splice(colIdx, 1, newCol)
 
-                setBoard(() => newBoard)
+                // const { groups } = newBoard
+                updateBoardState(newBoard)
+                // updateGroupdState(newGroups)
+                // updateBoardState(newBoard)
                 setAnchorEl(null)
                 setAnchorElCel(null)
-                await boardService.updateBoard(newBoard)
+                // await boardService.updateBoard(newBoard)
             }
-
-
-            // const updatedGroups = newBoard.groups
-
-            // setBoardGroup(() => updatedGroups)
-            // const newBoard = await boardService.updateTask(data, boardId)
-            // setBoard(newBoard)
-
         } catch (error) {
             console.log(error)
         }
-        // const group = board.groups[groupIdx]
-        // const updatedGroups = await boardService.removeGroup(groupId, '63132d01e209b84db1bb4f4a')
 
-        // state.board.groups[groupIdx].tasks[taskIdx].cols[colIdx] = newCol
     }
 
-    // updateGroup(state, { groupId, data }) {
-    //     state.prevGroup = state.board.groups.find((g) => g.id === groupId)
-    //     let groupToUpdate = state.board.groups.find((g) => g.id === groupId)
-    //     groupToUpdate[Object.keys(data)[0]] = data[Object.keys(data)[0]]
-
-    // },
 
     const addTask = async (groupId: string, title: string) => {
         if (board) {
             const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
-            const { groups } = updatedBoard
-            setBoardGroup(() => groups)
-            console.log(board)
+            updateBoardState(updatedBoard)
 
         }
 
@@ -242,7 +266,15 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
     useEffect(() => {
+
+        if (!activeFilterParam.isActive && board) {
+            updateGroupdState(board.groups)
+            return
+        }
+
         onFilterGroup()
+
+
     }, [activeFilterParam])
 
 
@@ -267,7 +299,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
                 let updatedFilter: ActiveFilterParam = {
                     ...activeFilterParam,
-                    [key]: newVal
+                    [key]: newVal,
+                    isActive: newVal.length > 0 ? true : false
+
                 }
                 setActiveFilterParam(() => updatedFilter)
                 return
@@ -277,10 +311,12 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 newVal = new RegExp(filterParam, 'i')
                 let updatedFilter: ActiveFilterParam = {
                     ...activeFilterParam,
-                    [key]: newVal
+                    [key]: newVal,
+                    isActive: filterParam.trim().length > 0 ? true : false
                 }
                 setActiveFilterParam(() => updatedFilter)
             }
+
         }
     }
 
@@ -358,20 +394,56 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
-    const onFilterGroup = () => {
-        console.log(activeFilterParam)
+    const onDragEnd = (result: DropResult) => {
 
-        if (board?.groups) {
+        const { destination, source } = result
+        if (!destination) return
+        if (!board) return
+        let updateBoard: Board = JSON.parse(JSON.stringify(board))
+        const sourceIdx = board!.groups.findIndex((group) => group.id === source.droppableId)
+        const destinationIdx = board!.groups.findIndex((group) => group.id === destination.droppableId)
 
-            const NewBoardGroup = board?.groups.map((g) => {
+        var dragItem = updateBoard.groups[sourceIdx].tasks[result.source.index]
+        updateBoard.groups[sourceIdx].tasks.splice(
+            result.source.index,
+            1
+        )
+        updateBoard.groups[destinationIdx].tasks.splice(
+            result.destination.index,
+            0,
+            dragItem
+        )
+
+        if (source.droppableId !== destination.droppableId) {
+            dragItem.groupId = destination.droppableId
+        }
+
+        updateBoardState(updateBoard)
+
+        // updateBoard(newBoardData)
+
+    }
+
+
+    const onFilterGroup = (updatedBoard?: Board) => {
+        let updateBoard
+        if (updatedBoard) {
+            updateBoard = updatedBoard
+        }
+        else {
+            updateBoard = board
+        }
+
+        if (updateBoard && board && board.groups) {
+
+            const NewBoardGroup = updateBoard.groups.map((g) => {
                 let { tasks, color, title, id, isCollapse } = g
                 tasks = tasks.filter((t, index) => {
-                    if (typeof t.cols[0].value === 'string' && typeof t.cols[index].type === 'string') {
+                    if (typeof t.cols[0].value === 'string') {
                         return (!activeFilterParam.txt || activeFilterParam.txt.test(t.cols[0].value))
                             && (activeFilterParam.status.length === 0 || _isActiveFilter(t, 'status'))
                             && (activeFilterParam.label.length === 0 || _isActiveFilter(t, 'labelCmp'))
                             && (activeFilterParam.priority.length === 0 || _isActiveFilter(t, 'priority'))
-
                     }
                 })
 
@@ -379,7 +451,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
             })
 
             if (NewBoardGroup) {
-                const gNew = NewBoardGroup.filter((g) => g.tasks.length > 0)
+                const gNew: Group[] = NewBoardGroup.filter((g) => g.tasks.length > 0)
                 setBoardGroup(gNew)
             }
 
@@ -388,15 +460,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
-
-
-
-
-
     const getGroupsByLabels = () => {
-        console.log('getGroupsByLabels')
-        console.log(boardGroup)
-
         if (boardGroup && board) {
             let groupByLabels: GroupByLabels = {}
             boardGroup.forEach(group => groupByLabels = { ...groupByLabels, [group.id]: {} })
@@ -477,7 +541,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
         const key = actionType as string
 
-        if (anchorEl && anchorEl.idx && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
+        if (anchorEl && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
             menuDialogAction[key as keyof menuDialogActionMap](anchorEl.idx)
             setAnchorEl(null)
         }
@@ -502,8 +566,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }, 0)
 
 
-
-        // if (idx) setAnchorElIdx(idx)
     }
 
     const onOpenCelMenu = (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => {
@@ -529,9 +591,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const menuDialogAction: menuDialogActionMap = {
-        deleteThisGroup: (idx: IdxOpt) => idx.groupId ? removeGroup(idx.groupId) : console.log('error'),
-        selectAllItems: (idx: IdxOpt) => {
-            if (!idx.groupId) return
+        deleteThisGroup: (idx?: IdxOpt | undefined) => idx?.groupId ? removeGroup(idx.groupId) : console.log('error'),
+        selectAllItems: (idx?: IdxOpt) => {
+            if (!idx?.groupId) return
             const groupiId = idx.groupId
             if (selectedGroups.includes(groupiId)) return
             setSelectedGroups((prevState) => prevState.concat(groupiId))
@@ -541,9 +603,15 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 group.tasks.forEach(task => newSelectedTask.push({ taskId: task.id, groupId: group.id, color: group.color }))
                 return setSelectedTasks(() => newSelectedTask)
             }
-        }
+        },
+        colapseThisGroup: (idx?: IdxOpt) => idx?.groupId ? toggleCollapseGroup(idx?.groupId) : console.log('error'),
+        colapseAllGroups: () => toggleCollapseAllGroups(),
+
 
     }
+
+
+
 
     return (
         <BoardContext.Provider
@@ -575,6 +643,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 toggleAll,
                 removeTasks,
                 duplicateTasks,
+                onDragEnd,
                 onSetActiveFilter,
                 onOpenDialogMenu,
                 onOpenCelMenu,

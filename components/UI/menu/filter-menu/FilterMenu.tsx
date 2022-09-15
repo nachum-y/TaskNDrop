@@ -9,7 +9,7 @@ import { BoardContext } from '../../../../store/board'
 
 const FilterMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ onMenuClick }) => {
 
-    const { statusValueBoard, labelsValueBoard, priorityValueBoard, onSetActiveFilter } = useContext(BoardContext)
+    const { statusValueBoard, labelsValueBoard, priorityValueBoard, onSetActiveFilter, activeFilterParam } = useContext(BoardContext)
     const clickHandler = (actionTypeMenu: string) => {
         onMenuClick(actionTypeMenu)
     }
@@ -40,8 +40,9 @@ const FilterMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ o
                     <div className={classes['filter-menu-filters-title']}>
                         Status</div>
                     <div className={classes['filter-menu-filters-holder']}>
-
-                        {statusValueBoard.map((status) => (<div onClick={() => setFilter('status', status.id)} key={status.id} className={classes['filter-menu-filters-filter-item']}>
+                        {statusValueBoard.map((status) => (<div onClick={() => setFilter('status', status.id)} key={status.id}
+                            className={activeFilterParam.status.includes(status.id) ? classes['filter-menu-filters-filter-item-active'] : classes['filter-menu-filters-filter-item']}
+                        >
                             <div style={{ backgroundColor: status.color, borderColor: status.color }}
                                 className={classes['filter-menu-filters-filter-item-color']}>
                             </div>
@@ -57,7 +58,9 @@ const FilterMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ o
                         Labels</div>
                     <div className={classes['filter-menu-filters-holder']}>
 
-                        {labelsValueBoard.map((label) => (<div onClick={() => setFilter('label', label.id)} key={label.id} className={classes['filter-menu-filters-filter-item']}>
+                        {labelsValueBoard.map((label) => (<div onClick={() => setFilter('label', label.id)} key={label.id}
+                            className={activeFilterParam.label.includes(label.id) ? classes['filter-menu-filters-filter-item-active'] : classes['filter-menu-filters-filter-item']}
+                        >
                             <div style={{ backgroundColor: label.color, borderColor: label.color }}
                                 className={classes['filter-menu-filters-filter-item-color']}>
                             </div>
@@ -72,7 +75,9 @@ const FilterMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ o
                         Priority</div>
                     <div className={classes['filter-menu-filters-holder']}>
 
-                        {priorityValueBoard.map((priority) => (<div onClick={() => setFilter('priority', priority.id)} key={priority.id} className={classes['filter-menu-filters-filter-item']}>
+                        {priorityValueBoard.map((priority) => (<div onClick={() => setFilter('priority', priority.id)} key={priority.id}
+                            className={activeFilterParam.priority.includes(priority.id) ? classes['filter-menu-filters-filter-item-active'] : classes['filter-menu-filters-filter-item']}
+                        >
                             <div style={{ backgroundColor: priority.color, borderColor: priority.color }}
                                 className={classes['filter-menu-filters-filter-item-color']}>
                             </div>

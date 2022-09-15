@@ -1,5 +1,5 @@
 @import '../../../styles/setup/icons';
-// @import '../../../../styles/setup/vars';
+@import '../../../styles/setup/vars';
 
 
 .board-sub-header {
@@ -79,13 +79,14 @@
         cursor: pointer;
         height: 28px;
 
-       
+
         &:focus {
             width: 190px;
             cursor: text;
             outline: none;
         }
     }
+
     ::-webkit-input-placeholder {
         color: #323338;
         font-size: 0.875rem;
@@ -95,6 +96,63 @@
 
 
 
+.add-board-entity-button-wrapper {
+    margin-right: 14px;
+
+    .add-task-button-component {
+        border-radius: 4px 0 0 4px;
+        display: flex;
+
+        button {
+            border-radius: 4px 0 0 4px;
+            background-color: $--primary-color;
+            color: #fff;
+            padding: 4px 8px;
+            height: 32px;
+            line-height: 24px;
+            --loader-padding: 8px;
+            outline: none;
+            border: none;
+            height: auto;
+            cursor: pointer;
+            white-space: nowrap;
+
+            &:hover {
+                background-color: $--primary-hover-color;
+
+            }
+        }
+    }
+
+    .ds-menu-button-container {
+
+        border-radius: 0 4px 4px 0;
+        border-left: 1px solid;
+        border-left-color: $--primary-hover-color;
+        background-color: $--primary-color;
+        height: 32px;
+        width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 100ms ease-in;
+
+        &:hover {
+            background-color: $--primary-hover-color;
+
+        }
+    }
+}
+
+
+
+.monday-style-button--kind-primary.monday-style-button--color-primary {
+    // background-color: #0085ff;
+    // background-color: var(--primary-color);
+}
 
 .icon {
     color: var(--icon-color);
@@ -116,6 +174,16 @@
     text-decoration: inherit;
     text-rendering: optimizeLegibility;
     text-transform: none;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-family: "dapulse";
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+
 }
 
 .icon-v2-search {
