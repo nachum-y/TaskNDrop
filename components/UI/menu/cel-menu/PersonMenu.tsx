@@ -4,6 +4,7 @@ import { ClickAwayListener, Popper } from '@mui/material'
 
 import classes from './PersonMenu.module.scss'
 import { FullMember, Labels, Member } from '../../../../service/type'
+import Image from 'next/image'
 
 
 
@@ -67,7 +68,7 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string | number | Member[])
 
         onMenuClick(updatedTaskMembers)
     }
-  
+
 
 
     return (
@@ -83,7 +84,8 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string | number | Member[])
                                         className={classes['memebers-to-remove-holder']}>
 
                                         <div className={classes['person-remove-img']} >
-                                            <img className={classes['person-bullet-mini']} src={member.imgUrl} />
+                                            <Image className={classes['person-bullet-mini']} src={`/persons/${member.id}.jpeg`} width={'22px'} height={'22px'}  />
+                                            {/* <img className={classes['person-bullet-mini']} src={member.imgUrl} /> */}
                                         </div>
                                         <span>{member.fullname}</span>
                                         <div className={classes['remove-btn-holder']} onClick={() => onRemovePersonHandler(member)}>
@@ -109,7 +111,8 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string | number | Member[])
                                     className={classes['member-holder']}
                                 >
                                     <div className={classes['person-bullet-menu']}>
-                                        <img src={member.imgUrl} alt={member.name} />
+                                    <Image className={classes['person-bullet-mini']} src={`/persons/${member.id}.jpeg`} width={'30px'} height={'30px'}  alt={member.name} />
+                                        {/* <img src={member.imgUrl} alt={member.name} /> */}
                                     </div>
                                     <span className={classes['memeber-name']}>{member.name}</span>
                                 </div>)

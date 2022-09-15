@@ -7,7 +7,6 @@ import { BoardContext } from '../../store/board'
 
 const HomePage = () => {
     const { initialBoardId } = useContext(BoardContext)
-    console.log(initialBoardId)
 
 
     return (

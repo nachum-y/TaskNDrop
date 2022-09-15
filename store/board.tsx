@@ -57,7 +57,7 @@ export const BoardContext = createContext<BoardContextState>(
 
 const BoardProvider: FC<Props> = ({ children }) => {
 
-    const [initialBoardId, setInitialBoardId] = useState<undefined | string>('63132d01e209b84db1bb4f4a')
+    const [initialBoardId, setInitialBoardId] = useState<undefined | string>('632336ac4e7e4d793cb0d9db')
     const [board, setBoard] = useState<Board | null>(contextDefaultValues.board)
     const [boardGroup, setBoardGroup] = useState<Group[]>([])
     const [colsOrderBoard, setColsOrder] = useState<ColsOrder[] | undefined>(undefined)
@@ -130,7 +130,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const onAppLoad = async () => {
         const boards = await boardService.query()
-        const initialBoard: Board = boards[0]
+        const initialBoard: Board = boards[1]
         loadBoard(initialBoard)
         setBoardGroup(initialBoard.groups)
         setStatusValueBoard(initialBoard.status)
@@ -138,6 +138,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setPriorityValueBoard(initialBoard.priority)
         setBoardMembers(initialBoard.members)
         setBoardGroupsByLabel(getGroupsByLabels)
+        // setInitialBoardId(board?._id.toString())
         // router.replace(`/boards/${initialBoard._id}`)
     }
 
@@ -157,7 +158,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
     const addGroupHandler = async () => {
-        const newGroup: Group = await boardService.saveGroup(undefined, '63132d01e209b84db1bb4f4a')
+        const newGroup: Group = await boardService.saveGroup(undefined, board!._id.toString())
 
         if (board && newGroup) {
             // let newBoard: Board = JSON.parse(JSON.stringify(board))
@@ -177,7 +178,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         try {
             let updatedGroup = boardGroup.filter((group: Group) => group.id !== groupId)
             setBoardGroup(updatedGroup)
-            const updatedGroups = await boardService.removeGroup(groupId, '63132d01e209b84db1bb4f4a')
+            const updatedGroups = await boardService.removeGroup(groupId, board!._id.toString())
 
         } catch (error) {
             console.log(error)
@@ -255,8 +256,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const addTask = async (groupId: string, title: string) => {
         if (board) {
             const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
-            console.log(updatedBoard);
-            
+            console.log(updatedBoard)
+
             updateBoardState(updatedBoard)
 
         }

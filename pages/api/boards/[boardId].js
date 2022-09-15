@@ -5,7 +5,7 @@ export default async (req, res) => {
     const boardId = req.query.boardId
     const { db } = await connectToDatabase()
     // const boardCollection = await db
-
+    console.log('here')
 
     if (req.method === 'POST') {
         try {
@@ -28,6 +28,7 @@ export default async (req, res) => {
 
 
     if (boardId) {
+        console.log('here')
         try {
             const board = await db
                 .collection('boards')

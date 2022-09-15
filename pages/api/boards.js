@@ -7,7 +7,7 @@ export default async (req, res) => {
     const boards = await db
         .collection("boards")
         .find({})
-        .limit(1)
+        .limit(3)
         .toArray()
     res.json(boards)
 }

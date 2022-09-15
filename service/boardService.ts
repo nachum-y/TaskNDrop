@@ -65,6 +65,8 @@ async function initialBoardId() {
 async function query() {
     const res = await fetch(`${server}/api/boards/`)
     const json = await res.json()
+    console.log(json);
+    
     return json
 }
 

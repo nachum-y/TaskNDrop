@@ -130,6 +130,8 @@
         img {
             border-radius: 50%;
             border: #f5f6f8 2px solid;
+            object-fit: cover;
+            aspect-ratio: 1/1;
         }
 
     }
@@ -151,7 +153,9 @@
 
     img {
         border-radius: 50%;
-        border: #f5f6f8 2px solid;
+        border: #f5f6f8 2px solid !important;
+        object-fit: cover;
+        aspect-ratio: 1/1;
     }
 
 }

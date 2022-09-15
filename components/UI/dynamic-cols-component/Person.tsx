@@ -6,15 +6,15 @@ import { BoardContext } from '../../../store/board'
 
 import Image from 'next/image'
 
-
+// import image2 from
 const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol, onCelClick }) => {
 
     const { value } = taskCol
 
-    
-    
+
+
     let persons: Member[] | [] | undefined
-    
+
     if (Array.isArray(value)) {
         persons = value
     }
@@ -34,7 +34,7 @@ const Person: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelCl
                             className={classes['person-bullet']}
                             key={person.id}
                         >
-                            <Image src={person.imgUrl} width={'30px'} height={'30px'} />
+                            <Image src={`/persons/${person.id}.jpeg`} width={'25px'} height={'25px'} />
                         </div>
                     )))}
                 </div>
