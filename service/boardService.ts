@@ -167,7 +167,6 @@ async function addTask(title: string, groupId: string, boardId: string) {
 
 
             const response = await _updateBoard(board, boardId)
-            console.log(response)
 
 
 

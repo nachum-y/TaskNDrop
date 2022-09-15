@@ -255,6 +255,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const addTask = async (groupId: string, title: string) => {
         if (board) {
             const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
+            console.log(updatedBoard);
+            
             updateBoardState(updatedBoard)
 
         }
@@ -533,6 +535,21 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
+    const copyTextToClipboard = (idx: IdxOpt) => {
+        // Get the text field
+        const { groupId, taskId } = idx
+        if (groupId && taskId && board) {
+            let group = board.groups.find(g => g.id === groupId)
+            if (group) {
+                let task = group.tasks.find(t => t.id === taskId)
+                let textToCopy = task?.cols[0].value
+
+                if (typeof textToCopy === 'string') {
+                    navigator.clipboard.writeText(textToCopy)
+                }
+            }
+        }
+    }
 
     const onClickDialogMenu = (actionType: string) => {
 
@@ -603,6 +620,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
         },
         colapseThisGroup: (idx?: IdxOpt) => idx?.groupId ? toggleCollapseGroup(idx?.groupId) : console.log('error'),
         colapseAllGroups: () => toggleCollapseAllGroups(),
+        deleteThisTask: (idx?: IdxOpt) => idx?.taskId ? removeTasks(idx.taskId) : console.log('error'),
+        duplicateThisTask: (idx?: IdxOpt) => idx?.taskId ? duplicateTasks(idx.taskId) : console.log('error'),
+        copyTaskName: (idx?: IdxOpt) => idx ? copyTextToClipboard(idx) : console.log('error'),
 
 
     }

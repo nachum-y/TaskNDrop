@@ -12,7 +12,7 @@ const ActionsMenuGroup = [
     },
     {
         title: 'Duplicate',
-        type: 'duplicateTask',
+        type: 'duplicateThisTask',
         icon: groupMenuIcon.colapseThisGroup
     },
     {

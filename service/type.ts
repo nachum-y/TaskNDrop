@@ -115,6 +115,9 @@ export type menuDialogActionMap = {
     selectAllItems: (groupId?: IdxOpt | undefined) => void,
     colapseThisGroup: (groupId?: IdxOpt | undefined) => void
     colapseAllGroups: () => void
+    deleteThisTask: (idx?: IdxOpt) => void
+    duplicateThisTask: (idx?: IdxOpt) => void
+    copyTaskName: (idx?: IdxOpt) => void
 }
 export type AnchorElCel = {
     anchorElCel: HTMLSpanElement | null,
