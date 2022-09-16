@@ -24,7 +24,7 @@ const SearchFilter: React.FC<{ setFilter: (type: string, val: string) => void }>
 
 
     return (
-        <div className={`${classes[`input-container${expandable ? '-focused' : ''}`]} ${classes[`input-container${isActive ? '-active' : ''}`]}`} >
+        <div className={`${classes[`input-container${expandable || isActive ? '-focused' : ''}`]} ${classes[`input-container${isActive ? '-active' : ''}`]}`} >
             <div className={`${classes['icon']} ${classes['icon-v2-search']}`}></div>
             <div className={classes['board-filter-input-wrapper']}>
                 <div className={classes['icon-and-input-wrapper']}>

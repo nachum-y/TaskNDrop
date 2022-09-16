@@ -1,5 +1,7 @@
 import { useState, useEffect, ReactEventHandler, MouseEventHandler, useRef } from 'react'
+import { boardHeaderIcon } from '../../../../service/svgIcon'
 import InlineEdit from '../../../UI/inline-edit/InlineEdit'
+import SvgIcon from '../../../UI/svgIcon/SvgIcon'
 
 import classes from '../GroupList.module.scss'
 
@@ -59,7 +61,8 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
                 <div className={classes['collapsable-icon-button']}
                     onClick={toggaleCollapseGroup}
                 >
-                    Icon
+                    <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" />
+
                 </div>
                 <div className={classes['group-header-title']}>
                     <div className={classes['color-indicator-gh']}>

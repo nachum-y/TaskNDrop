@@ -944,13 +944,15 @@
 
 .collapsable-icon-button {
     transform-origin: center center;
-    transform: rotate(180deg);
+    transform: rotate(0deg);
     transition: transform .2s;
     font-size: 0.75rem;
     // outline: none;
     margin-inline-end: 0.625rem;
     position: relative;
     cursor: pointer;
+    display: flex;
+
 }
 
 .isColapse {

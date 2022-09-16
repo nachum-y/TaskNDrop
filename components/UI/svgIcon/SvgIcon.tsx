@@ -1,5 +1,4 @@
 
-type Props = { children: React.ReactNode }
 const SvgIcon: React.FC<{ path: string, fill?: string, classN?: string, width?: string, height?: string, viewBox?: string }> = (props) => {
     return (
         <svg

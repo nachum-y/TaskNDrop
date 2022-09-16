@@ -17,11 +17,18 @@
     display: flex;
     align-items: center;
 
+    input {
+        width: 100%;
+    }
+
     &-focused {
         border: 1px solid;
         border-color: #0073ea;
         display: flex;
         align-items: center;
+        width: 190px;
+        margin-inline-end: 0.25rem;
+
 
         input {
             width: 190px;
