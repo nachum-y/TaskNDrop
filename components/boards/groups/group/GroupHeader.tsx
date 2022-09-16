@@ -5,7 +5,7 @@ import SvgIcon from '../../../UI/svgIcon/SvgIcon'
 
 import classes from '../GroupList.module.scss'
 
-const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor: string, openMenu: (el: HTMLDivElement) => void, isCollapse: boolean, toggaleCollapseGroup: () => void, gropTaskLength: number }> = ({ title, removeGroup, groupColor, openMenu, isCollapse, toggaleCollapseGroup, gropTaskLength }) => {
+const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor: string, openMenu: (el: HTMLDivElement, typeMenu: string) => void, isCollapse: boolean, toggaleCollapseGroup: () => void, gropTaskLength: number }> = ({ title, removeGroup, groupColor, openMenu, isCollapse, toggaleCollapseGroup, gropTaskLength }) => {
 
 
     const [value, setValue] = useState(title)
@@ -34,8 +34,9 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
     }, [gropTaskLength])
 
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        openMenu(event.currentTarget)
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>, typeMenu: string) => {
+        event.preventDefault()
+        openMenu(event.currentTarget, typeMenu)
 
     }
 
@@ -52,7 +53,7 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
                 <div className={classes['group-header-menu']}>
                     <div
                         className={classes['group-header-menu-icon']}
-                        onClick={handleClick}
+                        onClick={(event) => handleClick(event, 'GroupMenu')}
                     >
                     </div>
                 </div>
@@ -64,14 +65,14 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
                     <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" />
 
                 </div>
-                <div className={classes['group-header-title']}>
-                    <div className={classes['color-indicator-gh']}>
-                        <div className={classes['group-header-color-menu']}>
-
-                        </div>
+                <div onClick={startEditingHandler} className={classes['group-header-title']} >
+                    <div onClick={(event) => handleClick(event, 'GroupMenu')} className={classes['color-indicator-gh']} style={{ backgroundColor: groupColor }}>
+                        {/* <div className={classes['group-header-color-menu']}>
+                         
+                        </div> */}
                     </div>
                     <div className={classes['group-header-title-wraper']}>
-                        <div onClick={startEditingHandler} className={classes['group-header-title-txt']}>
+                        <div className={classes['group-header-title-txt']}>
                             {!editingMode &&
                                 <span>
                                     {value}

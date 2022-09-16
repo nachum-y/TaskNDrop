@@ -1,0 +1,71 @@
+@import '../../../styles/setup/vars';
+
+.board-subset-toolbar {
+    width: 100%;
+    display: flex;
+
+    .item {
+        width: auto;
+        position: relative;
+        padding-bottom: 4px;
+
+
+        button,
+        .button-item {
+            max-width: 180px;
+            padding: 8px 24px 8px 12px !important;
+            border: 0;
+            border-radius: 0.25rem;
+            color: $--primary-text-color;
+            background-color: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: center;
+            align-content: center;
+            height: 100%;
+
+            span {
+                display: flex;
+                align-items: center;
+                align-content: center;
+                height: 100%;
+            }
+
+            &>* {
+                padding: 0 0.25rem;
+            }
+
+            &:hover {
+                background-color: #dcdfec;
+            }
+
+
+        }
+
+        &-active {
+            &>* {
+                font-weight: 700;
+            }
+        }
+
+        .active-strip {
+            height: 2px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            background-color: $--primary-color;
+            background-color: blue;
+        }
+
+
+
+        &:not(:hover)::after {
+            content: "";
+            height: 16px;
+            border-right: 1px solid;
+            border-color: #d0d4e4;
+            position: absolute;
+            top: 8px;
+            right: 0;
+        }
+    }
+}

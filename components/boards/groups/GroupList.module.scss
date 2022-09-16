@@ -28,7 +28,6 @@
     overflow-x: auto;
     position: relative;
     height: 100%;
-    margin-top: 1rem;
 
 }
 
@@ -469,13 +468,14 @@
 
 
 .isColapse {
-    .group-header-title {
-        padding-inline-start: 0px;
-    }
+    // .group-header-title {
+    //     padding-inline-start: 0px;
+    //     .color-indicator-gh {
+    //         display: none;
+    //     }
+    // }
 
-    .color-indicator-gh {
-        display: none;
-    }
+
 
 }
 
@@ -903,7 +903,6 @@
     white-space: nowrap;
     max-width: 25rem;
     font-size: 1.125rem;
-    cursor: pointer;
     cursor: text;
     height: 26px;
     padding: 0px 4px;
@@ -966,15 +965,35 @@
     display: none;
 }
 
-.group-header-title:focus .color-indicator-gh {
-    display: inline-block;
+.group-header-title {
 
+
+    &:focus-within {
+        .color-indicator-gh {
+            display: inline-flex;
+            margin-inline-start: 0.5rem;
+            background-color: blue;
+            cursor: pointer;
+        }
+
+        input {
+            padding-inline-start: 1.5rem;
+            width: 100%;
+            outline: 1px solid;
+        }
+    }
+
+    &:not(:focus-within) {
+        &:hover {
+            // outline-offset: 2px;
+            // outline: 1px solid #d0d4e4;
+            // border-radius: 4px;
+        }
+
+    }
 }
 
-.group-header-title:focus {
-    padding-inline-start: 1.5rem;
 
-}
 
 // btn
 .btn-clean {
@@ -1053,7 +1072,7 @@
 
 .group-header-title-wraper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
     justify-content: space-evenly;
 }

@@ -10,7 +10,7 @@
 }
 
 .board-header {
-    padding: 1rem 2rem 1rem 2.5rem;
+    padding: 1rem 2rem 0rem 2.5rem;
 
     &-top {
         display: flex;
@@ -24,7 +24,7 @@
         flex: 1 0;
         min-width: 100px;
         margin-right: 8px;
-        margin-left: -5px;
+        // margin-left: -5px;
     }
 
     &-right {
@@ -88,7 +88,7 @@
 .board-header-main {
     position: sticky;
     left: 0;
-    height: 2.75rem;
+    height: auto;
 }
 
 
