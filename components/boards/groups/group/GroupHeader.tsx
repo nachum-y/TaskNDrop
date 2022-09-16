@@ -35,14 +35,15 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
 
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>, typeMenu: string) => {
+        event.stopPropagation()
         event.preventDefault()
+        console.log(event)
+
+        // event.shiftKey
+        // console.log(event.shiftKey)
         openMenu(event.currentTarget, typeMenu)
 
     }
-
-    {/* <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-                    Open Popover
-                </Button> */}
 
 
 
@@ -62,27 +63,26 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
                 <div className={classes['collapsable-icon-button']}
                     onClick={toggaleCollapseGroup}
                 >
-                    <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" />
+                    <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" fill={groupColor} />
 
                 </div>
-                <div onClick={startEditingHandler} className={classes['group-header-title']} >
+                <div onClick={startEditingHandler} className={classes[`group-header-title${editingMode ? '-focus' : ''}`]} >
                     <div onClick={(event) => handleClick(event, 'GroupMenu')} className={classes['color-indicator-gh']} style={{ backgroundColor: groupColor }}>
-                        {/* <div className={classes['group-header-color-menu']}>
-                         
-                        </div> */}
+
                     </div>
                     <div className={classes['group-header-title-wraper']}>
                         <div className={classes['group-header-title-txt']}>
                             {!editingMode &&
-                                <span>
+                                <span style={{ color: groupColor }}>
                                     {value}
                                 </span>}
-                            {editingMode && < InlineEdit value={value} setValue={setValue} editMode={setEditingMode} />}
+                            {editingMode && < InlineEdit value={value} setValue={setValue} editMode={setEditingMode} setColor={groupColor} />}
                         </div>
                         {isCollapse && (<div className={classes['group-summary-data']}>
                             {items}
                         </div>)}
                     </div>
+                    <div className="right_component_dummy_column"></div>
                 </div>
             </div>
         </>

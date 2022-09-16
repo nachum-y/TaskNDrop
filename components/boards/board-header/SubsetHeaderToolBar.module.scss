@@ -37,15 +37,15 @@
             &:hover {
                 background-color: #dcdfec;
             }
-
-
-        }
-
-        &-active {
-            &>* {
-                font-weight: 700;
+            &.active {
+                &>* {
+                    font-weight: 700;
+                }
             }
+
         }
+
+       
 
         .active-strip {
             height: 2px;

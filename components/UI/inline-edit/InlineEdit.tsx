@@ -6,12 +6,14 @@ import classes from './InlineEdit.module.scss'
 
 
 
-const InlineEdit: React.FC<{ value: string, setValue: (val: string) => void, editMode: (setStateAction:boolean) => void }> = ({ value, setValue ,editMode}) => {
+const InlineEdit: React.FC<{ value: string, setValue: (val: string) => void, editMode: (setStateAction: boolean) => void, setColor?: string }> = ({ value, setValue, editMode, setColor }) => {
 
 
     const [editingValue, setEditingValue] = useState(value)
 
     const onBlur = (event: FocusEvent<HTMLInputElement>) => {
+        console.log('here')
+
         if (event.target.value.trim() === "") {
             setValue(value)
         } else {
@@ -33,6 +35,8 @@ const InlineEdit: React.FC<{ value: string, setValue: (val: string) => void, edi
 
     return (
         <input
+            tabIndex={-1}
+            style={{ color: setColor }}
             className={classes['inline-input']}
             type="text"
             autoFocus

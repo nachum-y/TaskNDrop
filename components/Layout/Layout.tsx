@@ -10,6 +10,8 @@ import { Props } from '../../service/type'
 import StatusMenu from '../UI/menu/cel-menu/StatusMenu'
 import { positions } from '@mui/system'
 import CelMenu from '../UI/menu/cel-menu/CelMenu'
+import Head from 'next/head'
+import BoardAppHeader from '../boards/board-header/BoardAppHeader'
 
 
 const Layout: React.FC<Props> = (props) => {
@@ -52,11 +54,19 @@ const Layout: React.FC<Props> = (props) => {
 
     return (
         <Fragment>
+            <Head>
+                <title>{board?.title}</title>
+            </Head>
             <AppNavigation />
             <main className={classes.main}>
                 <AppSideControler />
                 <div className={classes['first-level-content']}>
-                    {props.children}
+                    <section className={classes['board-wrapper']}>
+                        <BoardAppHeader />
+                        <div className={classes['board-content-component']}>
+                            {props.children}
+                        </div>
+                    </section>
                 </div>
                 {anchorEl?.anchorEl && <MenuDialog
                     anchorElement={anchorEl.anchorEl}

@@ -63,8 +63,7 @@ const GroupList = () => {
 
 
     return (
-        <div className={classes['board-content-component']}>
-
+        <>
             {selectedTasks.length > 0 && < BoardActionsMenu
                 selectedTasks={selectedTasks}
                 onRemoveTasks={() => removeTasks(undefined)}
@@ -106,7 +105,8 @@ const GroupList = () => {
                     </div>
                 </button>
             )}
-        </div >
+
+        </>
     )
 }
 

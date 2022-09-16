@@ -5,3 +5,12 @@
     // overflow-x: scroll;
 }
 
+
+
+.board-content-component {
+    padding: 0.5rem 0 2.5rem 2.5rem;
+    overflow-x: auto;
+    position: relative;
+    height: 100%;
+
+}
