@@ -8,10 +8,11 @@
         width: auto;
         position: relative;
         padding-bottom: 4px;
-
+       
 
         button,
         .button-item {
+            cursor: pointer;
             max-width: 180px;
             padding: 8px 24px 8px 12px !important;
             border: 0;
