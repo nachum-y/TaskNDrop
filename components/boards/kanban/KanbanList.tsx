@@ -1,16 +1,21 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { TasksByStatus } from '../../../service/type'
 import { BoardContext } from '../../../store/board'
+import SelectMenu from '../../UI/select-menu/SelectMenu'
 import KanbanCard from './KanbanCard'
 import classes from './KanbanList.module.scss'
 const KanbanList = () => {
 
 
-    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard } = useContext(BoardContext)
+    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, boardGroup, setKanbanStatus } = useContext(BoardContext)
+
+    const [tasksByLabel, setTasksByLabel] = useState<TasksByStatus | undefined>(boardTasksByLabel)
 
     useEffect(() => {
         setTasksByLabels()
-    }, [kanbanStatus])
+        console.log('here')
+
+    }, [kanbanStatus, boardGroup])
 
 
     return (
@@ -65,7 +70,16 @@ const KanbanList = () => {
                         Customize View
                     </div>
                     <div className={classes['kanbn-view-menu-settings-title-secondary']}>
-                        Kanban Column
+                        <SelectMenu
+                            minWidthBox={60}
+                            TitleLabel='Kanban Column'
+                            MenuItemList={[
+                                { value: 'priority', title: 'Priority' },
+                                { value: 'labelCmp', title: 'Labels' },
+                                { value: 'status', title: 'Status' }]}
+                            kanbanStatus={kanbanStatus}
+                            setKanbanStatus={setKanbanStatus}
+                        />
                     </div>
 
                     <div id='selecet onChange' placeholder='Select' className={classes['m-2']}>

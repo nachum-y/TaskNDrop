@@ -5,7 +5,7 @@
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
-    height: calc(100vh - 166px);
+    // height: calc(100vh - 166px);
     padding: 16px 0 0 0px;
 
     .task-person{
@@ -232,7 +232,7 @@
     display: grid;
     grid-template-rows: 1;
     grid-template-columns: 1rem 1fr 268px;
-    border-top: 1px solid $--ui-border-color;
+    // border-top: 1px solid $--ui-border-color;
 
     &-menu{
         border-inline-start: 2px solid $--ui-border-color;

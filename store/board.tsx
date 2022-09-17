@@ -49,6 +49,7 @@ const contextDefaultValues: BoardContextState = {
     onDragEnd: () => { },
     onSetActiveFilter: () => { },
     setTasksByLabels: () => { },
+    setKanbanStatus: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
     onSetModal: () => { },
@@ -153,7 +154,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const getInitialBoardId = async () => {
         const boardIdInitial = await boardService.initialBoardId()
         setInitialBoardId(boardIdInitial)
-        console.log(boardIdInitial)
 
     }
 
@@ -267,7 +267,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const addTask = async (groupId: string, title: string) => {
         if (board) {
             const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
-            console.log(updatedBoard)
 
             updateBoardState(updatedBoard)
 
@@ -278,7 +277,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const newItem = async (newItemObj: newItem) => {
         if (board) {
             const groupIdx = board.groups.findIndex(g => g.id === newItemObj.groupId)
-            console.log(groupIdx)
         }
 
     }
@@ -540,11 +538,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const setTasksByLabels = () => {
         if (board) {
-            let colType = kanbanStatus === 'labels' ? 'labelCmp' : kanbanStatus
-            const statusKey = board[colType as keyof Board]
-            console.log(statusKey)
-            // console.log(isArrayOf());
+            let colType = kanbanStatus === 'labelCmp' ? 'labels' : kanbanStatus
 
+            const statusKey = board[colType as keyof Board]
 
             if (Array.isArray(statusKey)) {
                 const statusKeyLabels = statusKey as Labels[]
@@ -553,9 +549,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
                 statusKeyLabels.forEach(status => tasksByStatus[status.id as keyof TasksByStatus] = { tasks: [], color: status.color, title: status.title, id: status.id })
 
-                board.groups.forEach(group => {
+                boardGroup.forEach(group => {
                     group.tasks.forEach(task => {
-                        const statusId = _findTasksByStatus(task, colType)
+                        const statusId = _findTasksByStatus(task, kanbanStatus)
                         if (statusId) {
                             tasksByStatus[statusId as keyof TasksByStatus]?.tasks.push(task)
                         }
@@ -733,6 +729,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onDragEnd,
                 onSetActiveFilter,
                 setTasksByLabels,
+                setKanbanStatus,
                 onOpenDialogMenu,
                 onOpenCelMenu,
                 onSetModal,

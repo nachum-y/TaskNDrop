@@ -276,6 +276,7 @@ export type BoardContextState = {
     onDragEnd: (result: DropResult) => void
     onSetActiveFilter: (filterType: string, filterParam: string) => void
     setTasksByLabels: () => void
+    setKanbanStatus: (status: string) => void
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onSetModal: (newModal: Modal) => void

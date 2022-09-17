@@ -1,5 +1,8 @@
-import { Col, ColsOrder, TaskByStatusForId } from '../../../service/type'
+import { useContext } from 'react'
+import { Col, ColsOrder, IdxOpt, TaskByStatusForId } from '../../../service/type'
+import { BoardContext } from '../../../store/board'
 import DynamicColComponent from '../groups/group/DynamicColComponent'
+import KanbanCardData from './KanbanCardData'
 import classes from './KanbanList.module.scss'
 
 
@@ -7,6 +10,7 @@ import classes from './KanbanList.module.scss'
 const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrder[] }> = ({ tasksByLabel, colsOrder }) => {
 
 
+    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, onOpenCelMenu, updateTask } = useContext(BoardContext)
 
 
     const updateTaskHandler = (newCol: Col) => {
@@ -21,15 +25,8 @@ const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrd
     }
 
 
-    const celClickHandler = (el: HTMLSpanElement, taskCol: Col) => {
-        // const idx = {
-        //     groupId,
-        //     taskId: id,
 
-        // }
-        // if (idx && taskCol && el) onOpenCelMenu(el, idx, taskCol)
 
-    }
     return (
         <div>
             <div className={classes['drag-task-kanban']}>
@@ -39,32 +36,12 @@ const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrd
                         <div className={classes['card-title']}>
                             <span>{task.cols[0].value?.toString()}</span>
                         </div>
-                        <div className={classes['card-data']}>
-                            {colsOrder && colsOrder.slice(1).map((col) => (
-                                <div className={classes['card-data-item']} key={col.type}>
-
-                                    <div className={classes['card-data-item-col-icon']}>
-
-                                    </div>
-                                    <div className={classes['card-data-item-col-title']}>
-                                        {col.type}
-                                    </div>
-
-                                    <div className={classes['card-data-item-col-content']}>
-                                        <DynamicColComponent
-                                            col={col}
-                                            taskCol={task.cols.find((c: Col) => c.type === col.type)
-                                                || { type: 'error', value: 'error' }}
-                                            updateTask={updateTaskHandler}
-                                            onCelClick={celClickHandler}
-                                            id={task.id}
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-
-
-                        </div>
+                        <KanbanCardData
+                            colsOrder={colsOrder}
+                            task={task}
+                            onOpenCelMenu={onOpenCelMenu}
+                            updateTask={updateTask}
+                        />
                     </div>
                 ))}
 
