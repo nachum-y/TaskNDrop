@@ -105,7 +105,6 @@ const ChartByStatus: React.FC<{ classN: string, title: string, status: string, l
         },
 
     }
-    // const chartSeries = [10, 20, 25, 45]
     return (
 
 
@@ -125,7 +124,6 @@ const ChartByStatus: React.FC<{ classN: string, title: string, status: string, l
                         labels: labels,
                     }}
                     series={chartSeries}
-                    colors={colors}
                     type="pie"
                 />
             </div>

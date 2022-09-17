@@ -21,7 +21,7 @@ const TeamView: React.FC<{ boardMembers: FullMember[] }> = ({ boardMembers }) =>
                     <div className={classes['member-name']}>
                         {member.name}
                     </div>
-                    <a href='https://www.linkedin.com/in/nachumy7' target="_blank">
+                    <a href='https://www.linkedin.com/in/nachumy7' target="_blank" rel="noopener noreferrer">
                         <div className={classes['member-linkedIn']}>
                             Connect on LinkedIn
                         </div>
