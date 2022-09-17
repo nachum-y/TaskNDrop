@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 // import classes from './BoardApp.module.scss'
 import Head from 'next/head'
 import { BoardContext } from '../../../../store/board'
+import Map from '../../../../components/boards/map/Map'
 
 
 
@@ -24,7 +25,7 @@ const BoardMap = () => {
     return (
         <>
             <section className={'board-wrapper'}>
-                <span>BoardMap</span>
+                <Map />
             </section>
         </>
     )

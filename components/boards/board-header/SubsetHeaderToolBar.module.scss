@@ -8,7 +8,7 @@
         width: auto;
         position: relative;
         padding-bottom: 4px;
-       
+
 
         button,
         .button-item {
@@ -38,6 +38,7 @@
             &:hover {
                 background-color: #dcdfec;
             }
+
             &.active {
                 &>* {
                     font-weight: 700;
@@ -46,7 +47,7 @@
 
         }
 
-       
+
 
         .active-strip {
             height: 2px;
@@ -55,6 +56,11 @@
             bottom: 0;
             background-color: $--primary-color;
             background-color: blue;
+            animation-name: slide;
+            animation-duration: 0.4s;
+            transform: scaleX(1);
+
+
         }
 
 
@@ -68,5 +74,18 @@
             top: 8px;
             right: 0;
         }
+    }
+}
+
+
+@keyframes slide {
+    from {
+        width: 0%;
+        transform: scaleX(0.5);
+    }
+
+    to {
+        width: 100%;
+       
     }
 }

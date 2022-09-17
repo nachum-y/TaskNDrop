@@ -53,7 +53,8 @@ const NumberView: React.FC<{ labelsVal: Labels[] }> = ({ labelsVal }) => {
                 <div className={classes['number-view-title']}>
                     Open Tasks </div>
                 <div className={classes['number-view-number']}>
-                    <span> {isNotDoneCount} / {totalTasks} </span><span> {((isNotDoneCount / totalTasks) * 100).toFixed(2)}%</span>
+                    <span> {isNotDoneCount} / {totalTasks} </span>
+                    {totalTasks > 0 && <span> {((isNotDoneCount / totalTasks) * 100).toFixed(2)}%</span>}
                 </div>
             </div>
             <div className={`${classes['number-view']} ${classes['closed']}`}>
@@ -62,11 +63,11 @@ const NumberView: React.FC<{ labelsVal: Labels[] }> = ({ labelsVal }) => {
                 </div>
                 <div className={classes['number-view-number']}>
                     <span> {isDoneCount}/ {totalTasks} </span>
-                    <span> {((isDoneCount / totalTasks) * 100).toFixed(2)}%</span>
+                    {totalTasks > 0 && < span > {((isDoneCount / totalTasks) * 100).toFixed(2)}%</span>}
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }
 
