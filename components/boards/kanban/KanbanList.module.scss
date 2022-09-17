@@ -6,7 +6,7 @@
     overflow-x: scroll;
     overflow-y: hidden;
     // height: calc(100vh - 166px);
-    padding: 16px 0 0 0px;
+    padding: 16px 0px 0px 0px;
 
     .task-person {
         .icon-dapulse-addbtn {
@@ -244,7 +244,7 @@
 .kanbn-view {
     display: grid;
     grid-template-rows: 1;
-    grid-template-columns: 1rem 1fr 268px;
+    grid-template-columns: 0px 1fr 268px;
     // border-top: 1px solid $--ui-border-color;
 
     &-menu {

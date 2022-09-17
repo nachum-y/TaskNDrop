@@ -1,0 +1,190 @@
+@import '../../../styles/setup/vars';
+@import '../../../styles/setup/mixins';
+
+.dashboard-content {
+    padding: 1rem 2rem;
+    background-color: #f6f7fb;
+    // height: calc(100vh - 166px);
+    overflow-y: scroll;
+    // overflow-x: hidden;
+    // display: flex;
+    // flex-wrap: wrap;
+    // gap: 0.5rem;
+    // align-items: flex-start;
+    // align-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(33%, 1fr));
+    grid-template-rows: 200px 200px auto;
+    gap: 1rem;
+
+}
+
+.dashboard-item-holder {
+    border: 1px solid #d0d4e4;
+    // padding: 0.7rem;
+    border-radius: 8px;
+    background-color: #fff;
+
+    .chart {
+        padding: 0.5rem 1rem;
+    }
+
+    &-title {
+        height: 48px;
+        border-bottom: 1px solid $--ui-border-color;
+        display: flex;
+        align-items: center;
+
+        span {
+            padding-inline-start: 1rem;
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+
+    .number-view {
+        margin: 0.5rem;
+        padding: 0.1rem 0.5rem;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &.closed {
+            background-color: rgba(58, 200, 118, 0.5);
+
+            &:hover {
+                background-color: rgba(58, 200, 118, 1);
+            }
+        }
+
+        &.open {
+            background-color: rgba(209, 209, 209, 0.5);
+
+            &:hover {
+                background-color: rgba(209, 209, 209, 1);
+            }
+        }
+
+        &-title {
+            font-size: 18px;
+            margin-inline-end: 1rem;
+        }
+
+        &-number {
+            font-size: 40px;
+            font-weight: 300;
+
+            span {
+                &:not(:last-of-type) {
+                    margin-inline-end: 1rem;
+                }
+            }
+        }
+    }
+
+    .members-view {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem;
+
+        &-member {
+            padding: 2rem 1rem;
+            background-color: rgba(209, 209, 209, 0.5);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+
+            .img-holder {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: #fff solid 2px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+
+            .member-name {
+                font-size: 18px;
+                padding: 0.5rem;
+                font-weight: 300;
+                margin-block-end: 1rem;
+            }
+
+            .member-linkedIn {
+
+                a,
+                a:visited {
+                    text-decoration: none;
+                    color: inherit;
+                }
+
+                background-color: rgba(209, 209, 209, 0.5);
+                width: 100%;
+                padding: 0.5rem;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.5s;
+                text-align: center;
+
+                &:hover {
+                    background-color: #0072b1;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+
+
+.dashboard-item-holder.dashboard-item-number {
+    grid-column: 1/1;
+
+}
+
+.dashboard-item-holder.dashboard-item-task-by-priority {
+    grid-column: 3/4;
+
+    grid-row: 1/-2;
+}
+
+.dashboard-item-holder.dashboard-item-task-by-lables {
+    grid-column: 2/3;
+    grid-row: 1/-2;
+}
+
+.dashboard-item-holder.dashboard-item-task-by-status {
+    grid-row: 2/4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.dashboard-item-holder.dashboard-item-task-by-status .chart>* {
+
+    height: 100%;
+}
+
+.dashboard-item-holder.dashboard-item-team {
+    /* grid-row: 1/2; */
+    grid-column: 2/-1;
+
+}
+
+.dashboard-item-holder .members-view {
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.dashboard-item-holder .chart {
+    padding: 0.5rem 1rem;
+    height: 100%;
+}
