@@ -1,7 +1,9 @@
+import Image from 'next/image'
+import { FullMember } from '../../../service/type'
 import classes from './Dashboard.module.scss'
 
 
-const TeamView = () => {
+const TeamView: React.FC<{ boardMembers: FullMember[] }> = ({ boardMembers }) => {
     return (
 
         <div className={`${classes['dashboard-item-holder']} ${classes['dashboard-item-team']}`}>
@@ -11,17 +13,21 @@ const TeamView = () => {
                 </span>
             </div>
             <div className={classes['members-view']}>
-                <div className={classes['members-view-member']}>
+
+                {boardMembers.map((member) => (<div key={member.id} className={classes['members-view-member']}>
                     <div className={classes['img-holder']}>
-                        {/* <img :src='getImg(person.imgUrl)'> */}
-                        img
+                        <Image src={`/persons/${member.id}.jpeg`} width={'96px'} height={'96px'} alt={member.name} />
                     </div>
                     <div className={classes['member-name']}>
-                        person.name </div>
-                    <div className={classes['member-linkedIn']}>
-                        <a href='#' target="_blank">Connect on LinkedIn</a>
+                        {member.name}
                     </div>
-                </div>
+                    <a href='https://www.linkedin.com/in/nachumy7' target="_blank">
+                        <div className={classes['member-linkedIn']}>
+                            Connect on LinkedIn
+                        </div>
+                    </a>
+                </div>))}
+
             </div >
         </div >
 

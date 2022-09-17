@@ -1,9 +1,52 @@
 import classes from './Dashboard.module.scss'
 import { Chart } from '../../UI/chart/Chart'
 import type { ApexOptions } from 'apexcharts'
+import useCountByLabel from '../../../hooks/useCountByLabel'
+import { Group, Labels } from '../../../service/type'
+import { useEffect, useState } from 'react'
 
-const ChartByStatus: React.FC<{ classN: string, title: string }> = ({ classN, title }) => {
+type StatusCount = {
+    id?: number
+}
 
+type ColorChart = {
+    count: number
+    color: string
+    labels: string
+
+}[]
+
+const ChartByStatus: React.FC<{ classN: string, title: string, status: string, labelsVal: Labels[] }> = ({ classN, title, status, labelsVal }) => {
+
+    const countStatus = useCountByLabel(status)
+
+
+    const [chart, setChart] = useState<ColorChart>([])
+    const [colors, setColors] = useState<string[]>([])
+    const [labels, setLabels] = useState<string[]>([])
+    const [chartSeries, setChartSeries] = useState<number[]>([])
+
+
+    useEffect(() => {
+        console.log('start here')
+        console.log(countStatus)
+
+        if (countStatus) {
+            let colorList: string[] = []
+            let LabelList: string[] = []
+            let countList: number[] = []
+            labelsVal.forEach(label => {
+                colorList.push(label.color)
+                LabelList.push(label.title || 'Default')
+                countList.push(countStatus[label.id as keyof StatusCount] || 0)
+
+            })
+            setColors(() => colorList)
+            setLabels(() => LabelList)
+            setChartSeries(() => countList)
+        }
+
+    }, [countStatus])
 
     const chartOptions: ApexOptions = {
         chart: {
@@ -20,7 +63,7 @@ const ChartByStatus: React.FC<{ classN: string, title: string }> = ({ classN, ti
                 }
             }
         },
-        colors: ['#ff9900', '#1c81c2', '#333', '#5c6ac0'],
+        // colors: colors,
         dataLabels: {
             enabled: false,
             formatter: function (val) {
@@ -51,7 +94,7 @@ const ChartByStatus: React.FC<{ classN: string, title: string }> = ({ classN, ti
         fill: {
             opacity: 1
         },
-        labels: ['Bitcoin', 'Ripple', 'Cardano', 'Ethereum'],
+        // labels: labels,
         legend: {
             labels: {
             },
@@ -62,8 +105,10 @@ const ChartByStatus: React.FC<{ classN: string, title: string }> = ({ classN, ti
         },
 
     }
-    const chartSeries = [10, 20, 25, 45]
+    // const chartSeries = [10, 20, 25, 45]
     return (
+
+
 
         <div className={`${classes['dashboard-item-holder']} ${classes[classN]}`}>
             <div className={classes['dashboard-item-holder-title']}>
@@ -74,8 +119,13 @@ const ChartByStatus: React.FC<{ classN: string, title: string }> = ({ classN, ti
             <div className={classes['chart']}>
                 <Chart
                     height={400}
-                    options={chartOptions}
+                    options={{
+                        ...chartOptions,
+                        colors: colors,
+                        labels: labels,
+                    }}
                     series={chartSeries}
+                    colors={colors}
                     type="pie"
                 />
             </div>
