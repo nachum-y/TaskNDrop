@@ -34,19 +34,10 @@ const KanbanCardData: React.FC<{ task: Task, colsOrder: ColsOrder[], onOpenCelMe
 
     }
 
-    // const listToView = ['person', 'status', 'textCmp','date']
-    // console.log(colsOrder)
-    // let newOrder = colsOrder.filter(c => {
-    //     return listToView.includes(c.type)
-    // })
-    // console.log(newOrder)
-
-
-
 
     return (
         <div className={classes['card-data']}>
-            {colsOrder && colsOrder.slice(1).map((col) => (
+            {colsOrder.length>0 && colsOrder.map((col) => (
                 <div className={classes['card-data-item']} key={col.type}>
 
                     <div className={`${classes['card-data-item-col-icon']} ${classes[col.type]}`}>

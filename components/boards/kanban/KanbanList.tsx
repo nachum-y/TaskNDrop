@@ -1,21 +1,21 @@
 import { useContext, useEffect, useState } from 'react'
-import { TasksByStatus } from '../../../service/type'
+import { ColsOrder, TasksByStatus } from '../../../service/type'
 import { BoardContext } from '../../../store/board'
 import SelectMenu from '../../UI/select-menu/SelectMenu'
+import SelectBox from '../../UI/selectBox/SelectBox'
 import KanbanCard from './KanbanCard'
 import classes from './KanbanList.module.scss'
 const KanbanList = () => {
 
 
-    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, boardGroup, setKanbanStatus } = useContext(BoardContext)
+    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, boardGroup, setKanbanStatus, kanbanColList, setKanbanColList } = useContext(BoardContext)
 
-    const [tasksByLabel, setTasksByLabel] = useState<TasksByStatus | undefined>(boardTasksByLabel)
 
     useEffect(() => {
         setTasksByLabels()
-        console.log('here')
 
     }, [kanbanStatus, boardGroup])
+
 
 
     return (
@@ -83,15 +83,19 @@ const KanbanList = () => {
                     </div>
 
                     <div id='selecet onChange' placeholder='Select' className={classes['m-2']}>
-                        <div id='v-for=view in kanbanViews :key=view :value=view' > view
+                        <div id='v-for=view in kanbanViews :key=view :value=view' >
                         </div>
                     </div>
-                    <div className={classes['kanbn-view-menu-settings-title-secondary']}>
-                        Card Columns</div>
-                    <div id='v-for=(col, index) in allCols :key=index@click=toggleView(col)' className={classes['kanbn-view-menu-settings-item']}>
-                        <div id=':class=colsToDisplay.includes(col) ?checkbox-selected : checkbox'>
+                    <div className={classes['kanbn-view-selectbox-title']}>
+                        <div id='v-for=(col, index) in allCols :key=index@click=toggleView(col)' className={classes['kanbn-view-menu-settings-item']}>
+
+                            {colsOrderBoard && <SelectBox
+                                selectTitle='Card Columns'
+                                kanbanColList={kanbanColList}
+                                colsOrder={colsOrderBoard}
+                                setKanbanColList={setKanbanColList}
+                            />}
                         </div>
-                        <span>colTitle(col)</span>
                     </div>
 
                 </div>

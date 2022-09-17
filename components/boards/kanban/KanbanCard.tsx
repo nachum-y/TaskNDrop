@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Col, ColsOrder, IdxOpt, TaskByStatusForId } from '../../../service/type'
 import { BoardContext } from '../../../store/board'
 import DynamicColComponent from '../groups/group/DynamicColComponent'
@@ -10,19 +10,21 @@ import classes from './KanbanList.module.scss'
 const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrder[] }> = ({ tasksByLabel, colsOrder }) => {
 
 
-    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, onOpenCelMenu, updateTask } = useContext(BoardContext)
+    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, onOpenCelMenu, updateTask, kanbanColList } = useContext(BoardContext)
 
 
-    const updateTaskHandler = (newCol: Col) => {
-        // // const colIdx = '1'
-        // const idx = {
-        //     groupId,
-        //     taskId: id,
+    const [colListToDisplay, setColListToDisplay] = useState<ColsOrder[]>([])
 
-        // }
-        // // const idx = { task.id: string, }
-        // updateTask(newCol, idx)
-    }
+    useEffect(() => {
+        if (colsOrderBoard && kanbanColList) {
+            setColListToDisplay(() =>
+                colsOrderBoard.filter(c => {
+                    return kanbanColList.includes(c.type)
+                }))
+        }
+       
+
+    }, [colsOrderBoard, kanbanColList])
 
 
 
@@ -37,7 +39,7 @@ const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrd
                             <span>{task.cols[0].value?.toString()}</span>
                         </div>
                         <KanbanCardData
-                            colsOrder={colsOrder}
+                            colsOrder={colListToDisplay}
                             task={task}
                             onOpenCelMenu={onOpenCelMenu}
                             updateTask={updateTask}

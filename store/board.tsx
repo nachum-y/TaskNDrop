@@ -18,6 +18,7 @@ const contextDefaultValues: BoardContextState = {
     priorityValueBoard: [],
     boardGroupsByLabel: undefined,
     kanbanStatus: 'status',
+    kanbanColList: ['person', 'date', 'status'],
     boardTasksByLabel: undefined,
     boardMembers: [],
     activeFilterParam: {
@@ -50,6 +51,7 @@ const contextDefaultValues: BoardContextState = {
     onSetActiveFilter: () => { },
     setTasksByLabels: () => { },
     setKanbanStatus: () => { },
+    setKanbanColList: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
     onSetModal: () => { },
@@ -72,6 +74,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [boardGroupsByLabel, setBoardGroupsByLabel] = useState<undefined | GroupByLabels>(contextDefaultValues.boardGroupsByLabel)
     const [kanbanStatus, setKanbanStatus] = useState<string>(contextDefaultValues.kanbanStatus)
+    const [kanbanColList, setKanbanColList] = useState<string[]>(contextDefaultValues.kanbanColList)
     const [boardTasksByLabel, setBoardTasksByLabel] = useState<undefined | TasksByStatus>(contextDefaultValues.boardTasksByLabel)
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
     const [activeFilterParam, setActiveFilterParam] = useState<ActiveFilterParam>(contextDefaultValues.activeFilterParam)
@@ -706,6 +709,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 priorityValueBoard,
                 boardGroupsByLabel,
                 kanbanStatus,
+                kanbanColList,
                 boardTasksByLabel,
                 boardMembers,
                 activeFilterParam,
@@ -730,6 +734,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onSetActiveFilter,
                 setTasksByLabels,
                 setKanbanStatus,
+                setKanbanColList,
                 onOpenDialogMenu,
                 onOpenCelMenu,
                 onSetModal,

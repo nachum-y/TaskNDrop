@@ -252,6 +252,7 @@ export type BoardContextState = {
     priorityValueBoard: Labels[]
     boardGroupsByLabel: undefined | GroupByLabels
     kanbanStatus: string
+    kanbanColList: string[]
     boardTasksByLabel: undefined | TasksByStatus
     boardMembers: FullMember[]
     activeFilterParam: ActiveFilterParam
@@ -277,6 +278,7 @@ export type BoardContextState = {
     onSetActiveFilter: (filterType: string, filterParam: string) => void
     setTasksByLabels: () => void
     setKanbanStatus: (status: string) => void
+    setKanbanColList: (listOfColList: string[]) => void
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onSetModal: (newModal: Modal) => void
