@@ -7,16 +7,15 @@ import SkeletonGroup from '../UI/skeletons/SkeletonGroup'
 import SkeletonBoardHeader from '../UI/skeletons/SkeletonBoardHeader'
 import MenuDialog from '../UI/menu/MenuDialog'
 import { Props } from '../../service/type'
-import StatusMenu from '../UI/menu/cel-menu/StatusMenu'
-import { positions } from '@mui/system'
 import CelMenu from '../UI/menu/cel-menu/CelMenu'
+import NewItem from '../UI/modal/NewItem'
 import Head from 'next/head'
 import BoardAppHeader from '../boards/board-header/BoardAppHeader'
 
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu } = useContext(BoardContext)
+    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
@@ -78,6 +77,7 @@ const Layout: React.FC<Props> = (props) => {
                     onClose={handleClose}
                     menuType={anchorElCel.taskCol}
                 />}
+                <NewItem />
             </main>
         </Fragment>
     )

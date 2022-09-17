@@ -1,9 +1,7 @@
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
-
-// import classes from './BoardApp.module.scss'
-import Head from 'next/head'
 import { BoardContext } from '../../../../store/board'
+import KanbanList from '../../../../components/boards/kanban/KanbanList'
 
 
 
@@ -25,7 +23,7 @@ const BoardKanban = () => {
         <>
 
             <section className={'board-wrapper'}>
-                <span>BoardKanban</span>
+                <KanbanList />
             </section>
         </>
     )

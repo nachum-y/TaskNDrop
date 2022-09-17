@@ -27,13 +27,18 @@ const StatusCmp: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCe
     let title: string | undefined
     let color: string | undefined
 
+    console.log(value)
+    console.log(type)
+
+
     const currStatus: Labels[] = labelsVal[key as keyof labelsStatus]
-    if (typeof currStatus !== undefined && currStatus.length > 0) {
+    console.log(currStatus)
+
+    if (currStatus && typeof currStatus !== undefined && currStatus.length > 0) {
         const currLabel = currStatus.find((t: Labels) => t.id === value)
         if (currLabel) {
             title = currLabel.title
             color = currLabel.color
-
         }
 
     }

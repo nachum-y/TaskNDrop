@@ -110,6 +110,13 @@ export type IdxOpt = {
 }
 
 
+export type newItem = {
+    groupId: string
+    cols: Col[]
+    isDone?: boolean
+}
+
+
 export type menuDialogActionMap = {
     deleteThisGroup: (groupId?: IdxOpt | undefined) => void
     selectAllItems: (groupId?: IdxOpt | undefined) => void,
@@ -165,6 +172,10 @@ export type ListLabels = {
 }
 
 
+export type TasksByLabel = {
+    lbael: Task[]
+}
+
 
 
 export type Id = string
@@ -199,7 +210,36 @@ export type MovementMode = 'FLUID' | 'SNAP'
 
 export type DropReason = 'DROP' | 'CANCEL'
 
+export type Modal = {
+    isOpen: boolean
+    modalType: string
+} | null
 
+
+export class LabelsCLass {
+
+    title: string
+    color: string
+    id: string
+
+    constructor(t: string, c: string, i: string) {
+        this.title = t
+        this.color = c
+        this.id = i
+    }
+
+}
+
+export type TaskByStatusForId = {
+    tasks: Task[]
+    color: string
+    title: string
+    id: string
+}
+
+export type TasksByStatus = {
+    id?: TaskByStatusForId
+}
 
 
 export type BoardContextState = {
@@ -211,12 +251,15 @@ export type BoardContextState = {
     labelsValueBoard: Labels[]
     priorityValueBoard: Labels[]
     boardGroupsByLabel: undefined | GroupByLabels
+    kanbanStatus: string
+    boardTasksByLabel: undefined | TasksByStatus
     boardMembers: FullMember[]
     activeFilterParam: ActiveFilterParam
     selectedTasks: SelectedTask[]
     selectedGroups: string[]
     anchorEl: AnchorEl | null
     anchorElCel: AnchorElCel | null
+    modal: Modal | null
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -232,8 +275,10 @@ export type BoardContextState = {
     duplicateTasks: (tasksIds: string | undefined) => void
     onDragEnd: (result: DropResult) => void
     onSetActiveFilter: (filterType: string, filterParam: string) => void
+    setTasksByLabels: () => void
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
+    onSetModal: (newModal: Modal) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
 

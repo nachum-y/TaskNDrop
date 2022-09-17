@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -17,6 +17,8 @@ const contextDefaultValues: BoardContextState = {
     labelsValueBoard: [],
     priorityValueBoard: [],
     boardGroupsByLabel: undefined,
+    kanbanStatus: 'status',
+    boardTasksByLabel: undefined,
     boardMembers: [],
     activeFilterParam: {
         isActive: false,
@@ -30,6 +32,7 @@ const contextDefaultValues: BoardContextState = {
     selectedGroups: [],
     anchorEl: null,
     anchorElCel: null,
+    modal: null,
     loadBoard: () => { },
     setBoard: () => { },
     updateBoard: () => { },
@@ -45,8 +48,10 @@ const contextDefaultValues: BoardContextState = {
     duplicateTasks: () => { },
     onDragEnd: () => { },
     onSetActiveFilter: () => { },
+    setTasksByLabels: () => { },
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
+    onSetModal: () => { },
     onCloseDialogMenu: () => { },
     onClickDialogMenu: () => { },
 }
@@ -65,14 +70,17 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [labelsValueBoard, setLabelsValueBoard] = useState<Labels[]>([])
     const [priorityValueBoard, setPriorityValueBoard] = useState<Labels[]>([])
     const [boardGroupsByLabel, setBoardGroupsByLabel] = useState<undefined | GroupByLabels>(contextDefaultValues.boardGroupsByLabel)
+    const [kanbanStatus, setKanbanStatus] = useState<string>(contextDefaultValues.kanbanStatus)
+    const [boardTasksByLabel, setBoardTasksByLabel] = useState<undefined | TasksByStatus>(contextDefaultValues.boardTasksByLabel)
     const [boardMembers, setBoardMembers] = useState<FullMember[]>([])
     const [activeFilterParam, setActiveFilterParam] = useState<ActiveFilterParam>(contextDefaultValues.activeFilterParam)
     const [selectedTasks, setSelectedTasks] = useState<SelectedTask[]>(contextDefaultValues.selectedTasks)
     const [selectedGroups, setSelectedGroups] = useState<string[]>(contextDefaultValues.selectedGroups)
     const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
-    const [anchorElIdx, setAnchorElIdx] = useState<IdxOpt | null>(null)
-    const [anchorElCelIdx, setAnchorElCelIdx] = useState<IdxOpt | null>(null)
+    const [modal, setModal] = useState<Modal>(null)
+
+
 
 
 
@@ -263,6 +271,14 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
             updateBoardState(updatedBoard)
 
+        }
+
+    }
+
+    const newItem = async (newItemObj: newItem) => {
+        if (board) {
+            const groupIdx = board.groups.findIndex(g => g.id === newItemObj.groupId)
+            console.log(groupIdx)
         }
 
     }
@@ -522,6 +538,35 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
+    const setTasksByLabels = () => {
+        if (board) {
+            let colType = kanbanStatus === 'labels' ? 'labelCmp' : kanbanStatus
+            const statusKey = board[colType as keyof Board]
+            console.log(statusKey)
+            // console.log(isArrayOf());
+
+
+            if (Array.isArray(statusKey)) {
+                const statusKeyLabels = statusKey as Labels[]
+
+                let tasksByStatus: TasksByStatus = {}
+
+                statusKeyLabels.forEach(status => tasksByStatus[status.id as keyof TasksByStatus] = { tasks: [], color: status.color, title: status.title, id: status.id })
+
+                board.groups.forEach(group => {
+                    group.tasks.forEach(task => {
+                        const statusId = _findTasksByStatus(task, colType)
+                        if (statusId) {
+                            tasksByStatus[statusId as keyof TasksByStatus]?.tasks.push(task)
+                        }
+                    })
+                })
+                setBoardTasksByLabel(() => tasksByStatus)
+            }
+        }
+
+
+    }
 
     const _isActiveFilter = (task: Task, find: string) => {
         // if(find === 'La')
@@ -538,6 +583,20 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     }
 
+    const _findTasksByStatus = (task: Task, find: string) => {
+
+        const idx = task.cols.findIndex((c) => c.type === find)
+        const key = idx as number
+        const taskVal = task.cols[idx]
+
+        if (idx !== -1 && taskVal.value && typeof taskVal.value === 'string') {
+            let index = find === 'labelCmp' ? 'label' : find
+            return taskVal.value
+            // const findIdx = activeFilterParam[index as keyof ActiveFilterParam]
+            // return Array.isArray(findIdx) ? findIdx.includes(task.cols[key].value!.toString()) : false
+        }
+
+    }
 
     const copyTextToClipboard = (idx: IdxOpt) => {
         // Get the text field
@@ -566,6 +625,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
+    const onSetModal = (newModal: Modal) => {
+
+        setModal(() => newModal)
+    }
 
     const onOpenDialogMenu = (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => {
 
@@ -597,7 +660,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 setAnchorElCel(() => set)
             }
         }, 0)
-        if (idx) setAnchorElCelIdx(idx)
+        // if (idx) setAnchorElCelIdx(idx)
     }
 
 
@@ -646,12 +709,15 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 labelsValueBoard,
                 priorityValueBoard,
                 boardGroupsByLabel,
+                kanbanStatus,
+                boardTasksByLabel,
                 boardMembers,
                 activeFilterParam,
                 selectedTasks,
                 selectedGroups,
                 anchorEl,
                 anchorElCel,
+                modal,
                 setBoard,
                 loadBoard,
                 updateBoard,
@@ -666,8 +732,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 duplicateTasks,
                 onDragEnd,
                 onSetActiveFilter,
+                setTasksByLabels,
                 onOpenDialogMenu,
                 onOpenCelMenu,
+                onSetModal,
                 onClickDialogMenu,
                 onCloseDialogMenu
             }}

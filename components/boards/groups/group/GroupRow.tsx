@@ -136,9 +136,9 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                 </div>
             </div>
             {
-                colsOrder.slice(1).map((col, index) => (
+                colsOrder.slice(1).map((col) => (
                     < div tabIndex={0} className={classes.col}
-                        key={index} >
+                        key={col.type} >
                         <DynamicColComponent
                             col={col}
                             taskCol={cols.find((c: Col) => c.type === col.type)

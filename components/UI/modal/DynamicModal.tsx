@@ -1,21 +1,19 @@
 import React, { useContext } from "react"
 import { BoardContext } from "../../../store/board"
-import GroupMenu from "./GroupMenu/GroupMenu"
-import TaskMenu from "./TaskMenu/TaskMenu"
-import FilterMenu from "./filter-menu/FilterMenu"
+
 
 type Cmp = React.FC<{ onMenuClick: (actionType: string) => void }>
 
 type ComponentMap = {
-    GroupMenu: Cmp,
-    TaskMenu: Cmp,
-    FilterMenu: Cmp,
+    // GroupMenu: Cmp,
+    // TaskMenu: Cmp,
+    // FilterMenu: Cmp,
 }
 
 const keysToComponentMap: ComponentMap = {
-    GroupMenu: GroupMenu,
-    TaskMenu: TaskMenu,
-    FilterMenu: FilterMenu,
+    // GroupMenu: GroupMenu,
+    // TaskMenu: TaskMenu,
+    // FilterMenu: FilterMenu,
 }
 
 
@@ -35,7 +33,7 @@ const DynamicMenuComponent: React.FC<{ menuType: string }> = ({ menuType }) => {
     if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {
         return React.createElement(
             keysToComponentMap[key as keyof ComponentMap],
-            {   
+            {
                 key: menuType,
                 onMenuClick: onClickHandler
             },
