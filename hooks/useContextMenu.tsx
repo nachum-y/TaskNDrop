@@ -18,11 +18,6 @@ const useContextMenu = () => {
         [setXPos, setYPos]
     )
 
-    // const handleClick = useCallback(() => {
-    //     console.log('right click handleClick')
-    //     showMenu && setShowMenu(false)
-    // }, [showMenu])
-
     useEffect(() => {
         // document.addEventListener("click", handleClick)
         document.addEventListener("contextmenu", handleContextMenu)

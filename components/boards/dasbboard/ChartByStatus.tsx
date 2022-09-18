@@ -28,8 +28,7 @@ const ChartByStatus: React.FC<{ classN: string, title: string, status: string, l
 
 
     useEffect(() => {
-        console.log('start here')
-        console.log(countStatus)
+
 
         if (countStatus) {
             let colorList: string[] = []

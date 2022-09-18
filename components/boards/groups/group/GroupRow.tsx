@@ -15,16 +15,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     const { cols, createdAt, id, groupId } = task
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const [isShitPress, setIsShitPress] = useState(false)
 
-    useEffect(() => {
-        if (isShitPress) {
-            console.log(isShitPress)
-
-
-        }
-
-    }, [isShitPress])
 
 
     useEffect(() => {

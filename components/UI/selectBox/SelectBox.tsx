@@ -19,7 +19,6 @@ const SelectBox: React.FC<{ selectTitle: string, kanbanColList: string[], colsOr
         let newState: NewState = {}
 
         colsOrder.forEach(col => {
-            console.log(kanbanColList);
             
             newState[col.type as keyof NewState] = kanbanColList.includes(col.type)
         })

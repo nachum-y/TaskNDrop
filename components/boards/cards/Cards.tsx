@@ -29,8 +29,6 @@ const Cards = () => {
 
     const taskStatus = (task: Task) => {
         const status = task.cols.find(c => c.type === 'status')
-        console.log(statusValueBoard)
-
         if (typeof status?.value === 'string') {
             return status?.value
         }

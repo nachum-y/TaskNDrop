@@ -10,7 +10,6 @@ const KanbanCardData: React.FC<{ task: Task, colsOrder: ColsOrder[], onOpenCelMe
 
 
     const updateTaskHandler = (newCol: Col) => {
-        console.log(newCol)
 
         const idx = {
             groupId: task.groupId,
@@ -22,8 +21,6 @@ const KanbanCardData: React.FC<{ task: Task, colsOrder: ColsOrder[], onOpenCelMe
 
 
     const celClickHandler = (el: HTMLSpanElement, taskCol: Col) => {
-        console.log(taskCol)
-        console.log(task)
 
 
         const idx = {

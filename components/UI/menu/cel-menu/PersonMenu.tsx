@@ -25,25 +25,9 @@ const PersonMenu: React.FC<{ onMenuClick: (actionId: string | number | Member[])
 
     React.useEffect(() => {
         setSuggestedMember(() => boardMembers.filter((member) => !taskMembers.find((m) => m.id === member.id)))
-        console.log(suggestedMember)
 
     }, [boardMembers, taskMembers])
 
-
-
-
-    console.log(taskMembers)
-
-    // const userToDisplay = () => {
-    //     if (boardMembers && taskMembers) {
-    //         const membersToRemove = taskMembers.map(member => taskMembers.)
-    //         console.log(membersToRemove)
-    //         return boardMembers
-    //     }
-
-
-    // }
-    // userToDisplay()
 
 
 

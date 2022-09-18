@@ -41,7 +41,6 @@ const CardCellWrap: React.FC<{ colsOrderBoard: ColsOrder[] }> = ({ colsOrderBoar
         cols.push(emptyCol)
     })
 
-    console.log(cols)
 
 
 

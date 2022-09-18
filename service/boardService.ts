@@ -65,7 +65,6 @@ async function initialBoardId() {
 async function query() {
     const res = await fetch(`${server}/api/boards/`)
     const json = await res.json()
-    console.log(json);
     
     return json
 }
@@ -86,7 +85,6 @@ async function saveGroup(group: Group | undefined, boardId: string) {
     if (group && boardId && group.id) {
         const idx = board.groups.findIndex((g) => g.id === group.id)
         board.groups.splice(idx, 1, group)
-        console.log(board);
         
         return group
     }
@@ -100,7 +98,6 @@ async function saveGroup(group: Group | undefined, boardId: string) {
         board.groups.push(newGroup)
 
         const response = await _updateBoard(board, boardId)
-        console.log(board);
 
         return newGroup
     }
@@ -119,13 +116,11 @@ async function removeGroup(groupId: string, boardId: string) {
         const idx = board.groups.findIndex((g) => g.id === groupId)
         const groupName = board.groups[idx].title
         board.groups.splice(idx, 1)
-        console.log(board)
         const response = await fetch(`${server}/api/boards/${boardId}`, {
             method: 'POST',
             body: JSON.stringify(board),
             headers: { 'Content-Type': 'application/json' }
         })
-        console.log(response)
 
     } else {
         throw new Error('Error ')
@@ -175,7 +170,6 @@ async function addTask(title: string, groupId: string, boardId: string) {
         }
 
     } catch (error) {
-        console.log(error)
 
     }
     // let groupToEdit = board.groups.find((g) => g.id === groupId)

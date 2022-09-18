@@ -37,7 +37,6 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
     const handleClick = (event: React.MouseEvent<HTMLDivElement>, typeMenu: string) => {
         event.stopPropagation()
         event.preventDefault()
-        console.log(event)
 
         // event.shiftKey
         // console.log(event.shiftKey)

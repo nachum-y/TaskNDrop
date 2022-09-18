@@ -17,7 +17,6 @@ const BoardHeaderTop = () => {
 
     useEffect(() => {
         if (value && value !== board?.title && value.trim().length !== 0) {
-            console.log(value)
         }
     }, [editingMode])
 

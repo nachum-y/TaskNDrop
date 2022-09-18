@@ -12,7 +12,6 @@ const InlineEdit: React.FC<{ value: string, setValue: (val: string) => void, edi
     const [editingValue, setEditingValue] = useState(value)
 
     const onBlur = (event: FocusEvent<HTMLInputElement>) => {
-        console.log('here')
 
         if (event.target.value.trim() === "") {
             setValue(value)
