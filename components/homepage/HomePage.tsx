@@ -51,7 +51,7 @@ const HomePage = () => {
                 />
             </div>
             <footer className={classes.footer}>
-                <span>&quot;Task And Drop&quot; - Pixel perfect, E2E clone of Monday.com (Next.js applicatio).</span>
+                <span>&quot;Task And Drop&quot; - Pixel perfect, E2E clone of Monday.com (Next.js application).</span>
             </footer>
         </div >
     )

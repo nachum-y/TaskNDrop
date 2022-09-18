@@ -294,3 +294,20 @@
     display: flex;
     justify-content: center;
 }
+
+
+@media only screen and (max-width: 900px) {
+    .home-page {
+        .header-line {
+            font-size: 40px;
+        }
+
+
+        .footer{
+            font-size: 0.65rem
+        }
+
+        overflow-x: hidden;
+    }
+
+}
