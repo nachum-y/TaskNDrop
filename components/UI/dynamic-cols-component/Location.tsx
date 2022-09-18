@@ -1,7 +1,14 @@
 import { ClickAwayListener } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Col, LocationCol } from '../../../service/type'
 import classes from './Location.module.scss'
+import { Wrapper, Status } from "@googlemaps/react-wrapper"
+import PlacesAutocomplete from '../PlacesAutocomplete/PlacesAutocomplete'
+
+
+
+
+
 const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol, onCelClick }) => {
 
     console.log(taskCol)
@@ -24,6 +31,19 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
     }
 
+    const ref = useRef(null)
+
+    useEffect(() => {
+        if (ref.current) {
+
+            // new google.maps.places.Autocomplete(ref.current)
+
+        }
+    })
+
+    const [selected, setSelected] = useState(null)
+
+    const { NEXT_PUBLIC_GOOGLE_MAP_KEY } = process.env
     return (
         <ClickAwayListener onClickAway={() => setEditingMode(false)}>
             <div className={classes['task-location']}>
@@ -35,13 +55,21 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
                             {title}
                         </span>}
                     {editingMode &&
-                        <input placeholder={title} id='row.id' type='text' autoFocus className={classes['input-location']} onBlur={() => setEditingMode(false)} />
+
+                        <Wrapper
+                            apiKey={NEXT_PUBLIC_GOOGLE_MAP_KEY as string}
+                            libraries={['places']}
+                        >
+                            <PlacesAutocomplete setSelected={setSelected} />
+                        </Wrapper>
+                        // <input placeholder={title} ref={ref} id='row.id' type='text' autoFocus className={classes['input-location']} onBlur={() => setEditingMode(false)} />
+
                     }
                     <div className={classes['icon-v2-line-location']}>
                     </div>
                 </div>
             </div>
-        </ClickAwayListener>
+        </ClickAwayListener >
     )
 }
 

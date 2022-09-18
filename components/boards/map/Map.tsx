@@ -25,7 +25,6 @@ const Map = () => {
 
     useEffect(() => {
         setTasksMap(locationMapList)
-        console.log(locationMapList)
 
 
     }, [locationMapList])
