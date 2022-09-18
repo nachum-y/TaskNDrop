@@ -63,7 +63,7 @@ const ChartColumn: React.FC<{ classN: string, title: string }> = ({ classN, titl
             </div >
             <div className={classes['chart']}>
                 <Chart
-                    height={740}
+                    height={550}
                     options={chartOptions}
                     series={chartSeries}
                     type="bar"

@@ -6,6 +6,7 @@ import StatusCmp from "../../../UI/dynamic-cols-component/StatusCmp"
 import Person from "../../../UI/dynamic-cols-component/Person"
 import CreationLog from "../../../UI/dynamic-cols-component/CreationLog"
 import Text from "../../../UI/dynamic-cols-component/Text"
+import Location from "../../../UI/dynamic-cols-component/Location"
 import DateCmp from "../../../UI/dynamic-cols-component/DateCmp"
 
 type Cmp = React.FC<{ taskCol: Col, id: string, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }>
@@ -30,9 +31,8 @@ const keysToComponentMap: ComponentMap = {
     labelCmp: StatusCmp,
     status: StatusCmp,
     priority: StatusCmp,
-    location: Test2,
+    location: Location,
     creationLog: CreationLog,
-
 
 }
 
