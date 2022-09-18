@@ -37,6 +37,7 @@ const DashBoard = () => {
       <ChartColumn
         classN='dashboard-item-task-by-status'
         title='Tasks by status'
+        labelsVal={statusValueBoard}
       />
 
 

@@ -16,6 +16,62 @@ type ColorChart = {
 
 }[]
 
+const chartOptions: ApexOptions = {
+    chart: {
+        background: 'transparent',
+        stacked: false,
+        toolbar: {
+            show: false
+        }
+    },
+    plotOptions: {
+        pie: {
+            donut: {
+                size: '0%'
+            }
+        }
+    },
+    dataLabels: {
+        enabled: false,
+        formatter: function (val) {
+            return val + '%'
+        },
+        background: {
+            enabled: true,
+            padding: 8,
+            borderRadius: 4,
+            borderWidth: 0,
+            opacity: 0.3,
+            dropShadow: {
+                enabled: true,
+                top: 1,
+                left: 1,
+                blur: 1,
+                opacity: 0.5
+            }
+        },
+        dropShadow: {
+            enabled: true,
+            top: 1,
+            left: 1,
+            blur: 1,
+            opacity: 0.5
+        }
+    },
+    fill: {
+        opacity: 1
+    },
+    legend: {
+        labels: {
+        },
+        show: false
+    },
+    stroke: {
+        width: 0
+    },
+
+}
+
 const ChartByStatus: React.FC<{ classN: string, title: string, status: string, labelsVal: Labels[] }> = ({ classN, title, status, labelsVal }) => {
 
     const countStatus = useCountByLabel(status)
@@ -47,63 +103,7 @@ const ChartByStatus: React.FC<{ classN: string, title: string, status: string, l
 
     }, [countStatus])
 
-    const chartOptions: ApexOptions = {
-        chart: {
-            background: 'transparent',
-            stacked: false,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            pie: {
-                donut: {
-                    size: '0%'
-                }
-            }
-        },
-        // colors: colors,
-        dataLabels: {
-            enabled: false,
-            formatter: function (val) {
-                return val + '%'
-            },
-            background: {
-                enabled: true,
-                padding: 8,
-                borderRadius: 4,
-                borderWidth: 0,
-                opacity: 0.3,
-                dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 1,
-                    blur: 1,
-                    opacity: 0.5
-                }
-            },
-            dropShadow: {
-                enabled: true,
-                top: 1,
-                left: 1,
-                blur: 1,
-                opacity: 0.5
-            }
-        },
-        fill: {
-            opacity: 1
-        },
-        // labels: labels,
-        legend: {
-            labels: {
-            },
-            show: false
-        },
-        stroke: {
-            width: 0
-        },
 
-    }
     return (
 
 
