@@ -1,3 +1,4 @@
+import { ClickAwayListener } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Col, LocationCol } from '../../../service/type'
 import classes from './Location.module.scss'
@@ -20,26 +21,27 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
     const startEditingHandler = () => {
         setEditingMode(() => true)
-        // test()
+
     }
 
     return (
-        <div className={classes['task-location']}>
-            <div className={classes['input-container']}>
-                {/*  */}
-                {!editingMode &&
-                    <span
-                        className={classes['text-content']}
-                    >
-                        {title}
-                    </span>}
-                {editingMode &&
-                    <input placeholder={title} id='row.id' type='text' className={classes['input-location']} />
-                }
-                <div className={classes['icon-v2-line-location']}>
+        <ClickAwayListener onClickAway={() => setEditingMode(false)}>
+            <div className={classes['task-location']}>
+                <div onClick={startEditingHandler} className={editingMode ? classes['text-cell-component-active'] : classes['text-cell-component']}>
+                    {!editingMode &&
+                        <span
+                            className={classes['text-content']}
+                        >
+                            {title}
+                        </span>}
+                    {editingMode &&
+                        <input placeholder={title} id='row.id' type='text' autoFocus className={classes['input-location']} onBlur={() => setEditingMode(false)} />
+                    }
+                    <div className={classes['icon-v2-line-location']}>
+                    </div>
                 </div>
             </div>
-        </div>
+        </ClickAwayListener>
     )
 }
 
