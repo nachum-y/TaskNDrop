@@ -23,10 +23,12 @@
 
             .person-img-holder {
                 width: 276px;
-                height: 127.8px;
+                height: 140px;
                 display: flex;
                 justify-content: center;
                 margin: auto;
+                align-items: center;
+                align-content: center;
 
                 img.card-img {
                     width: 115px;
@@ -34,6 +36,14 @@
                     display: flex;
                     align-self: center;
                     border-radius: 50%;
+                    aspect-ratio: 1/1;
+                }
+
+                img {
+                    width: 115px;
+                    aspect-ratio: 1/1;
+                    object-fit: cover;
+
                 }
             }
 
