@@ -28,9 +28,8 @@ const KanbanList = () => {
                 {boardTasksByLabel && Object.keys(boardTasksByLabel).map(status => (
                     <div key={status} className={classes['kanban-list-component']}>
                         <div style={{ backgroundColor: boardTasksByLabel[status as keyof TasksByStatus]?.color }} className={classes['kanban-list-component-header handle']}>
-                            <span className={classes['kanban-list-component-header-title']}>{status}</span>
+                            <span className={classes['kanban-list-component-header-title']}>{boardTasksByLabel[status as keyof TasksByStatus]?.title|| 'Default'}</span>
                         </div>
-
                         <div className={classes['kanban-list-component-inn']}>
 
                             <div style={{ backgroundColor: boardTasksByLabel[status as keyof TasksByStatus]?.color }} className={classes['color-indicator']}>
