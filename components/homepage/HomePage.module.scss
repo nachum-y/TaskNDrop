@@ -46,13 +46,6 @@
         z-index: 10;
     }
 
-    // .home-img {
-    //     height: 1000px;
-    //     background-image: url(../../assets/images/home-page.png);
-    //     background-repeat: no-repeat;
-    //     background-size: auto;
-    //     background-position: top;
-    // }
 }
 
 .btn-container {
@@ -298,16 +291,37 @@
 
 @media only screen and (max-width: 900px) {
     .home-page {
+
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: nowrap;
+
         .header-line {
             font-size: 40px;
+
+            padding-top: 70px;
         }
 
+        .first-layout {
+            height: 100%;
+        }
 
-        .footer{
+        .footer {
             font-size: 0.65rem
         }
 
         overflow-x: hidden;
+    }
+
+
+
+    .btn-container {
+
+        margin-top: 1rem;
     }
 
 }
