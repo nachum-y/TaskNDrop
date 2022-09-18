@@ -1,0 +1,76 @@
+.task-location {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin-inline: 0.5rem;
+
+    background-color: inherit;
+
+    &:focus-within {
+        border: 1px solid #0073ea;
+    }
+
+    span {
+        margin-inline-start: 0.8rem;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border: 1px solid transparent;
+        padding: 0 2px;
+
+    }
+
+    .input-container {
+        // height: 80%;
+        // width: 95%;
+        position: relative;
+
+        &:hover {
+            border: 1px solid #c3c6d4;
+        }
+
+        input.location-input {
+            border: none;
+            outline: none;
+            position: relative;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            align-content: center;
+
+
+
+            input {}
+
+            &:hover {
+                // box-shadow: 0 0 0 1px var(--el-input-hover-border-color) inset !important;
+
+            }
+
+            &:focus-visible {
+                background-color: #fff;
+                border: 1px solid #c3c6d4;
+            }
+        }
+
+        .icon-v2-line-location {
+            cursor: text;
+
+            &:before {
+                content: "\f35a";
+                font-family: "dapulse";
+                position: absolute;
+                top: 4px;
+                left: 0;
+                font-size: 12px;
+            }
+
+            &:hover {
+                color: #0073ea;
+            }
+        }
+    }
+}
