@@ -48,3 +48,22 @@
   height: 100%;
 
 }
+
+
+@media only screen and (max-width: 850px) {
+
+  .main {
+    inset: 0;
+  }
+
+  .first-level-content {
+    margin-left: 0;
+  }
+
+  .board-content-component {
+
+    padding: 0.5rem 0 2.5rem 0.5rem;
+  }
+
+
+}

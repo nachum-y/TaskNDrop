@@ -20,3 +20,10 @@
     background-color: $--dark-background-color;
 
 }
+
+
+@media only screen and (max-width: 850px) {
+    .side-controler {
+        display: none;
+    }
+}
