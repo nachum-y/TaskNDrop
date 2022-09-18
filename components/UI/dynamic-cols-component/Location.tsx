@@ -11,15 +11,19 @@ import PlacesAutocomplete from '../PlacesAutocomplete/PlacesAutocomplete'
 
 const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCelClick: (el: HTMLSpanElement) => void }> = ({ taskCol, updateCol, onCelClick }) => {
 
-    console.log(taskCol)
+
 
     const value: LocationCol | undefined = taskCol.value as LocationCol || undefined
+    const type = taskCol.type
     const [title, setTitle] = useState<string>('Type address...')
+    const [selected, setSelected] = useState<LocationCol | null>(null)
 
     useEffect(() => {
         if (value && typeof value !== 'number') {
             setTitle(value.title)
         }
+        console.log(taskCol)
+
     }, [value])
 
 
@@ -33,15 +37,15 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
     const ref = useRef(null)
 
+
+
+
     useEffect(() => {
-        if (ref.current) {
-
-            // new google.maps.places.Autocomplete(ref.current)
-
+        if (selected) {
+            const newCol = { type, value: selected }
+            updateCol(newCol)
         }
-    })
-
-    const [selected, setSelected] = useState(null)
+    }, [selected])
 
     const { NEXT_PUBLIC_GOOGLE_MAP_KEY } = process.env
     return (
