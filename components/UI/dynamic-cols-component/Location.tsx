@@ -62,7 +62,6 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
                         <Wrapper
                             apiKey={NEXT_PUBLIC_GOOGLE_MAP_KEY as string}
-                            libraries={['places']}
                         >
                             <PlacesAutocomplete setSelected={setSelected} />
                         </Wrapper>
