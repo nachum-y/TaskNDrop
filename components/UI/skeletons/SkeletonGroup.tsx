@@ -1,6 +1,8 @@
 import Shimmer from './Shimmer'
 import SkeletonElement from './SkeletonElement'
 import classes from './SkeletonElement.module.scss'
+import Box from '@mui/material/Box'
+import Skeleton from '@mui/material/Skeleton'
 
 const SkeletonGroup: React.FC<{ theme: string }> = (props) => {
     const { theme } = props
@@ -8,13 +10,14 @@ const SkeletonGroup: React.FC<{ theme: string }> = (props) => {
 
     return (
         <div className={`${classes['skeleton-wrapper']} ${themeClass}`}>
-            <div className={classes['skeleton-group']}>
-                <SkeletonElement type='title' />
-                <SkeletonElement type='text' />
-                <SkeletonElement type='text' />
-                <SkeletonElement type='text' />
-            </div>
-            <Shimmer />
+
+
+            <Box sx={{ width: '100%' }}>
+                <Skeleton />
+                <Skeleton animation="wave" />
+                <Skeleton animation={false} />
+            </Box>
+           
         </div>
     )
 }
