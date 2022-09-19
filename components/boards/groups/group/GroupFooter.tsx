@@ -15,7 +15,7 @@ type Uniqs = {
     id?: LabelObjPrc
 }
 
-const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean, userScreenWidth: number | undefined, scrollLeft: number }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse }) => {
+const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean, userScreenWidth: number | undefined, scrollLeft: number }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse, scrollLeft }) => {
 
 
 
@@ -96,7 +96,7 @@ const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels |
             <div className={`${classes['footer-col']} ${classes['fixed']} `}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}></div>
-                    <div className={classes['board-content-group-row-footer-corner']}></div>
+                    <div className={classes['board-content-group-row-footer-corner']} style={{ left: `${400 - (rowStyle || 0)}px` }}></div>
                 </div>
             </div>
 
