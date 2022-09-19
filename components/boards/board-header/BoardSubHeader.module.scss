@@ -224,6 +224,12 @@
 }
 
 @media only screen and (max-width: 850px) {
+
+
+    .board-sub-header {
+        justify-content: space-between;
+    }
+
     .add-board-entity-button-wrapper {
         .add-task-button-component {
             display: none;

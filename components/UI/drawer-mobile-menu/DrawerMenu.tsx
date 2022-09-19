@@ -9,11 +9,11 @@ import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import { DrawerMenu } from '../../../service/type'
+import DynamicDrawerMenu from './DynamicDrawerMenu'
 
 const drawerBleeding = 56
 
 interface Props {
-    children: React.ReactNode
     /**
      * Injected by the documentation to work in an iframe.
      * You won't need it on your project.
@@ -45,7 +45,6 @@ const Puller = styled(Box)(({ theme }) => ({
 }))
 
 const DrawerMenu = (props: Props) => {
-    console.log(props.children)
 
     const { window } = props
     const [open, setOpen] = React.useState(props.drawerParam?.setOpen || false)
@@ -96,7 +95,7 @@ const DrawerMenu = (props: Props) => {
                 >
                     <Puller />
                     <Typography sx={{ p: 2, color: 'text.secondary' }}> {props.drawerParam?.title}</Typography>
-                    {props.children}
+                    <DynamicDrawerMenu menuType={'SelectViewMenu'} />
                 </StyledBox>)}
                 <StyledBox
                     sx={{
