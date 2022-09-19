@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import { DrawerMenuType } from '../../../service/type'
 import DynamicDrawerMenu from './DynamicDrawerMenu'
+import { useRouter } from 'next/router'
 
 const drawerBleeding = 56
 
@@ -46,17 +47,25 @@ const Puller = styled(Box)(({ theme }) => ({
 const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => void }> = ({ drawerParam, oncloseDrawer }) => {
     // const { window } = props
     const [open, setOpen] = React.useState(drawerParam?.setOpen || false)
-
+    const router = useRouter()
     const toggleDrawer = (newOpen: boolean) => () => {
         oncloseDrawer()
     }
 
-    const [menuToShow, setMenuToShow] = React.useState()
+    const route = router.route
+
+
     React.useEffect(() => {
-        console.log(drawerParam)
+        router.events.on("routeChangeComplete", () => {
+            oncloseDrawer()
+        })
+        return () => {
+            router.events.off("routeChangeComplete", () => {
+            })
+        }
 
-    }, [drawerParam])
-
+        // oncloseDrawer()
+    }, [router.events])
     // This is used only for the example
     // const container = window !== undefined ? () => window().document.body : undefined
 
