@@ -294,6 +294,7 @@
 
         inset: 0;
         display: flex;
+        position: absolute;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -302,7 +303,7 @@
 
         .header-line {
             font-size: 40px;
-
+            line-height: 50px;
             padding-top: 70px;
         }
 
@@ -321,7 +322,7 @@
 
     .btn-container {
 
-        margin-top: 1rem;
+        margin-top: 4rem;
     }
 
 }
