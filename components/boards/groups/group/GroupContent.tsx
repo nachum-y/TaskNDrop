@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import GroupAddTask from './GroupAddTask'
 import GroupFooter from './GroupFooter'
 import GroupHeader from './GroupHeader'
@@ -27,6 +27,12 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
     } = useContext(BoardContext)
 
+
+    const [windowWidth, setWindowWidth] = useState<number>()
+
+
+
+
     const { title, tasks, id, color, isCollapse } = group
 
     const removeGroupHandler = () => {
@@ -51,9 +57,15 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
     }
 
 
+    useEffect(() => {
+        if (window) {
+            setWindowWidth(window.outerWidth)
+        }
+    }, [])
+
 
     return (
-        <div className={`${classes['board-content-group']} ${isCollapse ? classes['collapseGroup'] : ''}`}>
+        <div className={`${classes['board-content-group']} ${isCollapse ? classes['collapseGroup'] : ''}`} >
             <Droppable droppableId={id}>
                 {(droppableProvided, droppableSnapshot) => (
                     <div
@@ -129,8 +141,9 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                             scrollLeft={scrollLeft}
                         />
                     </div>
-                )}
-            </Droppable>
+                )
+                }
+            </Droppable >
         </div >
 
     )

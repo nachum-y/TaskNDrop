@@ -17,6 +17,7 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
 
 
 
+
     const startEditingHandler = () => {
         setEditingMode(() => true)
     }
@@ -32,6 +33,8 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
         if (gropTaskLength === 1) setItems(() => '1 Item')
         if (gropTaskLength > 1) setItems(() => `${gropTaskLength} Item`)
     }, [gropTaskLength])
+
+ 
 
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>, typeMenu: string) => {

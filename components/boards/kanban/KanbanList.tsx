@@ -52,7 +52,7 @@ const KanbanList = () => {
                             </div>
 
                             <div className={classes['kanban-list-component-add-itet']}>
-                                <input placeholder='+Add Item' className={classes['kanban-list-component-add-item-input']} />
+                                {/* <input placeholder='+Add Item' className={classes['kanban-list-component-add-item-input']} /> */}
                             </div>
                         </div>
                     </div>
