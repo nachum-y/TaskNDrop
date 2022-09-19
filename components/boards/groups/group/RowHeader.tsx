@@ -11,7 +11,7 @@ const RowHeader: React.FC<{ colsOrder: ColsOrder[], groupColor: string, onToggle
         if (userScreenWidth && userScreenWidth < 850) {
             setRowStyle(80)
             if (scrollLeft) {
-                if (scrollLeft > 0 && scrollLeft < 140) {
+                if (scrollLeft >= 0 && scrollLeft < 140) {
                     setRowStyle(scrollLeft + 80)
                 } else {
                     setRowStyle(220)
