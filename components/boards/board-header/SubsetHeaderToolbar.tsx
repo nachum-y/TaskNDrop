@@ -10,12 +10,14 @@ function SubsetHeaderToolBar() {
     const router = useRouter()
     const currentRoute = router.pathname
 
+    console.log('loadHERE')
+
 
     return (
 
 
         <div className={classes['board-subset-toolbar']}>
-
+            <span>hellooooo</span>
             <Link href={{
                 pathname: '/boards/[boardId]/',
                 query: router.query
