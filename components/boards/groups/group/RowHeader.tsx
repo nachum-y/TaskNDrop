@@ -13,7 +13,7 @@ const RowHeader: React.FC<{ colsOrder: ColsOrder[], groupColor: string, onToggle
             if (scrollLeft) {
                 if (scrollLeft >= 0 && scrollLeft < 140) {
                     setRowStyle(scrollLeft + 80)
-                } else {
+                } else if (scrollLeft >= 140) {
                     setRowStyle(220)
                 }
 

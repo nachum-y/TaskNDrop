@@ -30,7 +30,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
             if (scrollLeft) {
                 if (scrollLeft >= 0 && scrollLeft < 140) {
                     setRowStyle(scrollLeft + 80)
-                } else {
+                } else if (scrollLeft >= 140) {
                     setRowStyle(220)
                 }
 
