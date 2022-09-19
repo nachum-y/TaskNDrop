@@ -24,6 +24,7 @@
             align-content: center;
             height: 100%;
 
+
             span {
                 display: flex;
                 align-items: center;
@@ -104,12 +105,12 @@
         z-index: 300;
         height: calc(50% + 335px);
 
+
         .item {
             padding: 0.5rem 0;
-
             button,
             .button-item {
-
+                // background-color: #dcdfec;
 
                 &.active {
 
@@ -118,7 +119,12 @@
 
                     }
                 }
+
+                :hover {
+                    background-color: transparent;
+                }
             }
         }
+
     }
 }

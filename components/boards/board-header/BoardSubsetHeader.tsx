@@ -45,8 +45,8 @@ function BoardSubsterHeader() {
                 </div>
 
                 <div className={classes['open-mobile-menu-view']}>
-                    <div className={classes['item']}>
-                        <button onClick={onOpenMenuHandler} type="button">
+                    <div onClick={onOpenMenuHandler} className={classes['item']}>
+                        <button type="button">
                             <div>
                                 <SvgIcon path={boardHeaderIcon.mainTable} width='16' height='16' />
                             </div>
@@ -54,6 +54,12 @@ function BoardSubsterHeader() {
                                 Main Table
                             </span>
                         </button >
+                        <div className={classes['ds-menu-button-container']}>
+                            <div className={classes['dropdown-button small-button']}>
+
+                                <SvgIcon path={boardHeaderIcon.angleDown} viewBox="0 0 448 512" width="10" height="10" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 
