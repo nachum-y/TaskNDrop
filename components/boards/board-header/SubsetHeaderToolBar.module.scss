@@ -95,5 +95,12 @@
     .board-subset-toolbar {
         display: flex;
         flex-direction: column;
+
+        min-width: max-content;
+        background-color: white;
+        box-shadow: 0 6px 20px -2px rgb(0 0 0 / 20%);
+        position: absolute;
+        border-radius: 8px;
+        z-index: 300;
     }
 }
