@@ -23,6 +23,7 @@ interface Props {
     oncloseDrawer: () => void
 }
 
+
 const Root = styled('div')(({ theme }) => ({
     height: '100%',
     backgroundColor:
@@ -44,6 +45,8 @@ const Puller = styled(Box)(({ theme }) => ({
 }))
 
 const DrawerMenu = (props: Props) => {
+    console.log(props.children)
+
     const { window } = props
     const [open, setOpen] = React.useState(props.drawerParam?.setOpen || false)
 
