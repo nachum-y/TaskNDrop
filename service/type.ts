@@ -241,7 +241,7 @@ export type TasksByStatus = {
     id?: TaskByStatusForId
 }
 
-export type DrawerMenu = {
+export type DrawerMenuType = {
     setOpen: boolean
     menuType: string,
     title: string
@@ -266,7 +266,7 @@ export type BoardContextState = {
     anchorEl: AnchorEl | null
     anchorElCel: AnchorElCel | null
     modal: Modal | null
-    drawerMenu: DrawerMenu | null
+    drawerMenu: DrawerMenuType
     scrollLeft: number
     userScreenWidth: number | undefined
     isMobileView: boolean
@@ -291,7 +291,7 @@ export type BoardContextState = {
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onSetModal: (newModal: Modal) => void
-    setDrawerMenu: (newMenu: DrawerMenu) => void
+    setDrawerMenu: (newMenu: DrawerMenuType) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
     setScrollLeft: (scrollNumber: number) => void

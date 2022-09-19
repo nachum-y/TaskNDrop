@@ -8,7 +8,7 @@ import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
-import { DrawerMenu } from '../../../service/type'
+import { DrawerMenuType } from '../../../service/type'
 import DynamicDrawerMenu from './DynamicDrawerMenu'
 
 const drawerBleeding = 56
@@ -18,8 +18,7 @@ interface Props {
      * Injected by the documentation to work in an iframe.
      * You won't need it on your project.
      */
-    window?: () => Window
-    drawerParam: DrawerMenu
+    drawerParam: DrawerMenuType
     oncloseDrawer: () => void
 }
 
@@ -44,20 +43,19 @@ const Puller = styled(Box)(({ theme }) => ({
     left: 'calc(50% - 15px)',
 }))
 
-const DrawerMenu = (props: Props) => {
-
+const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => void }> = ({ drawerParam, oncloseDrawer }) => {
     // const { window } = props
-    const [open, setOpen] = React.useState(props.drawerParam?.setOpen || false)
+    const [open, setOpen] = React.useState(drawerParam?.setOpen || false)
 
     const toggleDrawer = (newOpen: boolean) => () => {
-        props.oncloseDrawer()
+        oncloseDrawer()
     }
 
     const [menuToShow, setMenuToShow] = React.useState()
     React.useEffect(() => {
-        console.log(props.drawerParam)
+        console.log(drawerParam)
 
-    }, [props.drawerParam])
+    }, [drawerParam])
 
     // This is used only for the example
     // const container = window !== undefined ? () => window().document.body : undefined
@@ -100,8 +98,8 @@ const DrawerMenu = (props: Props) => {
                     }}
                 >
                     <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}> {props.drawerParam?.title}</Typography>
-                    <DynamicDrawerMenu menuType={props.drawerParam?.menuType as string} />
+                    <Typography sx={{ p: 2, color: 'text.secondary' }}> {drawerParam?.title}</Typography>
+                    <DynamicDrawerMenu menuType={drawerParam?.menuType as string} />
                 </StyledBox>)}
                 <StyledBox
                     sx={{

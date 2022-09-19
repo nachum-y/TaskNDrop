@@ -20,10 +20,10 @@ const keysToComponentMap: ComponentMap = {
 
 
 const DynamicDrawerMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
-
+   
     const key = menuType as string
 
-
+    
 
     if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {
         return React.createElement(

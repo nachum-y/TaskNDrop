@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenu } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -89,7 +89,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [modal, setModal] = useState<Modal>(null)
-    const [drawerMenu, setDrawerMenu] = useState<DrawerMenu>(null)
+    const [drawerMenu, setDrawerMenu] = useState<DrawerMenuType>(null)
     const [scrollLeft, setScrollLeft] = useState<number>(contextDefaultValues.scrollLeft)
     const [userScreenWidth, setUserScreenWidth] = useState<number | undefined>()
     const [isMobileView, setIsMobileView] = useState<boolean>(false)
