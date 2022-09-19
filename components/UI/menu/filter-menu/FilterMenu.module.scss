@@ -153,11 +153,17 @@
     .filter-menu {
         width: 100%;
         height: calc(50vh - 60px);
-
+        left: 0px;
 
         &-filters {
             height: auto;
             padding-bottom: 0.25rem;
+
+            &-filter-item-active {
+                span {
+                    white-space: nowrap
+                }
+            }
 
         }
 

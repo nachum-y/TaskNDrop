@@ -5,9 +5,9 @@ const FilterViewMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = 
 
 
     return (
-        <div>
-            <FilterMenu onMenuClick={onMenuClick} />
-        </div>
+
+        <FilterMenu onMenuClick={onMenuClick} />
+
     )
 }
 

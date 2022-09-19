@@ -15,7 +15,7 @@ type Uniqs = {
     id?: LabelObjPrc
 }
 
-const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean, userScreenWidth: number | undefined, scrollLeft: number }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse, scrollLeft }) => {
+const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean, userScreenWidth: number | undefined, scrollLeft: number | undefined }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse, scrollLeft }) => {
 
 
 

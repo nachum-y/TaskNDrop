@@ -327,3 +327,17 @@
 .kanbn-view-selectbox-title {
     margin-top: 1rem;
 }
+
+@media only screen and (max-width: 850px) {
+    .kanbn-view {
+        display: flex;
+
+        &-menu {
+            display: none;
+
+            &-settings {
+                display: none;
+            }
+        }
+    }
+}

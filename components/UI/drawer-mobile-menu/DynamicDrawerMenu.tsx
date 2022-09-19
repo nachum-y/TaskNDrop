@@ -25,7 +25,7 @@ const DynamicDrawerMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
 
     const onClickHandler = (actionType: string) => {
         onClickDialogMenu(actionType)
-        
+
 
     }
 
