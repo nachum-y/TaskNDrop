@@ -13,6 +13,7 @@ import Head from 'next/head'
 import BoardAppHeader from '../boards/board-header/BoardAppHeader'
 import { SpeedDialAction } from '@mui/material'
 import SpeedDialMenu from '../UI/speed-dial-mobile/SpeedDialMenu'
+import DrawerMenu from '../UI/drawer-mobile-menu/DrawerMenu'
 
 
 const Layout: React.FC<Props> = (props) => {
@@ -76,6 +77,8 @@ const Layout: React.FC<Props> = (props) => {
                             {props.children}
                         </div>
                         {(!userScreenWidth || userScreenWidth < 850) && < SpeedDialMenu />}
+                        {(!userScreenWidth || userScreenWidth < 850) && <DrawerMenu />}
+
                     </section>
 
                 </div>

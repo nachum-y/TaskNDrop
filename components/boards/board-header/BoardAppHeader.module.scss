@@ -152,5 +152,14 @@
 
     .board-header {
         padding: 1rem 0.5rem 0rem 0.5rem;
+
+        .board-header-last-seen {
+            display: none;
+        }
+
+
+        .board-header-icon-invite {
+            display: none;
+        }
     }
 }
