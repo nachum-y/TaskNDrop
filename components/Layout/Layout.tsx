@@ -17,11 +17,23 @@ import DrawerMenu from '../UI/drawer-mobile-menu/DrawerMenu'
 import DynamicDrawerMenu from '../UI/drawer-mobile-menu/DynamicDrawerMenu'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
+import CustomizedSnackbars from '../UI/user-message/CustomizedSnackbars'
 
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal, setScrollLeft, userScreenWidth, drawerMenu, isMobileView, setDrawerMenu } = useContext(BoardContext)
+    const { board,
+        onAppLoad,
+        anchorEl,
+        anchorElCel,
+        onCloseDialogMenu,
+        modal,
+        setScrollLeft,
+        userScreenWidth,
+        drawerMenu,
+        isMobileView,
+        setDrawerMenu,
+        snacbarUserMessage, setSnacbarUserMessage } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
@@ -77,6 +89,7 @@ const Layout: React.FC<Props> = (props) => {
             </Head>
             <AppNavigation />
             <main className={classes.main}>
+
                 <AppSideControler />
                 <div className={classes['first-level-content']}>
                     <section className={classes['board-wrapper']}>
@@ -109,6 +122,8 @@ const Layout: React.FC<Props> = (props) => {
                 }}>
                     <LinearProgress />
                 </Box> */}
+                {snacbarUserMessage?.setOpen
+                    && <CustomizedSnackbars snacbarUserMessage={snacbarUserMessage} setSnacbarUserMessage={setSnacbarUserMessage} />}
             </main>
         </Fragment>
     )

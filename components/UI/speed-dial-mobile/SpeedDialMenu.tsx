@@ -3,7 +3,7 @@ import Backdrop from '@mui/material/Backdrop'
 import SpeedDial from '@mui/material/SpeedDial'
 import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 import SpeedDialAction from '@mui/material/SpeedDialAction'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import SvgIcon from '../svgIcon/SvgIcon'
 import { Tooltip, tooltipClasses } from '@mui/material'
 
@@ -13,24 +13,36 @@ import { Tooltip, tooltipClasses } from '@mui/material'
 // import ShareIcon from '@mui/icons-material/Share'
 import { groupMenuIcon, speedDialIcons } from '../../../service/svgIcon'
 import classes from './SpeedDialMenu.module.scss'
+import { BoardContext } from '../../../store/board'
 const actions = [
-    { icon: <SvgIcon path={speedDialIcons.newTask} viewBox="0 0 448 512" fill='#fff' />, name: 'New Item' },
-    { icon: <SvgIcon path={speedDialIcons.newGroup} viewBox="0 0 512 512" fill='#fff' />, name: 'New Group' },
+    { icon: <SvgIcon path={speedDialIcons.newTask} viewBox="0 0 448 512" fill='#fff' />, name: 'New Item', actionType: 'AddNewTask' },
+    { icon: <SvgIcon path={speedDialIcons.newGroup} viewBox="0 0 512 512" fill='#fff' />, name: 'New Group', actionType: 'AddNewGroup' },
 ]
 
 
-
 const SpeedDialMenu = () => {
+
+    const { onSaveGroup } = useContext(BoardContext)
+
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleClose = (actionType?: string) => {
+        console.log(actionType)
+        if (actionType === 'AddNewGroup') onSaveGroup()
+        else {
+            
+
+        }
+
+        setOpen(false)
+    }
 
     return (
         <SpeedDial
             ariaLabel="Mobile SpeedDial Menu"
             sx={{ position: 'absolute', bottom: 16, right: 16 }}
             icon={<SvgIcon path={speedDialIcons.plusIcon} viewBox="0 0 448 512" classN={open ? classes['speed-dial-rotate'] : classes['speed-dial']} />}
-            onClose={handleClose}
+            onClose={() => handleClose}
             onOpen={handleOpen}
             open={open}
         >
@@ -40,7 +52,7 @@ const SpeedDialMenu = () => {
                     icon={action.icon}
                     tooltipTitle={action.name}
                     tooltipOpen
-                    onClick={handleClose}
+                    onClick={() => handleClose(action.actionType)}
                 />
             ))}
         </SpeedDial>

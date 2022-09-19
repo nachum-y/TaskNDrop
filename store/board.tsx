@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -38,6 +38,7 @@ const contextDefaultValues: BoardContextState = {
     scrollLeft: 0,
     userScreenWidth: undefined,
     isMobileView: false,
+    snacbarUserMessage: null,
     loadBoard: () => { },
     setBoard: () => { },
     updateBoard: () => { },
@@ -63,6 +64,7 @@ const contextDefaultValues: BoardContextState = {
     onCloseDialogMenu: () => { },
     onClickDialogMenu: () => { },
     setScrollLeft: () => { },
+    setSnacbarUserMessage: () => { },
 }
 
 export const BoardContext = createContext<BoardContextState>(
@@ -93,6 +95,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [scrollLeft, setScrollLeft] = useState<number>(contextDefaultValues.scrollLeft)
     const [userScreenWidth, setUserScreenWidth] = useState<number | undefined>()
     const [isMobileView, setIsMobileView] = useState<boolean>(false)
+    const [snacbarUserMessage, setSnacbarUserMessage] = useState<SnacbarUserMessage>(null)
 
 
 
@@ -294,10 +297,18 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const addTask = async (groupId: string, title: string) => {
         if (board) {
-            const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
+            try {
+                const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
+                updateBoardState(updatedBoard)
+            } catch (error) {
 
-            updateBoardState(updatedBoard)
+                setSnacbarUserMessage({
+                    setOpen: true,
+                    message: 'Error',
+                    severity: 'error'
+                })
 
+            }
         }
 
     }
@@ -421,8 +432,26 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
         else return
         if (board && tasksIds) {
-            const updatedBoard = await boardService.removeTasks(tasksIds, board._id.toString())
-            updateBoardState(updatedBoard, true)
+            let numberOfItem
+            typeof tasksIds === 'string' ? numberOfItem = `1 items` : numberOfItem = `${tasksIds.length} items`
+
+            if (tasksIds)
+                try {
+                    const updatedBoard = await boardService.removeTasks(tasksIds, board._id.toString())
+                    updateBoardState(updatedBoard, true)
+                    setSnacbarUserMessage({
+                        setOpen: true,
+                        message: `We successfully deleted ${numberOfItem} item`,
+                        severity: 'success'
+                    })
+                } catch (error) {
+                    setSnacbarUserMessage({
+                        setOpen: true,
+                        message: 'Error',
+                        severity: 'error'
+                    })
+                }
+
         }
     }
 
@@ -750,6 +779,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 scrollLeft,
                 userScreenWidth,
                 isMobileView,
+                snacbarUserMessage,
                 setBoard,
                 loadBoard,
                 updateBoard,
@@ -774,6 +804,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onClickDialogMenu,
                 onCloseDialogMenu,
                 setScrollLeft,
+                setSnacbarUserMessage,
             }}
         >
             {children}

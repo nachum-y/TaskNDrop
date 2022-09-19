@@ -247,6 +247,12 @@ export type DrawerMenuType = {
     title: string
 } | null
 
+export type SnacbarUserMessage = {
+    setOpen: boolean
+    message: string
+    severity: string
+} | null
+
 export type BoardContextState = {
     initialBoardId: undefined | string
     board: null | Board,
@@ -270,6 +276,7 @@ export type BoardContextState = {
     scrollLeft: number
     userScreenWidth: number | undefined
     isMobileView: boolean
+    snacbarUserMessage: SnacbarUserMessage
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -295,6 +302,7 @@ export type BoardContextState = {
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
     setScrollLeft: (scrollNumber: number) => void
+    setSnacbarUserMessage: (userMessage: SnacbarUserMessage) => void
 
 }
 
