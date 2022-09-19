@@ -28,7 +28,8 @@ const BoardFilter = () => {
         if (isMobileView) {
             const menuParam = {
                 setOpen: true,
-                menuType: 'FilterViewMenu'
+                menuType: 'FilterViewMenu',
+                title: 'Filter'
             }
             setDrawerMenu(menuParam)
             return

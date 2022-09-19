@@ -243,7 +243,8 @@ export type TasksByStatus = {
 
 export type DrawerMenu = {
     setOpen: boolean
-    menuType: string
+    menuType: string,
+    title: string
 } | null
 
 export type BoardContextState = {

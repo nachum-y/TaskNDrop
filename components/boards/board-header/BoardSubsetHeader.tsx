@@ -21,7 +21,8 @@ function BoardSubsterHeader() {
     const onOpenMenuHandler = () => {
         const menuVal = {
             setOpen: true,
-            menuType: 'SelectViewMenu'
+            menuType: 'SelectViewMenu',
+            title: 'Views'
         }
         setDrawerMenu(menuVal)
         // console.log('openMenu')
