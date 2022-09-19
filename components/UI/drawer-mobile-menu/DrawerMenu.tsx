@@ -99,7 +99,7 @@ const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => v
                 >
                     <Puller />
                     <Typography sx={{ p: 2, color: 'text.secondary' }}> {drawerParam?.title}</Typography>
-                    <DynamicDrawerMenu menuType={drawerParam?.menuType as string} />
+                    {drawerParam?.menuType && (<DynamicDrawerMenu menuType={drawerParam.menuType} />)}
                 </StyledBox>)}
                 <StyledBox
                     sx={{
