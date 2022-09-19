@@ -261,6 +261,8 @@ export type BoardContextState = {
     anchorEl: AnchorEl | null
     anchorElCel: AnchorElCel | null
     modal: Modal | null
+    scrollLeft: number
+    userScreenWidth: number | undefined
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -284,6 +286,7 @@ export type BoardContextState = {
     onSetModal: (newModal: Modal) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
+    setScrollLeft: (scrollNumber: number) => void
 
 }
 

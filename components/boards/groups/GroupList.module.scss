@@ -115,7 +115,7 @@
     position: relative;
     // margin-left: 2.25rem;
     padding-left: 2.25rem;
-    height: calc(100vh - 166px);
+    // height: calc(100vh - 166px);
 
 
     &-group {
@@ -1083,5 +1083,44 @@
     flex-direction: column;
     height: 100%;
     justify-content: space-evenly;
+
+}
+
+
+
+@media only screen and (max-width: 850px) {
+    .board-content {
+        overflow-x: auto;
+        position: relative;
+        // margin-left: 2.25rem;
+        padding-left: 2.25rem;
+        // height: calc(100vh - 166px);
+
+
+        &-group {
+            margin-right: 15px;
+            padding: 5px 0px 0px 0px;
+            font-size: 14px;
+
+            &-row {
+                grid-template-columns: 160px repeat(auto-fill, minmax(140px, 160px));
+                transition: 0.3s;
+
+                &-header {
+                    grid-template-columns: 160px repeat(auto-fill, minmax(140px, 160px));
+                    transition: 0.3s;
+
+                }
+            }
+        }
+
+    }
+
+    .task-item {
+        .item-conversation {
+            display: none;
+        }
+
+    }
 
 }

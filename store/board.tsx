@@ -34,6 +34,8 @@ const contextDefaultValues: BoardContextState = {
     anchorEl: null,
     anchorElCel: null,
     modal: null,
+    scrollLeft: 0,
+    userScreenWidth: undefined,
     loadBoard: () => { },
     setBoard: () => { },
     updateBoard: () => { },
@@ -57,6 +59,7 @@ const contextDefaultValues: BoardContextState = {
     onSetModal: () => { },
     onCloseDialogMenu: () => { },
     onClickDialogMenu: () => { },
+    setScrollLeft: () => { },
 }
 
 export const BoardContext = createContext<BoardContextState>(
@@ -83,8 +86,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [modal, setModal] = useState<Modal>(null)
-
-
+    const [scrollLeft, setScrollLeft] = useState<number>(contextDefaultValues.scrollLeft)
+    const [userScreenWidth, setUserScreenWidth] = useState<number | undefined>()
 
 
 
@@ -139,6 +142,22 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
     const loadBoard = (loadedBoard: Board) => setBoard(() => loadedBoard)
+
+
+    useEffect(() => {
+        if (window) {
+            setUserScreenWidth(window.innerWidth)
+            window.addEventListener('resize', _handleWindowSizeChange)
+            return () => {
+                window.removeEventListener('resize', _handleWindowSizeChange)
+            }
+        }
+    }, [])
+
+
+
+
+
 
     const onAppLoad = async () => {
         const boards = await boardService.query()
@@ -669,6 +688,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
+    const _handleWindowSizeChange = () => {
+        setUserScreenWidth(window.innerWidth)
+    }
 
     const menuDialogAction: menuDialogActionMap = {
         deleteThisGroup: (idx?: IdxOpt | undefined) => idx?.groupId ? removeGroup(idx.groupId) : console.log('error'),
@@ -718,6 +740,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 anchorEl,
                 anchorElCel,
                 modal,
+                scrollLeft,
+                userScreenWidth,
                 setBoard,
                 loadBoard,
                 updateBoard,
@@ -739,7 +763,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onOpenCelMenu,
                 onSetModal,
                 onClickDialogMenu,
-                onCloseDialogMenu
+                onCloseDialogMenu,
+                setScrollLeft,
             }}
         >
             {children}

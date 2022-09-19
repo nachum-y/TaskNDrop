@@ -22,6 +22,8 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
         selectedGroups,
         boardGroupsByLabel,
         toggleCollapseGroup,
+        userScreenWidth,
+        scrollLeft
 
     } = useContext(BoardContext)
 
@@ -76,6 +78,8 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                                 onToggleAll={() => toggleAll(group)}
                                 selectedGroups={selectedGroups}
                                 groupId={id}
+                                userScreenWidth={userScreenWidth}
+                                scrollLeft={scrollLeft}
                             />)}
 
                         </div>

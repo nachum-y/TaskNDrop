@@ -11,9 +11,11 @@ import { boardService } from '../../../../service/boardService'
 
 const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: string }> = ({ task, colsOrder, groupColor }) => {
 
-    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks, onOpenDialogMenu } = useContext(BoardContext)
+    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks, onOpenDialogMenu, scrollLeft, userScreenWidth } = useContext(BoardContext)
     const { cols, createdAt, id, groupId } = task
     const inputRef = useRef<HTMLInputElement>(null)
+
+    const [rowStyle, setRowStyle] = useState<number>(0)
 
 
 
@@ -21,6 +23,21 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     useEffect(() => {
         // selectedTasks
     }, [selectedTasks])
+
+    useEffect(() => {
+        if (userScreenWidth && userScreenWidth < 850) {
+            setRowStyle(80)
+            if (scrollLeft) {
+                if (scrollLeft > 0 && scrollLeft < 140) {
+                    setRowStyle(scrollLeft + 80)
+                } else {
+                    setRowStyle(220)
+                }
+
+            }
+        }
+
+    }, [scrollLeft, userScreenWidth])
 
 
     const updateTaskHandler = (newCol: Col) => {
@@ -87,7 +104,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
 
     return (
-        <div className={classes['board-content-group-row']} tabIndex={-1}>
+        <div className={classes['board-content-group-row']} tabIndex={-1} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
             <div className={`${classes.col} ${classes.fixed}`}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}>
@@ -116,7 +133,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                             </form>
                         </div>
                         <div className={classes['open-icon-holder']}>
-                            <span>Open</span>
+                            <span>Open {rowStyle}</span>
                             <div className={classes['open-icon']}></div>
                         </div>
                     </div>

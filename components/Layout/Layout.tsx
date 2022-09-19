@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment, useContext, ReactEventHandler } from 'react'
+import { useEffect, useState, Fragment, useContext, ReactEventHandler, UIEventHandler, DOMAttributes } from 'react'
 import classes from './Layout.module.scss'
 import AppNavigation from '../app-navigation/AppNavigation'
 import AppSideControler from '../app-navigation/AppSideControler'
@@ -15,11 +15,19 @@ import BoardAppHeader from '../boards/board-header/BoardAppHeader'
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal } = useContext(BoardContext)
+    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal, setScrollLeft } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
     }, [])
+
+
+
+
+    const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+        setScrollLeft(event.currentTarget.scrollLeft as number)
+        // console.log('offsetHeight: ', event.currentTarget.offsetHeight)
+    }
 
 
 
@@ -62,7 +70,7 @@ const Layout: React.FC<Props> = (props) => {
                 <div className={classes['first-level-content']}>
                     <section className={classes['board-wrapper']}>
                         <BoardAppHeader />
-                        <div className={classes['board-content-component']}>
+                        <div onScroll={handleScroll} className={classes['board-content-component']}>
                             {props.children}
                         </div>
                     </section>
