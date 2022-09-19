@@ -92,7 +92,7 @@ const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels |
 
     return (
 
-        <div className={classes['board-content-group-row-footer']} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
+        <div className={classes['board-content-group-row-footer']} style={{ display: 'grid', gridTemplateColumns: isCollapse ? '0px repeat(auto-fill, 140px)' : `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
             <div className={`${classes['footer-col']} ${classes['fixed']} `}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}></div>
