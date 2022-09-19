@@ -229,14 +229,54 @@
 
     .board-sub-header {
         justify-content: space-between;
+
+    }
+
+    .icon {
+        height: 0.5rem;
+    }
+
+    .board-filter {
+        flex-direction: row-reverse;
+
+    }
+
+
+    .filter-container {
+        background-color: #dcdfec;
+        margin-inline-end: 1rem;
+
+        &-expandable {
+            transition: background-color .1s cubic-bezier(0, 0, 0.35, 1);
+            border-radius: 4px;
+        }
+
+
+        &-active {
+            background-color: #cce5ff;
+
+
+        }
+    }
+
+
+    .input-container {
+        background-color: #dcdfec;
+        border-radius: 4px;
+
+
+        &-focused {
+            width: 140px;
+        }
+
     }
 
 
     .icon-and-input-wrapper-active {
         background-color: #dcdfec;
-    
+
     }
-    
+
     .add-board-entity-button-wrapper {
         .add-task-button-component {
             display: none;
@@ -249,17 +289,18 @@
             height: 1.5rem;
             width: auto;
             padding-inline-end: 0.5rem;
+
             &:hover {
                 background-color: #dcdfec;
-    
+
             }
+
             // :focus{
             //     background-color: #dcdfec;
             // }
         }
 
         .open-mobile-menu-view {
-            border-radius: 4px 0 0 4px;
             display: flex;
 
             .item {
@@ -267,6 +308,8 @@
                 position: relative;
                 background-color: #dcdfec;
                 display: flex;
+                border-radius: 0.25rem;
+
 
 
                 button,
