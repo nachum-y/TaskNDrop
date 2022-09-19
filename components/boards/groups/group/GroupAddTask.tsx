@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import useRowStyle from '../../../../hooks/useRowStyle'
 import classes from '../GroupList.module.scss'
 
 type BackgrounStyle = {
@@ -7,6 +8,7 @@ type BackgrounStyle = {
 const GroupAddTask: React.FC<{ groupColor: string, onAddTask: (title: string) => void }> = ({ groupColor, onAddTask }) => {
 
     const inputRef = useRef<HTMLInputElement>(null)
+    const rowStyle = useRowStyle()
 
     const lightColor = () => {
         if (typeof groupColor === 'string' && groupColor.length >= 3) {
@@ -32,7 +34,7 @@ const GroupAddTask: React.FC<{ groupColor: string, onAddTask: (title: string) =>
 
     return (
 
-        <div className={classes['board-content-group-row-add-item']}>
+        <div className={classes['board-content-group-row-add-item']} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
             <div className={`${classes['add-item-col']} ${classes['fixed']}`}>
                 <div className={`${classes['task-item']} ${classes['add-item']}`}>
                     <div className={`${classes['border']} ${classes['add-item']}`}></div>
