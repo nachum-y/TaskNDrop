@@ -211,4 +211,12 @@
         flex-direction: column;
     }
 
+    .dashboard-item-holder {
+        .number-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+
+        }
+    }
 }
