@@ -84,7 +84,7 @@ const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => v
                 {/* <Button onClick={toggleDrawer(true)}>Open</Button> */}
             </Box>
             <SwipeableDrawer
-                // container={container}
+
                 anchor="bottom"
                 open={open}
                 onClose={toggleDrawer(false)}

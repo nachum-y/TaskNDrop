@@ -11,12 +11,14 @@ import { Tooltip, tooltipClasses } from '@mui/material'
 // import SaveIcon from '@mui/icons-material/Save'
 // import PrintIcon from '@mui/icons-material/Print'
 // import ShareIcon from '@mui/icons-material/Share'
-import { groupMenuIcon } from '../../../service/svgIcon'
+import { groupMenuIcon, speedDialIcons } from '../../../service/svgIcon'
 import classes from './SpeedDialMenu.module.scss'
 const actions = [
-    { icon: <SvgIcon path={groupMenuIcon.colapseThisGroup} />, name: 'New Item' },
-    { icon: <SvgIcon path={groupMenuIcon.colapseThisGroup} />, name: 'New Group' },
+    { icon: <SvgIcon path={speedDialIcons.newTask} viewBox="0 0 448 512" fill='#fff' />, name: 'New Item' },
+    { icon: <SvgIcon path={speedDialIcons.newGroup} viewBox="0 0 512 512" fill='#fff' />, name: 'New Group' },
 ]
+
+
 
 const SpeedDialMenu = () => {
     const [open, setOpen] = useState(false)
@@ -27,7 +29,7 @@ const SpeedDialMenu = () => {
         <SpeedDial
             ariaLabel="Mobile SpeedDial Menu"
             sx={{ position: 'absolute', bottom: 16, right: 16 }}
-            icon={<SvgIcon path={groupMenuIcon.colapseThisGroup} />}
+            icon={<SvgIcon path={speedDialIcons.plusIcon} viewBox="0 0 448 512" classN={open ? classes['speed-dial-rotate'] : classes['speed-dial']} />}
             onClose={handleClose}
             onOpen={handleOpen}
             open={open}
