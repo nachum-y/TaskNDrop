@@ -95,7 +95,7 @@ const DrawerMenu = (props: Props) => {
                 >
                     <Puller />
                     <Typography sx={{ p: 2, color: 'text.secondary' }}> {props.drawerParam?.title}</Typography>
-                    <DynamicDrawerMenu menuType={'SelectViewMenu'} />
+                    <DynamicDrawerMenu menuType={props.drawerParam?.menuType as string} />
                 </StyledBox>)}
                 <StyledBox
                     sx={{
