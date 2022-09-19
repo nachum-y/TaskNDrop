@@ -104,5 +104,21 @@
         z-index: 300;
         height: calc(50% + 335px);
 
+        .item {
+            padding: 0.5rem 0;
+
+            button,
+            .button-item {
+
+
+                &.active {
+
+                    &>* {
+                        font-weight: 700;
+
+                    }
+                }
+            }
+        }
     }
 }
