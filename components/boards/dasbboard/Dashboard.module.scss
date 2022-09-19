@@ -214,11 +214,23 @@
     }
 
     .dashboard-item-holder {
-        .number-view {
+        padding: 0.5rem 0;
+        padding: 0;
+
+        .chart {
+            padding: 0;
+
+        }
+
+        .members-view {
             display: grid;
             grid-template-columns: 1fr 1fr;
+        }
 
-
+        .number-view {
+            &-number {
+                font-size: 1.5rem;
+            }
         }
     }
 }
