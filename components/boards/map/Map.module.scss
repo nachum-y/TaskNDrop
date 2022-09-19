@@ -66,3 +66,25 @@
 .map-content .map-page {
     gap: 1.6rem;
 }
+
+
+@media only screen and (max-width: 850px) {
+
+    .map-content {
+
+        width: 100%;
+        display: flex;
+
+        .map-page {
+
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-content: center;
+            align-items: stretch;
+            margin-inline-end: 0.5rem;
+        }
+
+    }
+
+}
