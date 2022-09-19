@@ -3,7 +3,7 @@ import { BoardContext } from "../../../store/board"
 import SelectViewMenu from "./SelectViewMenu"
 import FilterViewMenu from "./FilterViewMenu"
 
-type Cmp = React.FC<{ onMenuClick: (actionType: string) => void }>
+type Cmp = React.FC<{}>
 
 type ComponentMap = {
     SelectViewMenu: Cmp,
@@ -26,7 +26,6 @@ const DynamicDrawerMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
     const onClickHandler = (actionType: string) => {
         onClickDialogMenu(actionType)
 
-
     }
 
 
@@ -35,7 +34,6 @@ const DynamicDrawerMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
             keysToComponentMap[key as keyof ComponentMap],
             {
                 key: menuType,
-                onMenuClick: onClickHandler
             },
         )
     }

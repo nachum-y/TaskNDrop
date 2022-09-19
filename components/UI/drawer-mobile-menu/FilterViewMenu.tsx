@@ -1,12 +1,10 @@
 import FilterMenu from "../menu/filter-menu/FilterMenu"
 
-const FilterViewMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ onMenuClick }) => {
-
-
+const FilterViewMenu = () => {
 
     return (
         <div>
-            <FilterMenu onMenuClick={onMenuClick} />
+            <FilterMenu />
         </div>
 
 

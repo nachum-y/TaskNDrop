@@ -7,12 +7,10 @@ import { BoardContext } from '../../../../store/board'
 
 
 
-const FilterMenu: React.FC<{ onMenuClick: (actionType: string) => void }> = ({ onMenuClick }) => {
+const FilterMenu = () => {
 
     const { statusValueBoard, labelsValueBoard, priorityValueBoard, onSetActiveFilter, activeFilterParam } = useContext(BoardContext)
-    const clickHandler = (actionTypeMenu: string) => {
-        onMenuClick(actionTypeMenu)
-    }
+
 
     const setFilter = (filterType: string, filterParam: string) => {
         onSetActiveFilter(filterType, filterParam)
