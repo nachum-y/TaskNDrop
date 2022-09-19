@@ -17,7 +17,7 @@ const SkeletonGroup: React.FC<{ theme: string }> = (props) => {
                 <Skeleton animation="wave" />
                 <Skeleton animation={false} />
             </Box>
-           
+
         </div>
     )
 }

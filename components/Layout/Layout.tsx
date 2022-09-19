@@ -15,6 +15,8 @@ import { SpeedDialAction } from '@mui/material'
 import SpeedDialMenu from '../UI/speed-dial-mobile/SpeedDialMenu'
 import DrawerMenu from '../UI/drawer-mobile-menu/DrawerMenu'
 import DynamicDrawerMenu from '../UI/drawer-mobile-menu/DynamicDrawerMenu'
+import Box from '@mui/material/Box'
+import LinearProgress from '@mui/material/LinearProgress'
 
 
 const Layout: React.FC<Props> = (props) => {
@@ -50,7 +52,7 @@ const Layout: React.FC<Props> = (props) => {
                     <div className={classes['first-level-content']}>
                         <SkeletonBoardHeader theme="light" />
                         {
-                            [1, 2, 3, 4, 5].map((n) => {
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
                                 return <SkeletonGroup
                                     key={n}
                                     theme="light"
@@ -101,6 +103,12 @@ const Layout: React.FC<Props> = (props) => {
                     menuType={anchorElCel.taskCol}
                 />}
                 <NewItem />
+                {/* <Box sx={{
+                    width: '100%', position: 'absolute',
+                    bottom: '2px'
+                }}>
+                    <LinearProgress />
+                </Box> */}
             </main>
         </Fragment>
     )
