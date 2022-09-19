@@ -46,7 +46,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 const DrawerMenu = (props: Props) => {
 
-    const { window } = props
+    // const { window } = props
     const [open, setOpen] = React.useState(props.drawerParam?.setOpen || false)
 
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -54,7 +54,7 @@ const DrawerMenu = (props: Props) => {
     }
 
     // This is used only for the example
-    const container = window !== undefined ? () => window().document.body : undefined
+    // const container = window !== undefined ? () => window().document.body : undefined
 
     return (
         <Root>
@@ -71,7 +71,7 @@ const DrawerMenu = (props: Props) => {
                 <Button onClick={toggleDrawer(true)}>Open</Button>
             </Box> */}
             <SwipeableDrawer
-                container={container}
+                // container={container}
                 anchor="bottom"
                 open={open}
                 onClose={toggleDrawer(false)}
