@@ -1,18 +1,19 @@
 import React, { useContext } from "react"
 import { BoardContext } from "../../../store/board"
 import SelectViewMenu from "./SelectViewMenu"
+import FilterViewMenu from "./FilterViewMenu"
 
 type Cmp = React.FC<{ onMenuClick: (actionType: string) => void }>
 
 type ComponentMap = {
     SelectViewMenu: Cmp,
-    // TaskMenu: Cmp,
+    FilterViewMenu: Cmp,
     // FilterMenu: Cmp,
 }
 
 const keysToComponentMap: ComponentMap = {
     SelectViewMenu: SelectViewMenu,
-    // TaskMenu: TaskMenu,
+    FilterViewMenu: FilterViewMenu,
     // FilterMenu: FilterMenu,
 }
 
@@ -24,6 +25,7 @@ const DynamicDrawerMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
 
     const onClickHandler = (actionType: string) => {
         onClickDialogMenu(actionType)
+        
 
     }
 

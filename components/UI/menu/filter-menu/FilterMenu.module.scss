@@ -145,3 +145,43 @@
 .status-title {
     font-size: 0.85rem;
 }
+
+
+
+@media only screen and (max-width: 850px) {
+
+    .filter-menu {
+        width: 100%;
+        height: calc(50vh - 60px);
+
+
+        &-filters {
+            height: auto;
+            padding-bottom: 0.25rem;
+
+        }
+
+        &-main-container {
+            flex-direction: column;
+            height: 100%;
+        }
+
+        &-filters-holder {
+            display: flex;
+            align-items: center;
+
+
+
+
+            .filter-menu-filters-filter-item {
+                display: flex;
+
+                span {
+                    white-space: nowrap
+                }
+            }
+        }
+
+    }
+
+}

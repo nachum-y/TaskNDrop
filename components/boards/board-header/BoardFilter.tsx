@@ -3,14 +3,14 @@ import { BoardContext } from '../../../store/board'
 import classes from './BoardSubHeader.module.scss'
 import SearchFilter from './filters/SearchFilter'
 import StatusFilter from './filters/StatusFilter'
-import InputSearch from './InputSearch'
+
 
 
 
 
 const BoardFilter = () => {
 
-    const { onSetActiveFilter, onOpenDialogMenu, activeFilterParam } = useContext(BoardContext)
+    const { onSetActiveFilter, onOpenDialogMenu, activeFilterParam, isMobileView, setDrawerMenu } = useContext(BoardContext)
     const [focused, setFocused] = useState(false)
     const [expandable, setExpandable] = useState(false)
 
@@ -25,6 +25,14 @@ const BoardFilter = () => {
     }
 
     const openDialogMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (isMobileView) {
+            const menuParam = {
+                setOpen: true,
+                menuType: 'FilterViewMenu'
+            }
+            setDrawerMenu(menuParam)
+            return
+        }
         const idx = {
             groupId: '.',
             taskId: '.'

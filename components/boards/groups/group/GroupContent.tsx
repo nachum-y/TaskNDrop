@@ -125,6 +125,8 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                             groupByLabel={boardGroupsByLabel ? boardGroupsByLabel[group.id as keyof GroupByLabels] : undefined}
                             gropTaskLength={group.tasks.length}
                             isCollapse={isCollapse}
+                            userScreenWidth={userScreenWidth}
+                            scrollLeft={scrollLeft}
                         />
                     </div>
                 )}

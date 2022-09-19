@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import useRowStyle from '../../../../hooks/useRowStyle'
 import { ColsOrder, GroupByLabels, Labels, ListLabels, Status } from '../../../../service/type'
 import classes from '../GroupList.module.scss'
 import GroupFooterPrc from './GroupFooterPrc'
@@ -14,7 +15,11 @@ type Uniqs = {
     id?: LabelObjPrc
 }
 
-const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse }) => {
+const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels | undefined, gropTaskLength: number, isCollapse: boolean, userScreenWidth: number | undefined, scrollLeft: number }> = ({ colsOrder, groupByLabel, gropTaskLength, isCollapse }) => {
+
+
+
+    const rowStyle = useRowStyle()
 
 
     const getPrcLabel = (colType: string) => {
@@ -87,7 +92,7 @@ const GroupFooter: React.FC<{ colsOrder: ColsOrder[], groupByLabel: ListLabels |
 
     return (
 
-        <div className={classes['board-content-group-row-footer']}>
+        <div className={classes['board-content-group-row-footer']} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
             <div className={`${classes['footer-col']} ${classes['fixed']} `}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}></div>
