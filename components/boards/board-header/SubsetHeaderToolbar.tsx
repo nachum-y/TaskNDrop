@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 
-function SubsetHeaderToolBar() {
+const SubsetHeaderToolBar = () => {
 
     const router = useRouter()
     const currentRoute = router.pathname
@@ -13,10 +13,10 @@ function SubsetHeaderToolBar() {
     console.log('loadHERE')
 
 
-    return (
+    return(
 
 
-        <div className={classes['board-subset-toolbar']}>
+        <div className = { classes['board-subset-toolbar']} >
             <span>hellooooo</span>
             <Link href={{
                 pathname: '/boards/[boardId]/',

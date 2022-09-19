@@ -196,6 +196,11 @@ span.card-span {
 
 
 @media only screen and (max-width: 850px) {
+    .card-container {
+        .cards-holder {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
 
-    
 }
