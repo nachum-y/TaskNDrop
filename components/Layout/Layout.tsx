@@ -85,7 +85,7 @@ const Layout: React.FC<Props> = (props) => {
                         {(!userScreenWidth || userScreenWidth < 850) && < SpeedDialMenu />}
                         {((!userScreenWidth || userScreenWidth < 850) && drawerMenu) && (
                             <DrawerMenu drawerParam={drawerMenu} oncloseDrawer={() => setDrawerMenu(null)} >
-                                <DynamicDrawerMenu menuType={drawerMenu.menuType} />
+                                <DynamicDrawerMenu menuType={'SelectViewMenu'} />
                             </DrawerMenu>)
                         }
 
