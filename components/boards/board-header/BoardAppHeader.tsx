@@ -10,6 +10,7 @@ const BoardAppHeader = () => {
         <div className={classes['board-header']}>
             <div className={classes['board-header-main']}>
                 <BoardHeaderTop />
+                <SubsetHeaderToolBar></SubsetHeaderToolBar>
                 {(userScreenWidth && userScreenWidth > 850) && (<SubsetHeaderToolBar />)}
                 <BoardSubsterHeader />
             </div>
