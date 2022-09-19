@@ -7,13 +7,13 @@ type Cmp = React.FC<{}>
 
 type ComponentMap = {
     SelectViewMenu: Cmp,
-    // FilterViewMenu: Cmp,
+    FilterViewMenu: Cmp,
     // FilterMenu: Cmp,
 }
 
 const keysToComponentMap: ComponentMap = {
     SelectViewMenu: SelectViewMenu,
-    // FilterViewMenu: FilterViewMenu,
+    FilterViewMenu: FilterViewMenu,
     // FilterMenu: FilterMenu,
 }
 
