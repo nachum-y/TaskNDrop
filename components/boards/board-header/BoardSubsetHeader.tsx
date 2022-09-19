@@ -8,7 +8,7 @@ import { useContext } from "react"
 import { Modal } from "../../../service/type"
 function BoardSubsterHeader() {
 
-    const { onSetModal } = useContext(BoardContext)
+    const { onSetModal, setDrawerMenu } = useContext(BoardContext)
     const onNewItemHandle = () => {
 
         const newModal: Modal = {
@@ -18,6 +18,14 @@ function BoardSubsterHeader() {
         // onSetModal(newModal)
     }
 
+    const onOpenMenuHandler = () => {
+        const menuVal = {
+            setOpen: true,
+            menuType: 'SelectViewMenu'
+        }
+        setDrawerMenu(menuVal)
+        // console.log('openMenu')
+    }
 
     return (
         <div className={classes['board-sub-header']}>
@@ -34,9 +42,24 @@ function BoardSubsterHeader() {
                         </div>
                     </div>
                 </div>
+
+                <div className={classes['open-mobile-menu-view']}>
+                    <div className={classes['item']}>
+                        <button onClick={onOpenMenuHandler} type="button">
+                            <div>
+                                <SvgIcon path={boardHeaderIcon.mainTable} width='16' height='16' />
+                            </div>
+                            <span>
+                                Main Table
+                            </span>
+                        </button >
+                    </div>
+                </div>
+
+
             </div>
             <BoardFilter />
-        </div>
+        </div >
     )
 }
 

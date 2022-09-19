@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenu } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -34,8 +34,10 @@ const contextDefaultValues: BoardContextState = {
     anchorEl: null,
     anchorElCel: null,
     modal: null,
+    drawerMenu: null,
     scrollLeft: 0,
     userScreenWidth: undefined,
+    isMobileView: false,
     loadBoard: () => { },
     setBoard: () => { },
     updateBoard: () => { },
@@ -57,6 +59,7 @@ const contextDefaultValues: BoardContextState = {
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
     onSetModal: () => { },
+    setDrawerMenu: () => { },
     onCloseDialogMenu: () => { },
     onClickDialogMenu: () => { },
     setScrollLeft: () => { },
@@ -86,8 +89,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
     const [modal, setModal] = useState<Modal>(null)
+    const [drawerMenu, setDrawerMenu] = useState<DrawerMenu>(null)
     const [scrollLeft, setScrollLeft] = useState<number>(contextDefaultValues.scrollLeft)
     const [userScreenWidth, setUserScreenWidth] = useState<number | undefined>()
+    const [isMobileView, setIsMobileView] = useState<boolean>(false)
 
 
 
@@ -147,6 +152,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     useEffect(() => {
         if (window) {
             setUserScreenWidth(window.innerWidth)
+            setIsMobileView(() => window.innerWidth < 850)
             window.addEventListener('resize', _handleWindowSizeChange)
             return () => {
                 window.removeEventListener('resize', _handleWindowSizeChange)
@@ -740,8 +746,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 anchorEl,
                 anchorElCel,
                 modal,
+                drawerMenu,
                 scrollLeft,
                 userScreenWidth,
+                isMobileView,
                 setBoard,
                 loadBoard,
                 updateBoard,
@@ -762,6 +770,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onOpenDialogMenu,
                 onOpenCelMenu,
                 onSetModal,
+                setDrawerMenu,
                 onClickDialogMenu,
                 onCloseDialogMenu,
                 setScrollLeft,

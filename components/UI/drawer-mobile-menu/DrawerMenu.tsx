@@ -8,15 +8,19 @@ import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import { DrawerMenu } from '../../../service/type'
 
 const drawerBleeding = 56
 
 interface Props {
+    children: React.ReactNode
     /**
      * Injected by the documentation to work in an iframe.
      * You won't need it on your project.
      */
     window?: () => Window
+    drawerParam: DrawerMenu
+    oncloseDrawer: () => void
 }
 
 const Root = styled('div')(({ theme }) => ({
@@ -41,10 +45,10 @@ const Puller = styled(Box)(({ theme }) => ({
 
 const DrawerMenu = (props: Props) => {
     const { window } = props
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(props.drawerParam?.setOpen || false)
 
     const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen)
+        props.oncloseDrawer()
     }
 
     // This is used only for the example
@@ -61,9 +65,9 @@ const DrawerMenu = (props: Props) => {
                     },
                 }}
             />
-            <Box sx={{ textAlign: 'center', pt: 1 }}>
+            {/* <Box sx={{ textAlign: 'center', pt: 1 }}>
                 <Button onClick={toggleDrawer(true)}>Open</Button>
-            </Box>
+            </Box> */}
             <SwipeableDrawer
                 container={container}
                 anchor="bottom"
@@ -76,7 +80,7 @@ const DrawerMenu = (props: Props) => {
                     keepMounted: true,
                 }}
             >
-                <StyledBox
+                {open && (<StyledBox
                     sx={{
                         position: 'absolute',
                         top: -drawerBleeding,
@@ -88,8 +92,9 @@ const DrawerMenu = (props: Props) => {
                     }}
                 >
                     <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}>51 results</Typography>
-                </StyledBox>
+                    <Typography sx={{ p: 2, color: 'text.secondary' }}> {props.drawerParam?.menuType}</Typography>
+                    {props.children}
+                </StyledBox>)}
                 <StyledBox
                     sx={{
                         px: 2,
@@ -98,7 +103,7 @@ const DrawerMenu = (props: Props) => {
                         overflow: 'auto',
                     }}
                 >
-                    <Skeleton variant="rectangular" height="100%" />
+                    {/* <Skeleton variant="rectangular" height="100%" /> */}
                 </StyledBox>
             </SwipeableDrawer>
         </Root>

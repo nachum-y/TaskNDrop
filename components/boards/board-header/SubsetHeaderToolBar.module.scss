@@ -86,6 +86,13 @@
 
     to {
         width: 100%;
-       
+
+    }
+}
+
+
+@media only screen and (max-width: 850px) {
+    .board-subset-toolbar {
+        flex-direction: column;
     }
 }

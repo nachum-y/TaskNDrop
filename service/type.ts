@@ -241,6 +241,10 @@ export type TasksByStatus = {
     id?: TaskByStatusForId
 }
 
+export type DrawerMenu = {
+    setOpen: boolean
+    menuType: string
+} | null
 
 export type BoardContextState = {
     initialBoardId: undefined | string
@@ -261,8 +265,10 @@ export type BoardContextState = {
     anchorEl: AnchorEl | null
     anchorElCel: AnchorElCel | null
     modal: Modal | null
+    drawerMenu: DrawerMenu | null
     scrollLeft: number
     userScreenWidth: number | undefined
+    isMobileView: boolean
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -284,6 +290,7 @@ export type BoardContextState = {
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
     onSetModal: (newModal: Modal) => void
+    setDrawerMenu: (newMenu: DrawerMenu) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void
     setScrollLeft: (scrollNumber: number) => void

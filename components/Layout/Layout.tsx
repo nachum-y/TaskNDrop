@@ -14,15 +14,17 @@ import BoardAppHeader from '../boards/board-header/BoardAppHeader'
 import { SpeedDialAction } from '@mui/material'
 import SpeedDialMenu from '../UI/speed-dial-mobile/SpeedDialMenu'
 import DrawerMenu from '../UI/drawer-mobile-menu/DrawerMenu'
+import DynamicDrawerMenu from '../UI/drawer-mobile-menu/DynamicDrawerMenu'
 
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal, setScrollLeft, userScreenWidth } = useContext(BoardContext)
+    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal, setScrollLeft, userScreenWidth, drawerMenu, isMobileView, setDrawerMenu } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
     }, [])
+
 
 
 
@@ -61,6 +63,10 @@ const Layout: React.FC<Props> = (props) => {
         )
     }
 
+    const showJSX = () => (
+        <div>
+            <span>helllooo</span>
+        </div>)
 
     return (
         <Fragment>
@@ -77,7 +83,11 @@ const Layout: React.FC<Props> = (props) => {
                             {props.children}
                         </div>
                         {(!userScreenWidth || userScreenWidth < 850) && < SpeedDialMenu />}
-                        {(!userScreenWidth || userScreenWidth < 850) && <DrawerMenu />}
+                        {((!userScreenWidth || userScreenWidth < 850) && drawerMenu) && (
+                            <DrawerMenu drawerParam={drawerMenu} oncloseDrawer={() => setDrawerMenu(null)} >
+                                <DynamicDrawerMenu menuType={drawerMenu.menuType} />
+                            </DrawerMenu>)
+                        }
 
                     </section>
 
