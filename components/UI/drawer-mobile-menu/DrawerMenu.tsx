@@ -53,6 +53,12 @@ const DrawerMenu = (props: Props) => {
         props.oncloseDrawer()
     }
 
+    const [menuToShow, setMenuToShow] = React.useState()
+    React.useEffect(() => {
+        console.log(props.drawerParam)
+
+    }, [props.drawerParam])
+
     // This is used only for the example
     // const container = window !== undefined ? () => window().document.body : undefined
 

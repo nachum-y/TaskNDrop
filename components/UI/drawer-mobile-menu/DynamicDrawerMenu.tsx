@@ -7,26 +7,22 @@ type Cmp = React.FC<{}>
 
 type ComponentMap = {
     SelectViewMenu: Cmp,
-    FilterViewMenu: Cmp,
+    // FilterViewMenu: Cmp,
     // FilterMenu: Cmp,
 }
 
 const keysToComponentMap: ComponentMap = {
     SelectViewMenu: SelectViewMenu,
-    FilterViewMenu: FilterViewMenu,
+    // FilterViewMenu: FilterViewMenu,
     // FilterMenu: FilterMenu,
 }
 
 
 
 const DynamicDrawerMenu: React.FC<{ menuType: string }> = ({ menuType }) => {
-    const { onClickDialogMenu } = useContext(BoardContext)
+
     const key = menuType as string
 
-    const onClickHandler = (actionType: string) => {
-        onClickDialogMenu(actionType)
-
-    }
 
 
     if (typeof keysToComponentMap[key as keyof ComponentMap] !== 'undefined') {
