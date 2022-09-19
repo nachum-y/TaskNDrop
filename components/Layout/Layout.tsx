@@ -11,11 +11,13 @@ import CelMenu from '../UI/menu/cel-menu/CelMenu'
 import NewItem from '../UI/modal/NewItem'
 import Head from 'next/head'
 import BoardAppHeader from '../boards/board-header/BoardAppHeader'
+import { SpeedDialAction } from '@mui/material'
+import SpeedDialMenu from '../UI/speed-dial-mobile/SpeedDialMenu'
 
 
 const Layout: React.FC<Props> = (props) => {
 
-    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal, setScrollLeft } = useContext(BoardContext)
+    const { board, onAppLoad, anchorEl, anchorElCel, onCloseDialogMenu, modal, setScrollLeft, userScreenWidth } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
@@ -73,7 +75,9 @@ const Layout: React.FC<Props> = (props) => {
                         <div onScroll={handleScroll} className={classes['board-content-component']}>
                             {props.children}
                         </div>
+                        {(!userScreenWidth || userScreenWidth < 850) && < SpeedDialMenu />}
                     </section>
+
                 </div>
                 {anchorEl?.anchorEl && <MenuDialog
                     anchorElement={anchorEl.anchorEl}
