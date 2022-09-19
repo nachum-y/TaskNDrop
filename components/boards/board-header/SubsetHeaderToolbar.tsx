@@ -14,7 +14,8 @@ const SubsetHeaderToolBar = () => {
     return (
 
         <div className={classes['board-subset-toolbar']} >
-            <Link href={{
+            <span>TEST!</span>
+            {/* <Link href={{
                 pathname: '/boards/[boardId]/',
                 query: router.query
             }}>
@@ -86,7 +87,7 @@ const SubsetHeaderToolBar = () => {
                     </button >
                     {currentRoute === '/boards/[boardId]/cards' && <div className={classes['active-strip']}></div>}
                 </div>
-            </Link>
+            </Link> */}
 
         </div >
     )
