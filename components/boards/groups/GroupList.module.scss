@@ -24,7 +24,7 @@
 
 
 .board-content-component {
-    padding: 1rem 0 2.5rem 2.5rem;
+    padding: 0 0 2.5rem 2.5rem;
     overflow-x: auto;
     position: relative;
     height: 100%;
@@ -35,6 +35,8 @@
 
 .board-content-group {
     margin-bottom: 1.5rem;
+    min-width: fit-content;
+
 
     &.collapseGroup {
         margin-bottom: 1rem;
@@ -42,6 +44,7 @@
         border-radius: 4px;
         height: auto;
         display: inline-flex;
+        position: relative;
 
         &>* {
             display: inline-flex;
@@ -84,20 +87,23 @@
 
         .floating-header-row-component {
             display: grid;
-            grid-template-columns: 3rem 22rem 100%;
+            // grid-template-columns: 3rem 22rem 100%;
             align-self: flex-start;
             height: 100%;
-            flex-basis: 400px;
-
-            width: 100%;
+            // flex-basis: 400px;
+            position: sticky;
+            z-index: 400;
+            background-color: #fff;
             margin-left: 0;
             padding-top: 4px;
             padding-bottom: 8px;
-
+            left: 0;
             border-top: 1px solid #d0d4e4;
             border-bottom: 1px solid #d0d4e4;
             box-shadow: 0px 1px 1px rgb(0 0 0 / 10%);
             border-bottom-left-radius: 4px;
+            top: 0;
+            z-index: 500;
 
         }
 
@@ -112,16 +118,17 @@
 // BOARD
 .board-content {
     overflow-x: auto;
-    position: relative;
+    // position: relative;
     // margin-left: 2.25rem;
     padding-left: 2.25rem;
     // height: calc(100vh - 166px);
 
 
     &-group {
-        margin-right: 15px;
+        // margin-right: 15px;
         padding: 5px 0px 0px 0px;
         font-size: 14px;
+
 
         &-row {
             @extend %row-style;
@@ -416,9 +423,10 @@
 
 
 .group-header {
-    position: sticky;
-    left: 2.25rem;
 
+    // position: sticky;
+    // left: 2.25rem;
+    // 
     &-menu {
         position: absolute;
         display: flex;
@@ -508,7 +516,7 @@
 
 .board-content-group {
 
-
+    // position: relative;
     // &.collapseGroup {
     //     height: auto !important;
 
@@ -543,11 +551,12 @@
 
 .board-content-group.collapseGroup .board-content-group-row-footer {
     display: grid;
-    grid-template-columns: 0 repeat(auto-fill, 140px);
+    // grid-template-columns: 0 repeat(auto-fill, 140px);
     grid-auto-flow: column;
-    grid-auto-columns: minmax(140px, 160px);
+    grid-auto-columns: minmax(140px);
     grid-template-rows: auto;
-    border-bottom: 0;
+    // border-bottom: 0;
+    // position: relative;
 }
 
 
@@ -559,10 +568,11 @@
 /// 
 /// 
 .group-title-action {
-    width: 400px;
+    // width: 400px;
     background-color: #fff;
     position: sticky;
-    left: 0rem;
+    left: 0;
+    width: fit-content;
 }
 
 
@@ -890,10 +900,10 @@
 
 
 .group-title-action {
-    width: 400px;
+    // width: 400px;
     background-color: white;
-    position: sticky;
-    left: 0rem;
+    // position: sticky;
+    // left: 0rem;
 
 }
 
@@ -940,13 +950,6 @@
     cursor: pointer;
     display: flex;
 
-}
-
-.isColapse {
-
-    .collapsable-icon-button {
-        transform: rotate(90deg);
-    }
 }
 
 .color-indicator-gh {
@@ -1023,6 +1026,10 @@
     background-color: #fff;
     border: none;
     outline: none;
+    display: block;
+    top: 0;
+    position: sticky;
+    z-index: 500;
 }
 
 
@@ -1070,6 +1077,22 @@
     padding: 0.3rem;
 }
 
+
+
+
+
+.collapsable-icon-button {
+    transform: rotate(90deg);
+}
+
+.group-title-action {
+    &.isColapse {
+        width: 400px;
+    }
+}
+
+
+
 .group-summary-data {
     white-space: nowrap;
     font-size: 14px;
@@ -1077,6 +1100,9 @@
     color: $--secondary-text-color;
     margin-left: 0.25rem;
 }
+
+
+
 
 .group-header-title-wraper {
     display: flex;
@@ -1092,6 +1118,7 @@
     .board-content {
         overflow-x: auto;
         position: relative;
+        // left: 0;
         // margin-left: 2.25rem;
         padding-left: 2.25rem;
         // height: calc(100vh - 166px);
@@ -1101,6 +1128,7 @@
             margin-right: 15px;
             padding: 5px 0px 0px 0px;
             font-size: 14px;
+
 
             &-row {
                 grid-template-columns: 160px repeat(auto-fill, minmax(140px, 160px));
@@ -1128,4 +1156,3 @@
     }
 
 }
-

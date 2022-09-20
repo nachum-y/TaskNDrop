@@ -54,43 +54,45 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
 
 
     return (
-        <>
-            <div className={`${classes['group-title-action']} ${isCollapse ? classes['isColapse'] : ''}`} style={{ width: `${400 - (rowStyle || 0)}px` }}>
-                <div className={classes['group-header-menu']}>
-                    <div
-                        className={classes['group-header-menu-icon']}
-                        onClick={(event) => handleClick(event, 'GroupMenu')}
-                    >
-                    </div>
-                </div>
-                <div className={classes['background-hider']}></div>
-                <div className={classes['group-header-border-color']} style={{ backgroundColor: groupColor }}></div>
-                <div className={classes['collapsable-icon-button']}
-                    onClick={toggaleCollapseGroup}
+
+        <div className={`${classes['group-title-action']} ${isCollapse ? classes['isColapse'] : ''}`}
+            style={{ width: `${400 - (rowStyle || 0)}px` }}
+        >
+            <div className={classes['group-header-menu']}>
+                <div
+                    className={classes['group-header-menu-icon']}
+                    onClick={(event) => handleClick(event, 'GroupMenu')}
                 >
-                    <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" fill={groupColor} />
-
-                </div>
-                <div onClick={startEditingHandler} className={classes[`group-header-title${editingMode ? '-focus' : ''}`]} >
-                    <div onClick={(event) => handleClick(event, 'GroupMenu')} className={classes['color-indicator-gh']} style={{ backgroundColor: groupColor }}>
-
-                    </div>
-                    <div className={classes['group-header-title-wraper']}>
-                        <div className={classes['group-header-title-txt']}>
-                            {!editingMode &&
-                                <span style={{ color: groupColor }}>
-                                    {value}
-                                </span>}
-                            {editingMode && < InlineEdit value={value} setValue={setValue} editMode={setEditingMode} setColor={groupColor} />}
-                        </div>
-                        {isCollapse && (<div className={classes['group-summary-data']}>
-                            {items}
-                        </div>)}
-                    </div>
-                    <div className="right_component_dummy_column"></div>
                 </div>
             </div>
-        </>
+            <div className={classes['background-hider']}></div>
+            <div className={classes['group-header-border-color']} style={{ backgroundColor: groupColor }}></div>
+            <div className={classes['collapsable-icon-button']}
+                onClick={toggaleCollapseGroup}
+            >
+                <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" fill={groupColor} />
+
+            </div>
+            <div onClick={startEditingHandler} className={classes[`group-header-title${editingMode ? '-focus' : ''}`]} >
+                <div onClick={(event) => handleClick(event, 'GroupMenu')} className={classes['color-indicator-gh']} style={{ backgroundColor: groupColor }}>
+
+                </div>
+                <div className={classes['group-header-title-wraper']}>
+                    <div className={classes['group-header-title-txt']}>
+                        {!editingMode &&
+                            <span style={{ color: groupColor }}>
+                                {value}
+                            </span>}
+                        {editingMode && < InlineEdit value={value} setValue={setValue} editMode={setEditingMode} setColor={groupColor} />}
+                    </div>
+                    {isCollapse && (<div className={classes['group-summary-data']}>
+                        {items}
+                    </div>)}
+                </div>
+                <div className="right_component_dummy_column"></div>
+            </div>
+        </div>
+
     )
 }
 
