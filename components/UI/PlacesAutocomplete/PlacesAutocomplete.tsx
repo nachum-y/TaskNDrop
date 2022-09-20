@@ -24,8 +24,8 @@ type CelLocation = {
 }
 
 const PlacesAutocomplete: React.FC<{ setSelected: any }> = ({ setSelected }) => {
-
-
+   
+   
     const ref = useRef<HTMLInputElement>(null)
 
     useEffect(() => {

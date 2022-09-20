@@ -1,5 +1,5 @@
 import { ClickAwayListener } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import { Col, LocationCol } from '../../../service/type'
 import classes from './Location.module.scss'
 import { Wrapper, Status } from "@googlemaps/react-wrapper"
@@ -47,6 +47,16 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
         }
     }, [selected])
 
+    // const [loading] = useGoogleMapsApi({ library: "places" });
+
+    const render = (status: Status): ReactElement => {
+        if (status === Status.FAILURE) return (<div >error</div>)
+        return (<div >spinner</div>)
+
+
+
+    }
+
     const { NEXT_PUBLIC_GOOGLE_MAP_KEY } = process.env
     return (
         <ClickAwayListener onClickAway={() => setEditingMode(false)}>
@@ -62,6 +72,8 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
                         <Wrapper
                             apiKey={NEXT_PUBLIC_GOOGLE_MAP_KEY as string}
+                            render={render}
+                            libraries={["places"]} 
                         >
                             <PlacesAutocomplete setSelected={setSelected} />
                         </Wrapper>
