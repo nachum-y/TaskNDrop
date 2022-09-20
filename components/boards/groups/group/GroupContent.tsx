@@ -14,7 +14,7 @@ const GroupRow = dynamic(() => import("./GroupRow"), { ssr: false })
 import classes from '../GroupList.module.scss'
 import { ColsOrder, Group, GroupByLabels, IdxOpt } from '../../../../service/type'
 
-const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void }> = ({ group, colsOrder, removeGroup }) => {
+const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup: (id: string) => void, draggableProvidedSet: any, draggableSnapshotSet: any }> = ({ group, colsOrder, removeGroup, draggableProvidedSet, draggableSnapshotSet }) => {
 
     const {
         onOpenDialogMenu,
@@ -32,7 +32,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
     const [windowWidth, setWindowWidth] = useState<number>()
 
 
-
+    const [collapseTemp, setCollapseTemp] = useState(false)
 
     const { title, tasks, id, color, isCollapse } = group
 
@@ -65,6 +65,13 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
     }, [])
 
 
+    useEffect(() => {
+
+        setCollapseTemp(() => draggableSnapshotSet.isDragging)
+
+
+    }, [draggableSnapshotSet])
+
     return (
         <Droppable droppableId={id} type='task'>
             {(droppableProvided, droppableSnapshot) => (
@@ -73,20 +80,25 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                     ref={droppableProvided.innerRef}
                     {...droppableProvided.droppableProps}
                     data-is-dragging-over={droppableSnapshot.isDraggingOver}
-                    className={`${classes['board-content-group']} ${isCollapse ? classes['collapseGroup'] : ''}`}
+                    className={`${classes['board-content-group']} ${(isCollapse || collapseTemp) ? classes['collapseGroup'] : ''}`}
                 >
-                    <div className={classes['floating-header-row-component']}>
-                        <GroupHeader
-                            title={title}
-                            removeGroup={removeGroupHandler}
-                            groupColor={color}
-                            openMenu={openMenuHandler}
-                            isCollapse={group.isCollapse}
-                            toggaleCollapseGroup={handleTogalleCollapse}
-                            gropTaskLength={group.tasks.length}
-                        />
+                    <div className={classes['floating-header-row-component']}
+                    >
+                        <div className="handler"
+                            isDragging={draggableSnapshotSet}
+                            {...draggableProvidedSet.dragHandleProps}>
+                            <GroupHeader
+                                title={title}
+                                removeGroup={removeGroupHandler}
+                                groupColor={color}
+                                openMenu={openMenuHandler}
+                                isCollapse={group.isCollapse}
+                                toggaleCollapseGroup={handleTogalleCollapse}
+                                gropTaskLength={group.tasks.length}
 
-                        {!isCollapse && (<RowHeader
+                            />
+                        </div>
+                        {(!isCollapse && !collapseTemp) && (<RowHeader
                             colsOrder={colsOrder}
                             groupColor={color}
                             onToggleAll={() => toggleAll(group)}
@@ -97,7 +109,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                         />)}
 
                     </div>
-                    {!isCollapse && tasks.map((task, index) => (
+                    {(!isCollapse && !collapseTemp) && tasks.map((task, index) => (
                         <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
                             {(draggableProvided: any, draggableSnapshot: any) => (
                                 <div
@@ -120,7 +132,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                     ))}
                     {droppableSnapshot.isDraggingOver && <div className={classes['empty-row']}></div>}
 
-                    {!isCollapse && (< GroupAddTask
+                    {(!isCollapse && !collapseTemp) && (< GroupAddTask
                         groupColor={color}
                         onAddTask={addTaskHandler}
                     />)}
@@ -128,7 +140,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                         colsOrder={colsOrder}
                         groupByLabel={boardGroupsByLabel ? boardGroupsByLabel[group.id as keyof GroupByLabels] : undefined}
                         gropTaskLength={group.tasks.length}
-                        isCollapse={isCollapse}
+                        isCollapse={(isCollapse || collapseTemp)}
                         userScreenWidth={userScreenWidth}
                         scrollLeft={scrollLeft}
                     />

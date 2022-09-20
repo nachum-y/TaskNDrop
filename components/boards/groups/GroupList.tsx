@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, KeyboardEvent } from 'react'
 import { BoardContext } from '../../../store/board'
-import { Group } from '../../../service/type'
+import { DropResult, Group } from '../../../service/type'
 import dynamic from "next/dynamic"
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
@@ -61,6 +61,18 @@ const GroupList = () => {
 
     }
 
+    const dragStartHandler = (res: any) => {
+
+
+    }
+
+    const onBeforeDragStart = (result: DropResult) => {
+
+
+
+    }
+
+
 
     return (
         <>
@@ -70,9 +82,10 @@ const GroupList = () => {
                 onDuplicateTasks={() => duplicateTasks(undefined)}
             />}
             <DragDropContext onDragEnd={onDragEnd}
+                onBeforeDragStart={onBeforeDragStart}
             >
 
-                <Droppable droppableId={'board'} type='group'>
+                <Droppable droppableId={'board'} type='group' direction='vertical'>
                     {(droppableProvided, droppableSnapshot) => (
                         <div
                             // className={droppableSnapshot.isDraggingOver ? classes['row-back-drop'] : ''}
@@ -84,18 +97,21 @@ const GroupList = () => {
                             {
                                 boardGroups.map((group, index) => {
                                     return (
-                                        <Draggable key={group.id} draggableId={`${group.id}`} index={index}>
+                                        <Draggable key={group.id} draggableId={group.id} index={index} >
                                             {(draggableProvided: any, draggableSnapshot) => (
                                                 <div
                                                     ref={draggableProvided.innerRef}
                                                     {...draggableProvided.draggableProps}
-                                                    {...draggableProvided.dragHandleProps}
+                                                    isDragging={draggableSnapshot}
+                                                // {...draggableProvided.dragHandleProps}
                                                 >
                                                     < GroupContent
                                                         key={group.id}
                                                         group={group}
                                                         colsOrder={board!.colsOrder}
                                                         removeGroup={removeGroupHandler}
+                                                        draggableProvidedSet={draggableProvided}
+                                                        draggableSnapshotSet={draggableSnapshot}
                                                     />
                                                 </div>
                                             )}
