@@ -31,9 +31,8 @@ const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrd
 
 
     return (
-        <div>
 
-            <Droppable droppableId={id} type='task-kanban'>
+            <Droppable droppableId={id} type='task-kanban' >
                 {(droppableProvided, droppableSnapshot) => (
                     <div
                         className={classes['drag-task-kanban']}
@@ -78,7 +77,6 @@ const KanbanCard: React.FC<{ tasksByLabel: TaskByStatusForId, colsOrder: ColsOrd
                 )
                 }
             </Droppable >
-        </div >
     )
 }
 

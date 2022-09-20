@@ -573,6 +573,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (!destination) return
         if (!board) return
         if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) return
+        console.log(
+            type
+        )
 
         let updateBoard: Board = JSON.parse(JSON.stringify(board))
         if (type === 'column') {
@@ -614,14 +617,29 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 return
             }
 
+        }
 
+        if (type === 'task-kanban') {
+            
+            if (boardGroup) {
+                const taskList = boardGroup.map(g => g.tasks).flat()
+                let taskToUpdate = taskList.find(t => t.id === draggableId)
+                if (kanbanStatus[0] === destination.droppableId[0] && taskToUpdate) {
+                    const newCol = {
+                        type: kanbanStatus,
+                        value: destination.droppableId
+                    }
+                    const idx = {
+                        groupId: taskToUpdate.groupId,
+                        taskId: taskToUpdate.id
+                    }
+                    updateTask(newCol, idx)
 
-
-
-
-
+                }
+            }
 
         }
+
 
 
     }

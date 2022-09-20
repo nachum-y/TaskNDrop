@@ -33,7 +33,7 @@ const KanbanCardData: React.FC<{ task: Task, colsOrder: ColsOrder[], onOpenCelMe
 
 
     return (
-        <div className={classes['card-data']}>
+        <div className={classes['card-data']} id='test'>
             {colsOrder.length>0 && colsOrder.map((col) => (
                 <div className={classes['card-data-item']} key={col.type}>
 

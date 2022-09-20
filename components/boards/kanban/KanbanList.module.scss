@@ -141,6 +141,7 @@
         overflow-y: auto;
         padding: 0px 4px 0 10px;
         margin: 8px 4px 0 0;
+        
 
         .card {
             display: flex;
@@ -328,6 +329,11 @@
     margin-top: 1rem;
 }
 
+.drag-task-kanban{
+    min-height: 110px;
+
+}
+
 @media only screen and (max-width: 850px) {
     .kanbn-view {
         display: flex;
@@ -341,3 +347,4 @@
         }
     }
 }
+
