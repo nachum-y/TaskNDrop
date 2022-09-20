@@ -66,7 +66,6 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
 
     return (
-        // <div className={`${classes['board-content-group']} ${isCollapse ? classes['collapseGroup'] : ''}`} >
         <Droppable droppableId={id} type='task'>
             {(droppableProvided, droppableSnapshot) => (
                 <div

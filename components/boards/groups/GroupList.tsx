@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState, KeyboardEvent } from 'react'
 import { BoardContext } from '../../../store/board'
 import { Group } from '../../../service/type'
-// import GroupContent from './group/GroupContent'
 import dynamic from "next/dynamic"
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 import classes from './GroupList.module.scss'
 import { DragDropContext } from 'react-beautiful-dnd'
@@ -71,18 +71,47 @@ const GroupList = () => {
             />}
             <DragDropContext onDragEnd={onDragEnd}
             >
-                {
-                    boardGroups.map((group) => {
-                        return (
-                            < GroupContent
-                                key={group.id}
-                                group={group}
-                                colsOrder={board!.colsOrder}
-                                removeGroup={removeGroupHandler}
-                            />
-                        )
-                    })}
+
+                <Droppable droppableId={'board'} type='group'>
+                    {(droppableProvided, droppableSnapshot) => (
+                        <div
+                            // className={droppableSnapshot.isDraggingOver ? classes['row-back-drop'] : ''}
+                            ref={droppableProvided.innerRef}
+                            {...droppableProvided.droppableProps}
+                            data-is-dragging-over={droppableSnapshot.isDraggingOver}
+                        >
+
+                            {
+                                boardGroups.map((group, index) => {
+                                    return (
+                                        <Draggable key={group.id} draggableId={`${group.id}`} index={index}>
+                                            {(draggableProvided: any, draggableSnapshot) => (
+                                                <div
+                                                    ref={draggableProvided.innerRef}
+                                                    {...draggableProvided.draggableProps}
+                                                    {...draggableProvided.dragHandleProps}
+                                                >
+                                                    < GroupContent
+                                                        key={group.id}
+                                                        group={group}
+                                                        colsOrder={board!.colsOrder}
+                                                        removeGroup={removeGroupHandler}
+                                                    />
+                                                </div>
+                                            )}
+                                        </Draggable>
+
+                                    )
+                                })}
+
+
+                        </div>
+                    )
+                    }
+
+                </Droppable >
             </DragDropContext>
+
             {boardGroups.length === 0 && <Message
                 image={searchEmptyImg}
                 title='No results found in this board'

@@ -479,33 +479,52 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const onDragEnd = (result: DropResult) => {
+        console.log(result.type)
         const { destination, source } = result
         if (!destination) return
         if (!board) return
         let updateBoard: Board = JSON.parse(JSON.stringify(board))
-        const sourceIdx = board!.groups.findIndex((group) => group.id === source.droppableId)
-        const destinationIdx = board!.groups.findIndex((group) => group.id === destination.droppableId)
+        if (result.type === 'task') {
 
-        var dragItem = updateBoard.groups[sourceIdx].tasks[result.source.index]
-        updateBoard.groups[sourceIdx].tasks.splice(
-            result.source.index,
-            1
-        )
-        updateBoard.groups[destinationIdx].tasks.splice(
-            result.destination.index,
-            0,
-            dragItem
-        )
+            const sourceIdx = board!.groups.findIndex((group) => group.id === source.droppableId)
+            const destinationIdx = board!.groups.findIndex((group) => group.id === destination.droppableId)
 
-        if (source.droppableId !== destination.droppableId) {
-            dragItem.groupId = destination.droppableId
+            var dragItem = updateBoard.groups[sourceIdx].tasks[result.source.index]
+            updateBoard.groups[sourceIdx].tasks.splice(
+                result.source.index,
+                1
+            )
+            updateBoard.groups[destinationIdx].tasks.splice(
+                result.destination.index,
+                0,
+                dragItem
+            )
+
+            if (source.droppableId !== destination.droppableId) {
+                dragItem.groupId = destination.droppableId
+            }
+
+            updateBoardState(updateBoard)
+
         }
 
-        updateBoardState(updateBoard)
+        if (result.type === 'group') {
+            const newGroupsOrder = Array.from(board.groups)
+
+            let b = newGroupsOrder[source.index]
+            newGroupsOrder[source.index] = newGroupsOrder[destination.index]
+            newGroupsOrder[destination.index] = b
+
+            updateBoard.groups = newGroupsOrder
+
+            updateBoardState(updateBoard)
+
+        }
 
     }
 
     const onDragEndColumn = (result: DropResult) => {
+
         const { destination, source } = result
         if (!destination) return
         if (!board) return
