@@ -105,19 +105,28 @@
 
 
 .board-header-icon-star,
-.board-header-icon-info {
+.board-header-icon-info,
+.board-header-icon-star-on {
     font-size: 16px;
     color: #676879;
     font-family: dapulse;
 }
 
 .board-header-icon-star::before {
-    content: "\f344";
+    // content: "\f344";
+    content: "\f3dc";
+}
+
+.board-header-icon-star-on::before {
+    color: #ffcb00;
+    content: "\f3db";
 }
 
 
+
 .board-header-icon-info::before {
-    content: "\f3dc";
+
+    content: "\f344";
 }
 
 .board-header-icon-invite {

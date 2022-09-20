@@ -8,7 +8,9 @@ const BoardHeaderTop = () => {
 
     const { board, setModal } = useContext(BoardContext)
 
+
     const [value, setValue] = useState(board!.title)
+    const [fevBoard, setFevBoard] = useState(true)
     const [editingMode, setEditingMode] = useState(false)
 
     const startEditingHandler = () => {
@@ -30,6 +32,10 @@ const BoardHeaderTop = () => {
 
     }
 
+    const onSetFevBoard = () => {
+        setFevBoard((prevState) => !prevState)
+    }
+
     return (
         <div className={classes['board-header-top']}>
             <div className={classes['board-header-left']}>
@@ -44,10 +50,10 @@ const BoardHeaderTop = () => {
                         {editingMode && < InlineEdit value={value} setValue={setValue} editMode={setEditingMode} />}
                     </div>
                     <div onClick={openModal} className={classes['board-header-show-description']}>
-                        <span className={classes['board-header-icon-star']} ></span>
-                    </div>
-                    <div className={classes['board-header-star']}>
                         <span className={classes['board-header-icon-info']} ></span>
+                    </div>
+                    <div onClick={onSetFevBoard} className={classes['board-header-star']}>
+                        <span className={classes[`board-header-icon-star${fevBoard ? '-on' : ''}`]} ></span>
                     </div>
                 </div>
             </div>
