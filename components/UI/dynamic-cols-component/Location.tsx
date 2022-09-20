@@ -75,7 +75,7 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
                             render={render}
                             libraries={["places"]} 
                         >
-                            <PlacesAutocomplete setSelected={setSelected} />
+                            {/* <PlacesAutocomplete setSelected={setSelected} /> */}
                         </Wrapper>
                         // <input placeholder={title} ref={ref} id='row.id' type='text' autoFocus className={classes['input-location']} onBlur={() => setEditingMode(false)} />
 
