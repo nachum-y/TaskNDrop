@@ -66,7 +66,9 @@ const PlacesAutocomplete: React.FC<{ setSelected: any }> = ({ setSelected }) => 
                 className={classes['input-location']}
                 ref={ref}
             />
-            <ComboboxPopover>
+            <ComboboxPopover
+            className={classes['location-list']}
+            >
                 <ComboboxList>
                     {status === "OK" &&
                         data.map(({ place_id, description }) => (
