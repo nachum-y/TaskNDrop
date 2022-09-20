@@ -5,13 +5,13 @@ import classes from './BoardSubHeader.module.scss'
 import SvgIcon from "../../UI/svgIcon/SvgIcon"
 import { BoardContext } from "../../../store/board"
 import { useContext } from "react"
-import { Modal } from "../../../service/type"
+import { ModalType } from "../../../service/type"
 function BoardSubsterHeader() {
 
     const { onSetModal, setDrawerMenu } = useContext(BoardContext)
     const onNewItemHandle = () => {
-        const newModal: Modal = {
-            isOpen: true,
+        const newModal: ModalType = {
+            setOpen: true,
             modalType: 'NewItem'
         }
         // onSetModal(newModal)

@@ -12,18 +12,13 @@ import CardCellWrap from './CardCellWrap'
 export default function FormDialog() {
 
     const { modal, onSetModal, colsOrderBoard } = useContext(BoardContext)
-    const open = modal?.isOpen || false
+    const open = false
     const handleClickOpen = () => {
         // setOpen(true)
     }
 
     const handleClose = () => {
-        const newModal = {
-            isOpen: false,
-            modalType: 'NewItem'
-        }
-
-        onSetModal(newModal)
+       
     }
 
     return (
