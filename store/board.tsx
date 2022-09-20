@@ -166,9 +166,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }, [])
 
 
-
-
-
     const onAppLoad = async () => {
         const boards = await boardService.query()
         const initialBoard: Board = boards[1]
@@ -179,6 +176,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setPriorityValueBoard(initialBoard.priority)
         setBoardMembers(initialBoard.members)
         setBoardGroupsByLabel(getGroupsByLabels)
+        
         // setInitialBoardId(board?._id.toString())
         // router.replace(`/boards/${initialBoard._id}`)
     }

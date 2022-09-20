@@ -4,6 +4,8 @@ import { Col, LocationCol } from '../../../service/type'
 import classes from './Location.module.scss'
 import { Wrapper, Status } from "@googlemaps/react-wrapper"
 import PlacesAutocomplete from '../PlacesAutocomplete/PlacesAutocomplete'
+import { Loader } from '@googlemaps/js-api-loader'
+import useGoogleMap from '../../../hooks/useGoogleMap'
 
 
 
@@ -17,6 +19,10 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
     const type = taskCol.type
     const [title, setTitle] = useState<string>('Type address...')
     const [selected, setSelected] = useState<LocationCol | null>(null)
+    const { NEXT_PUBLIC_GOOGLE_MAP_KEY } = process.env
+    const loaded = useGoogleMap()
+
+
 
     useEffect(() => {
         if (value && typeof value !== 'number') {
@@ -35,7 +41,6 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
     }
 
-    const ref = useRef(null)
 
 
 
@@ -47,7 +52,6 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
         }
     }, [selected])
 
-    // const [loading] = useGoogleMapsApi({ library: "places" });
 
     const render = (status: Status): ReactElement => {
         if (status === Status.FAILURE) return (<div >error</div>)
@@ -57,7 +61,7 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
 
     }
 
-    const { NEXT_PUBLIC_GOOGLE_MAP_KEY } = process.env
+
     return (
         <ClickAwayListener onClickAway={() => setEditingMode(false)}>
             <div className={classes['task-location']}>
@@ -70,13 +74,11 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
                         </span>}
                     {editingMode &&
 
-                        <Wrapper
-                            apiKey={NEXT_PUBLIC_GOOGLE_MAP_KEY as string}
-                            render={render}
-                            libraries={["places"]} 
-                        >
-                            {/* <PlacesAutocomplete setSelected={setSelected} /> */}
-                        </Wrapper>
+                        <>
+                            {!loaded && (<div>...</div>)}
+                            {loaded && <PlacesAutocomplete setSelected={setSelected} />}
+                        </>
+                        // </Wrapper>
                         // <input placeholder={title} ref={ref} id='row.id' type='text' autoFocus className={classes['input-location']} onBlur={() => setEditingMode(false)} />
 
                     }
