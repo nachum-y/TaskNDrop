@@ -85,7 +85,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                     <div className={classes['floating-header-row-component']}
                     >
                         <div className="handler"
-                            isDragging={draggableSnapshotSet}
+                            isdragging={draggableSnapshotSet}
                             {...draggableProvidedSet.dragHandleProps}>
                             <GroupHeader
                                 title={title}

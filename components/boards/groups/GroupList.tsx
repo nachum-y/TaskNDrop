@@ -59,16 +59,9 @@ const GroupList = () => {
 
     }
 
-    const dragStartHandler = (res: any) => {
-
-
-    }
-
-    const onBeforeDragStart = (result: DropResult) => {
 
 
 
-    }
 
 
 
@@ -80,7 +73,6 @@ const GroupList = () => {
                 onDuplicateTasks={() => duplicateTasks(undefined)}
             />}
             <DragDropContext onDragEnd={onDragEnd}
-                onBeforeDragStart={onBeforeDragStart}
             >
 
                 <Droppable droppableId={'board'} type='group' direction='vertical'>
@@ -100,7 +92,7 @@ const GroupList = () => {
                                                 <div
                                                     ref={draggableProvided.innerRef}
                                                     {...draggableProvided.draggableProps}
-                                                    isDragging={draggableSnapshot}
+                                                    isdragging={draggableSnapshot}
                                                 // {...draggableProvided.dragHandleProps}
                                                 >
                                                     < GroupContent

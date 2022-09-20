@@ -54,6 +54,7 @@ const contextDefaultValues: BoardContextState = {
     duplicateTasks: () => { },
     onDragEnd: () => { },
     onDragEndColumn: () => { },
+    onDragEndKanban: () => { },
     onSetActiveFilter: () => { },
     setTasksByLabels: () => { },
     setKanbanStatus: () => { },
@@ -75,7 +76,7 @@ export const BoardContext = createContext<BoardContextState>(
 
 const BoardProvider: FC<Props> = ({ children }) => {
 
-    const [initialBoardId, setInitialBoardId] = useState<undefined | string>('632336ac4e7e4d793cb0d9db')
+    const [initialBoardId, setInitialBoardId] = useState<undefined | string>('632a2ce94e7e4d793c9459a0')
     const [board, setBoard] = useState<Board | null>(contextDefaultValues.board)
     const [boardGroup, setBoardGroup] = useState<Group[]>([])
     const [colsOrderBoard, setColsOrder] = useState<ColsOrder[] | undefined>(undefined)
@@ -168,7 +169,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const onAppLoad = async () => {
         const boards = await boardService.query()
-        const initialBoard: Board = boards[1]
+        const initialBoard: Board = boards[0]
+        console.log(initialBoard)
+
         loadBoard(initialBoard)
         setBoardGroup(initialBoard.groups)
         setStatusValueBoard(initialBoard.status)
@@ -565,6 +568,66 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     }
 
+    const onDragEndKanban = (result: DropResult) => {
+        const { destination, source, type, draggableId } = result
+        if (!destination) return
+        if (!board) return
+        if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) return
+
+        let updateBoard: Board = JSON.parse(JSON.stringify(board))
+        if (type === 'column') {
+
+
+            if (kanbanStatus === 'status' && draggableId[0] === 's') {
+                const newStatusValueArray = Array.from(statusValueBoard)
+                let sourceTemp = newStatusValueArray[source.index]
+                newStatusValueArray[source.index] = newStatusValueArray[destination.index]
+                newStatusValueArray[destination.index] = sourceTemp
+                setStatusValueBoard(newStatusValueArray)
+                updateBoard.status = newStatusValueArray
+                updateBoardState(updateBoard)
+                return
+            }
+            if (kanbanStatus === 'labelCmp' && draggableId[0] === 'l') {
+                console.log(source)
+                const newLabelsValueBoard = Array.from(labelsValueBoard)
+                let sourceTemp = newLabelsValueBoard[source.index]
+                newLabelsValueBoard[source.index] = newLabelsValueBoard[destination.index]
+                newLabelsValueBoard[destination.index] = sourceTemp
+
+                setLabelsValueBoard(newLabelsValueBoard)
+                updateBoard.labels = newLabelsValueBoard
+                updateBoardState(updateBoard)
+                return
+            }
+            if (kanbanStatus === 'priority' && draggableId[0] === 'p') {
+
+                const newPriorityValueBoard = Array.from(priorityValueBoard)
+                let sourceTemp = newPriorityValueBoard[source.index]
+                newPriorityValueBoard[source.index] = newPriorityValueBoard[destination.index]
+                newPriorityValueBoard[destination.index] = sourceTemp
+
+
+                setPriorityValueBoard(newPriorityValueBoard)
+                updateBoard.priority = newPriorityValueBoard
+                updateBoardState(updateBoard)
+                return
+            }
+
+
+
+
+
+
+
+
+        }
+
+
+    }
+
+
+
     const onFilterGroup = (updatedBoard?: Board) => {
         let updateBoard
         if (updatedBoard) {
@@ -860,6 +923,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 duplicateTasks,
                 onDragEnd,
                 onDragEndColumn,
+                onDragEndKanban,
                 onSetActiveFilter,
                 setTasksByLabels,
                 setKanbanStatus,

@@ -5,16 +5,21 @@ import SelectMenu from '../../UI/select-menu/SelectMenu'
 import SelectBox from '../../UI/selectBox/SelectBox'
 import KanbanCard from './KanbanCard'
 import classes from './KanbanList.module.scss'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext } from 'react-beautiful-dnd'
+
 const KanbanList = () => {
 
 
-    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, boardGroup, setKanbanStatus, kanbanColList, setKanbanColList } = useContext(BoardContext)
+    const { boardTasksByLabel, setTasksByLabels, kanbanStatus, colsOrderBoard, boardGroup, setKanbanStatus, kanbanColList, setKanbanColList, onDragEndKanban } = useContext(BoardContext)
 
 
     useEffect(() => {
+        
         setTasksByLabels()
 
-    }, [kanbanStatus, boardGroup])
+    }, [kanbanStatus, boardGroup,])
+
 
 
 
@@ -22,45 +27,79 @@ const KanbanList = () => {
         <div className={classes['kanbn-view']}>
             <div className={classes['kanbn-view-border']}>
             </div>
-            <div id='Draggable' className={classes['kanban-view-content']}>
 
 
-                {boardTasksByLabel && Object.keys(boardTasksByLabel).map(status => (
-                    <div key={status} className={classes['kanban-list-component']}>
-                        <div style={{ backgroundColor: boardTasksByLabel[status as keyof TasksByStatus]?.color }} className={classes['kanban-list-component-header handle']}>
-                            <span className={classes['kanban-list-component-header-title']}>{boardTasksByLabel[status as keyof TasksByStatus]?.title|| 'Default'}</span>
+            <DragDropContext onDragEnd={onDragEndKanban}
+            >
+
+                <Droppable droppableId={'kanban-view'} type='column' direction='horizontal'>
+                    {(droppableProvided, droppableSnapshot) => (
+                        <div
+                            id='Draggable' className={classes['kanban-view-content']}
+                            ref={droppableProvided.innerRef}
+                            {...droppableProvided.droppableProps}
+                            data-is-dragging-over={droppableSnapshot.isDraggingOver}
+                        >
+
+
+                            {boardTasksByLabel && Object.keys(boardTasksByLabel).map((status, index) => (
+
+                                <Draggable key={status} draggableId={status} index={index} >
+                                    {(draggableProvided: any, draggableSnapshot) => (
+                                        <div
+                                            ref={draggableProvided.innerRef}
+                                            {...draggableProvided.draggableProps}
+                                            isdragging={draggableSnapshot}
+                                        >
+                                            <div key={status} className={classes['kanban-list-component']}>
+                                                <div style={{ backgroundColor: boardTasksByLabel[status as keyof TasksByStatus]?.color }} className={classes['kanban-list-component-header handle']}>
+                                                    <span {...draggableProvided.dragHandleProps} className={classes['kanban-list-component-header-title']}>{boardTasksByLabel[status as keyof TasksByStatus]?.title || 'Default'}</span>
+                                                </div>
+                                                <div className={classes['kanban-list-component-inn']}>
+
+                                                    <div style={{ backgroundColor: boardTasksByLabel[status as keyof TasksByStatus]?.color }} className={classes['color-indicator']}>
+                                                    </div>
+                                                    <div className={classes['card-holder']}>
+                                                        {boardTasksByLabel[status as keyof TasksByStatus] && (
+                                                            <KanbanCard
+                                                                colsOrder={colsOrderBoard!}
+                                                                tasksByLabel={boardTasksByLabel[status as keyof TasksByStatus]!}
+                                                                id={status}
+                                                            // labels='
+                                                            // status=''
+                                                            // priority=''
+                                                            // boardMembers=''
+                                                            // taskList=''
+                                                            // colsToDisplay=''
+                                                            // labelId=''
+                                                            // typeView=''
+
+                                                            />)}
+                                                    </div>
+
+                                                    <div className={classes['kanban-list-component-add-itet']}>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    )}
+                                </Draggable>
+
+
+                            ))
+
+
+
+                            }
+
                         </div>
-                        <div className={classes['kanban-list-component-inn']}>
+                    )
+                    }
+                </Droppable >
+            </DragDropContext >
 
-                            <div style={{ backgroundColor: boardTasksByLabel[status as keyof TasksByStatus]?.color }} className={classes['color-indicator']}>
-                            </div>
-                            <div className={classes['card-holder']}>
-                                {boardTasksByLabel[status as keyof TasksByStatus] && (
-                                    <KanbanCard
-                                        colsOrder={colsOrderBoard!}
-                                        tasksByLabel={boardTasksByLabel[status as keyof TasksByStatus]!}
-                                    // labels='
-                                    // status=''
-                                    // priority=''
-                                    // boardMembers=''
-                                    // taskList=''
-                                    // colsToDisplay=''
-                                    // labelId=''
-                                    // typeView=''
-
-                                    />)}
-                            </div>
-
-                            <div className={classes['kanban-list-component-add-itet']}>
-                                {/* <input placeholder='+Add Item' className={classes['kanban-list-component-add-item-input']} /> */}
-                            </div>
-                        </div>
-                    </div>
-                ))
-                }
-
-
-            </div >
             <div className={classes['kanbn-view-menu']}>
 
                 <div className={classes['kanbn-view-menu-settings']}>

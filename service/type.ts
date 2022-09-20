@@ -292,6 +292,7 @@ export type BoardContextState = {
     duplicateTasks: (tasksIds: string | undefined) => void
     onDragEnd: (result: DropResult) => void
     onDragEndColumn: (result: DropResult) => void
+    onDragEndKanban: (result: DropResult) => void
     onSetActiveFilter: (filterType: string, filterParam: string) => void
     setTasksByLabels: () => void
     setKanbanStatus: (status: string) => void

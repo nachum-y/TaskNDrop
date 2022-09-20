@@ -83,7 +83,7 @@
         {
             "id": "m101",
             "name": "Robert Susan",
-            "email": "shiran@gmail.com",
+            "email": "robertsusan@gmail.com",
             "isAdmin": false,
             "joinedAt": {
                 "$numberDouble": "1.6582915145650E+12"
@@ -97,7 +97,7 @@
         {
             "id": "m102",
             "name": "Ashley Mark",
-            "email": "Meital@gmail.com",
+            "email": "ashleymark@gmail.com",
             "isAdmin": false,
             "joinedAt": {
                 "$numberDouble": "1.6582915145650E+12"
@@ -125,7 +125,7 @@
         {
             "id": "m104",
             "name": "Carol Paul",
-            "email": "Tal@gmail.com",
+            "email": "carolpaul@gmail.com",
             "isAdmin": false,
             "joinedAt": {
                 "$numberDouble": "1.6582915145650E+12"
@@ -248,7 +248,7 @@
                     "createdBy": {
                         "id": "m101",
                         "name": "Robert Susan",
-                        "email": "shiran@gmail.com",
+                        "email": "robertsusan@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -333,7 +333,7 @@
                     "createdBy": {
                         "id": "m102",
                         "name": "Ashley Mark",
-                        "email": "Meital@gmail.com",
+                        "email": "ashleymark@gmail.com",
                         "isAdmin": true,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -431,7 +431,7 @@
                     "createdBy": {
                         "id": "m101",
                         "name": "Robert Susan",
-                        "email": "shiran@gmail.com",
+                        "email": "robertsusan@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -516,7 +516,7 @@
                     "createdBy": {
                         "id": "m102",
                         "name": "Ashley Mark",
-                        "email": "Meital@gmail.com",
+                        "email": "ashleymark@gmail.com",
                         "isAdmin": true,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -601,7 +601,7 @@
                     "createdBy": {
                         "id": "m104",
                         "name": "Carol Paul",
-                        "email": "Tal@gmail.com",
+                        "email": "carolpaul@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -671,7 +671,7 @@
                     "createdBy": {
                         "id": "m102",
                         "name": "Ashley Mark",
-                        "email": "Meital@gmail.com",
+                        "email": "ashleymark@gmail.com",
                         "isAdmin": true,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -751,7 +751,7 @@
                     "createdBy": {
                         "id": "m104",
                         "name": "Carol Paul",
-                        "email": "Tal@gmail.com",
+                        "email": "carolpaul@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -833,7 +833,7 @@
                     "createdBy": {
                         "id": "m101",
                         "name": "Robert Susan",
-                        "email": "shiran@gmail.com",
+                        "email": "robertsusan@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -908,7 +908,7 @@
                     "createdBy": {
                         "id": "m104",
                         "name": "Carol Paul",
-                        "email": "Tal@gmail.com",
+                        "email": "carolpaul@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -988,7 +988,7 @@
                     "createdBy": {
                         "id": "m101",
                         "name": "Robert Susan",
-                        "email": "shiran@gmail.com",
+                        "email": "robertsusan@gmail.com",
                         "isAdmin": false,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
@@ -1066,7 +1066,7 @@
                     "createdBy": {
                         "id": "m102",
                         "name": "Ashley Mark",
-                        "email": "Meital@gmail.com",
+                        "email": "ashleymark@gmail.com",
                         "isAdmin": true,
                         "joinedAt": {
                             "$numberDouble": "1.6582915145650E+12"
