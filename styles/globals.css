@@ -166,6 +166,10 @@ video {
 }
 
 
-.MuiSpeedDial-root button{
+.MuiSpeedDial-root button {
   background-color: #0073ea !important;
+}
+
+.MuiBackdrop-root {
+  opacity: 0 !important;
 }

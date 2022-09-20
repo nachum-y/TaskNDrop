@@ -1,4 +1,5 @@
 import { useState, useEffect, ReactEventHandler, MouseEventHandler, useRef } from 'react'
+import useRowStyle from '../../../../hooks/useRowStyle'
 import { boardHeaderIcon } from '../../../../service/svgIcon'
 import InlineEdit from '../../../UI/inline-edit/InlineEdit'
 import SvgIcon from '../../../UI/svgIcon/SvgIcon'
@@ -16,7 +17,7 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
     const [items, setItems] = useState<string>('')
 
 
-
+    const rowStyle = useRowStyle()
 
     const startEditingHandler = (event: React.MouseEvent<HTMLDivElement>) => {
         setEditingMode(() => true)
@@ -54,7 +55,7 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
 
     return (
         <>
-            <div className={`${classes['group-title-action']} ${isCollapse ? classes['isColapse'] : ''}`}>
+            <div className={`${classes['group-title-action']} ${isCollapse ? classes['isColapse'] : ''}`} style={{ width: `${400 - (rowStyle || 0)}px` }}>
                 <div className={classes['group-header-menu']}>
                     <div
                         className={classes['group-header-menu-icon']}

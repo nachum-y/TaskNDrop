@@ -10,7 +10,6 @@ function BoardSubsterHeader() {
 
     const { onSetModal, setDrawerMenu } = useContext(BoardContext)
     const onNewItemHandle = () => {
-
         const newModal: Modal = {
             isOpen: true,
             modalType: 'NewItem'
@@ -19,13 +18,17 @@ function BoardSubsterHeader() {
     }
 
     const onOpenMenuHandler = () => {
+
         const menuVal = {
             setOpen: true,
             menuType: 'SelectViewMenu',
             title: 'Views'
         }
         setDrawerMenu(menuVal)
-        // console.log('openMenu')
+    }
+
+    const onOpenItemMenu = () => {
+
     }
 
     return (
@@ -36,7 +39,7 @@ function BoardSubsterHeader() {
                         className={classes['add-with-dropdown monday-style-button"']}>
                         New Item
                     </button>
-                    <div className={classes['ds-menu-button-container']}>
+                    <div onClick={onOpenItemMenu} className={classes['ds-menu-button-container']}>
                         <div className={classes['dropdown-button small-button']}>
 
                             <SvgIcon path={boardHeaderIcon.angleDown} viewBox="0 0 448 512" width="10" height="10" />

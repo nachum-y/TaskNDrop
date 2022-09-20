@@ -6,8 +6,8 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useContext, useState } from 'react'
-import { BoardContext } from '../../../store/board'
-import CardCellWrap from './new-item/CardCellWrap'
+import { BoardContext } from '../../../../store/board'
+import CardCellWrap from './CardCellWrap'
 
 export default function FormDialog() {
 

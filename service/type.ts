@@ -86,7 +86,7 @@ export type Board = {
     _id: ObjectId
     title: string
     createdAt: Int32
-    beMember: Member
+    byMember: Member
     labels: Labels[]
     status: Status[]
     priority: Priority[]
@@ -210,8 +210,8 @@ export type MovementMode = 'FLUID' | 'SNAP'
 
 export type DropReason = 'DROP' | 'CANCEL'
 
-export type Modal = {
-    isOpen: boolean
+export type ModalType = {
+    setOpen: boolean
     modalType: string
 } | null
 
@@ -271,7 +271,7 @@ export type BoardContextState = {
     selectedGroups: string[]
     anchorEl: AnchorEl | null
     anchorElCel: AnchorElCel | null
-    modal: Modal | null
+    modal: ModalType | null
     drawerMenu: DrawerMenuType
     scrollLeft: number
     userScreenWidth: number | undefined
@@ -297,7 +297,8 @@ export type BoardContextState = {
     setKanbanColList: (listOfColList: string[]) => void
     onOpenDialogMenu: (el: HTMLDivElement, menuType: string, idx?: IdxOpt) => void
     onOpenCelMenu: (el: HTMLSpanElement, idx?: IdxOpt, taskCol?: Col) => void
-    onSetModal: (newModal: Modal) => void
+    onSetModal: (newModal: ModalType) => void
+    setModal: (newModal: ModalType) => void
     setDrawerMenu: (newMenu: DrawerMenuType) => void
     onClickDialogMenu: (actionType: string) => void
     onCloseDialogMenu: () => void

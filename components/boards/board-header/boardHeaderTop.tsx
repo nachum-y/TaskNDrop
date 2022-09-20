@@ -6,7 +6,7 @@ import { BoardContext } from '../../../store/board'
 const BoardHeaderTop = () => {
 
 
-    const { board } = useContext(BoardContext)
+    const { board, setModal } = useContext(BoardContext)
 
     const [value, setValue] = useState(board!.title)
     const [editingMode, setEditingMode] = useState(false)
@@ -19,6 +19,16 @@ const BoardHeaderTop = () => {
         if (value && value !== board?.title && value.trim().length !== 0) {
         }
     }, [editingMode])
+
+
+    const openModal = () => {
+        const modalParam = {
+            setOpen: true,
+            modalType: 'BoardModal'
+        }
+        setModal(modalParam)
+
+    }
 
     return (
         <div className={classes['board-header-top']}>
@@ -33,7 +43,7 @@ const BoardHeaderTop = () => {
                             </span>}
                         {editingMode && < InlineEdit value={value} setValue={setValue} editMode={setEditingMode} />}
                     </div>
-                    <div className={classes['board-header-show-description']}>
+                    <div onClick={openModal} className={classes['board-header-show-description']}>
                         <span className={classes['board-header-icon-star']} ></span>
                     </div>
                     <div className={classes['board-header-star']}>

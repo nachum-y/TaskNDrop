@@ -2,7 +2,7 @@
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, Modal, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage, ModalType } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -60,6 +60,7 @@ const contextDefaultValues: BoardContextState = {
     onOpenDialogMenu: () => { },
     onOpenCelMenu: () => { },
     onSetModal: () => { },
+    setModal: () => { },
     setDrawerMenu: () => { },
     onCloseDialogMenu: () => { },
     onClickDialogMenu: () => { },
@@ -90,7 +91,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [selectedGroups, setSelectedGroups] = useState<string[]>(contextDefaultValues.selectedGroups)
     const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
     const [anchorElCel, setAnchorElCel] = useState<AnchorElCel | null>(null)
-    const [modal, setModal] = useState<Modal>(null)
+    const [modal, setModal] = useState<ModalType>(null)
     const [drawerMenu, setDrawerMenu] = useState<DrawerMenuType>(null)
     const [scrollLeft, setScrollLeft] = useState<number>(contextDefaultValues.scrollLeft)
     const [userScreenWidth, setUserScreenWidth] = useState<number | undefined>()
@@ -167,7 +168,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-
     const onAppLoad = async () => {
         const boards = await boardService.query()
         const initialBoard: Board = boards[1]
@@ -215,12 +215,19 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const removeGroup = async (groupId: string) => {
 
         try {
+            let removedGroup = boardGroup.find((g) => g.id === groupId)
             let updatedGroup = boardGroup.filter((group: Group) => group.id !== groupId)
-            // setBoardGroup(updatedGroup)
             let updatedBoard: Board = JSON.parse(JSON.stringify(board))
             updatedBoard.groups = updatedGroup
             updateBoardState(updatedBoard)
-            // const updatedGroups = await boardService.removeGroup(groupId, board!._id.toString())
+            setSnacbarUserMessage({
+                setOpen: true,
+                message: `${removedGroup?.title} group was successfully deleted.`,
+                severity: 'success'
+            })
+
+
+
 
         } catch (error) {
             console.log(error)
@@ -678,7 +685,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
-    const onSetModal = (newModal: Modal) => {
+    const onSetModal = (newModal: ModalType) => {
 
         setModal(() => newModal)
     }
@@ -800,6 +807,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onOpenDialogMenu,
                 onOpenCelMenu,
                 onSetModal,
+                setModal,
                 setDrawerMenu,
                 onClickDialogMenu,
                 onCloseDialogMenu,

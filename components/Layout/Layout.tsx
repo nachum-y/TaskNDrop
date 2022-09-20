@@ -8,7 +8,7 @@ import SkeletonBoardHeader from '../UI/skeletons/SkeletonBoardHeader'
 import MenuDialog from '../UI/menu/MenuDialog'
 import { Props } from '../../service/type'
 import CelMenu from '../UI/menu/cel-menu/CelMenu'
-import NewItem from '../UI/modal/NewItem'
+import NewItem from '../UI/modal/new-item/NewItem'
 import Head from 'next/head'
 import BoardAppHeader from '../boards/board-header/BoardAppHeader'
 import { SpeedDialAction } from '@mui/material'
@@ -18,7 +18,7 @@ import DynamicDrawerMenu from '../UI/drawer-mobile-menu/DynamicDrawerMenu'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
 import CustomizedSnackbars from '../UI/user-message/CustomizedSnackbars'
-
+import BasicModal from '../UI/modal/BasicModal'
 
 const Layout: React.FC<Props> = (props) => {
 
@@ -33,7 +33,9 @@ const Layout: React.FC<Props> = (props) => {
         drawerMenu,
         isMobileView,
         setDrawerMenu,
-        snacbarUserMessage, setSnacbarUserMessage } = useContext(BoardContext)
+        snacbarUserMessage,
+        setSnacbarUserMessage,
+        setModal } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
@@ -124,6 +126,8 @@ const Layout: React.FC<Props> = (props) => {
                 </Box> */}
                 {snacbarUserMessage?.setOpen
                     && <CustomizedSnackbars snacbarUserMessage={snacbarUserMessage} setSnacbarUserMessage={setSnacbarUserMessage} />}
+
+                {modal?.setOpen && <BasicModal modalSet={modal} setModal={setModal} />}
             </main>
         </Fragment>
     )
