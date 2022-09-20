@@ -303,11 +303,16 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
 
-    const addTask = async (groupId: string, title: string) => {
+    const addTask = async (groupId: string, title: string, shift?: boolean) => {
         if (board) {
             try {
-                const updatedBoard = await boardService.addTask(title, groupId, board._id.toString())
+                const updatedBoard = await boardService.addTask(title, groupId, board._id.toString(), shift)
                 updateBoardState(updatedBoard)
+                setSnacbarUserMessage({
+                    setOpen: true,
+                    message: `${title} added successfully`,
+                    severity: 'success'
+                })
             } catch (error) {
 
                 setSnacbarUserMessage({

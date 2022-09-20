@@ -8,13 +8,17 @@ import { useContext } from "react"
 import { ModalType } from "../../../service/type"
 function BoardSubsterHeader() {
 
-    const { onSetModal, setDrawerMenu } = useContext(BoardContext)
+    const { onSetModal, setDrawerMenu, addTask, board } = useContext(BoardContext)
     const onNewItemHandle = () => {
-        const newModal: ModalType = {
-            setOpen: true,
-            modalType: 'NewItem'
-        }
+        // const newModal: ModalType = {
+        //     setOpen: true,
+        //     modalType: 'NewItem'
+        // }
         // onSetModal(newModal)
+        const groupId = board?.groups[0].id
+        if (groupId) {
+            addTask(groupId, 'New item', true)
+        }
     }
 
     const onOpenMenuHandler = () => {

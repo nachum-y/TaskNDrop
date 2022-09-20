@@ -65,7 +65,7 @@ async function initialBoardId() {
 async function query() {
     const res = await fetch(`${server}/api/boards/`)
     const json = await res.json()
-    
+
     return json
 }
 
@@ -85,7 +85,7 @@ async function saveGroup(group: Group | undefined, boardId: string) {
     if (group && boardId && group.id) {
         const idx = board.groups.findIndex((g) => g.id === group.id)
         board.groups.splice(idx, 1, group)
-        
+
         return group
     }
     else {
@@ -142,7 +142,7 @@ async function removeGroup(groupId: string, boardId: string) {
 //     return groupToEdit
 // }
 
-async function addTask(title: string, groupId: string, boardId: string) {
+async function addTask(title: string, groupId: string, boardId: string, shift?: boolean) {
     let res = await _getBoardById(boardId)
     const board: Board = await res.json()
     try {
@@ -159,8 +159,12 @@ async function addTask(title: string, groupId: string, boardId: string) {
                 createdBy: await userService.getActiveMember(),
                 groupId: groupId,
             }
+            if (shift) {
 
-            groupToEdit.tasks.push(task)
+                groupToEdit.tasks.unshift(task)
+            } else {
+                groupToEdit.tasks.push(task)
+            }
 
 
             const response = await _updateBoard(board, boardId)

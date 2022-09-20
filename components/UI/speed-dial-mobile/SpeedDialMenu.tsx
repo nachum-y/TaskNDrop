@@ -22,7 +22,7 @@ const actions = [
 
 const SpeedDialMenu = () => {
 
-    const { onSaveGroup } = useContext(BoardContext)
+    const { onSaveGroup, addTask, board } = useContext(BoardContext)
 
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
@@ -30,8 +30,10 @@ const SpeedDialMenu = () => {
         console.log(actionType)
         if (actionType === 'AddNewGroup') onSaveGroup()
         else {
-            
-
+            const groupId = board?.groups[0].id
+            if (groupId) {
+                addTask(groupId, 'New item', true)
+            }
         }
 
         setOpen(false)
