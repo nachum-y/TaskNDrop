@@ -201,14 +201,25 @@ const BoardProvider: FC<Props> = ({ children }) => {
         const newGroup: Group = await boardService.saveGroup(undefined, board!._id.toString())
 
         if (board && newGroup) {
-            // let newBoard: Board = JSON.parse(JSON.stringify(board))
-            // newBoard.groups.push(newGroup)
-            // const { groups: newGroups } = newBoard
 
-            setBoardGroup((prevState) => prevState.concat(newGroup))
-            let updatedBoard: Board = JSON.parse(JSON.stringify(board))
-            updatedBoard.groups.push(newGroup)
-            setBoard((prevState) => updatedBoard)
+            try {
+                setBoardGroup((prevState) => prevState.concat(newGroup))
+                let updatedBoard: Board = JSON.parse(JSON.stringify(board))
+                updatedBoard.groups.push(newGroup)
+                setBoard((prevState) => updatedBoard)
+                setSnacbarUserMessage({
+                    setOpen: true,
+                    message: `A new group was added to the board`,
+                    severity: 'success'
+                })
+            } catch (error) {
+                setSnacbarUserMessage({
+                    setOpen: true,
+                    message: `Error`,
+                    severity: 'error'
+                })
+            }
+
         }
     }
 
