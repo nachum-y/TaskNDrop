@@ -133,7 +133,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                             </form>
                         </div>
                         <div className={classes['open-icon-holder']}>
-                            <span>Open {rowStyle}</span>
+                            <span>Open </span>
                             <div className={classes['open-icon']}></div>
                         </div>
                     </div>
