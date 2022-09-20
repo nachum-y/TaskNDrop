@@ -102,9 +102,8 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     }
 
 
-
     return (
-        <div className={classes['board-content-group-row']} tabIndex={-1} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
+        <div className={classes['board-content-group-row']} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
             <div className={`${classes.col} ${classes.fixed}`}>
                 <div className={classes['task-item']}>
                     <div className={classes['row-menu']}>

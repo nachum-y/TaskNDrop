@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 import GroupAddTask from './GroupAddTask'
 import GroupFooter from './GroupFooter'
 import GroupHeader from './GroupHeader'
-import GroupRow from './GroupRow'
+// import GroupRow from './GroupRow'
 import RowHeader from './RowHeader'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import { BoardContext } from '../../../../store/board'
 
-
+import dynamic from 'next/dynamic'
+const GroupRow = dynamic(() => import("./GroupRow"), { ssr: false })
 
 
 import classes from '../GroupList.module.scss'
@@ -66,7 +67,7 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
 
     return (
         // <div className={`${classes['board-content-group']} ${isCollapse ? classes['collapseGroup'] : ''}`} >
-        <Droppable droppableId={id}>
+        <Droppable droppableId={id} type='task'>
             {(droppableProvided, droppableSnapshot) => (
                 <div
                     // className={droppableSnapshot.isDraggingOver ? classes['row-back-drop'] : ''}
@@ -99,18 +100,8 @@ const GroupContent: React.FC<{ group: Group, colsOrder: ColsOrder[], removeGroup
                     </div>
                     {!isCollapse && tasks.map((task, index) => (
                         <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
-                            {(draggableProvided: any, draggableSnapshot) => (
+                            {(draggableProvided: any, draggableSnapshot: any) => (
                                 <div
-                                    // outlineColor={
-                                    //     draggableSnapshot.isDragging
-                                    //         ? "card-border"
-                                    //         : "transparent"
-                                    // }
-                                    // boxShadow={
-                                    //     draggableSnapshot.isDragging
-                                    //         ? "0 5px 10px rgba(0, 0, 0, 0.6)"
-                                    //         : "unset"
-                                    // }
                                     ref={draggableProvided.innerRef}
                                     {...draggableProvided.draggableProps}
                                     {...draggableProvided.dragHandleProps}

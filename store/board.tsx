@@ -53,6 +53,7 @@ const contextDefaultValues: BoardContextState = {
     removeTasks: () => { },
     duplicateTasks: () => { },
     onDragEnd: () => { },
+    onDragEndColumn: () => { },
     onSetActiveFilter: () => { },
     setTasksByLabels: () => { },
     setKanbanStatus: () => { },
@@ -478,7 +479,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const onDragEnd = (result: DropResult) => {
-
         const { destination, source } = result
         if (!destination) return
         if (!board) return
@@ -505,6 +505,26 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     }
 
+    const onDragEndColumn = (result: DropResult) => {
+        const { destination, source } = result
+        if (!destination) return
+        if (!board) return
+        if (!colsOrderBoard) return
+
+        let updateBoard: Board = JSON.parse(JSON.stringify(board))
+
+        const newColumnOrder = Array.from(colsOrderBoard)
+        let b = newColumnOrder[source.index]
+        newColumnOrder[source.index] = newColumnOrder[destination.index]
+        newColumnOrder[destination.index] = b
+
+
+        updateBoard.colsOrder = newColumnOrder
+
+
+        updateBoardState(updateBoard)
+
+    }
 
     const onFilterGroup = (updatedBoard?: Board) => {
         let updateBoard
@@ -800,6 +820,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 removeTasks,
                 duplicateTasks,
                 onDragEnd,
+                onDragEndColumn,
                 onSetActiveFilter,
                 setTasksByLabels,
                 setKanbanStatus,
