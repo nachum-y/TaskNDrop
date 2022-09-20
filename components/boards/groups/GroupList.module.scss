@@ -917,14 +917,13 @@
 }
 
 .background-hider {
-    width: 2.25rem;
+    width: 3.75rem;
     height: 4.2rem;
     box-shadow: none;
-    left: -2.3rem;
-    top: -2px;
+    left: -3.7rem;
+    top: -10px;
     position: absolute;
-    background-color: white;
-    display: none;
+    background: #fff;
 }
 
 .group-header-title:focus {
