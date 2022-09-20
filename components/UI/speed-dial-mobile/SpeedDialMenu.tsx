@@ -27,7 +27,6 @@ const SpeedDialMenu = () => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = (actionType?: string) => {
-        console.log(actionType)
         if (actionType === 'AddNewGroup') onSaveGroup()
         else {
             const groupId = board?.groups[0].id

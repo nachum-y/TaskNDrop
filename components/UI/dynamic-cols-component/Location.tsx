@@ -28,7 +28,6 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
         if (value && typeof value !== 'number') {
             setTitle(value.title)
         }
-        console.log(taskCol)
 
     }, [value])
 
@@ -48,7 +47,6 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
     useEffect(() => {
         if (selected) {
             const newCol = { type, value: selected }
-            updateCol(newCol)
         }
     }, [selected])
 

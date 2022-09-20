@@ -17,12 +17,11 @@ const useGoogleMap = () => {
     useEffect(() => {
         if (loader) {
             const res = loader.load().then((google) => {
-                console.log(google)
                 setLoaded(true)
 
+            }).catch((err) => {
+                throw new Error(err)
             })
-
-            console.log(res)
 
 
         }

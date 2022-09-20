@@ -45,7 +45,6 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
         event.preventDefault()
 
         // event.shiftKey
-        // console.log(event.shiftKey)
         openMenu(event.currentTarget, typeMenu)
 
     }

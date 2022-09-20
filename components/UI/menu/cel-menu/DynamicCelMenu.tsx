@@ -77,7 +77,6 @@ const DynamicCelMenu: React.FC<{ menuType: Col }> = ({ menuType }) => {
     const statusKey = type as string
     const currStatus: Labels[] | FullMember[] | number = labelsVal[statusKey as keyof labelsStatus]
 
-    console.log(statusKey)
 
     const menuObj = {
         boardList: currStatus,

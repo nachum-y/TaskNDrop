@@ -176,7 +176,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setPriorityValueBoard(initialBoard.priority)
         setBoardMembers(initialBoard.members)
         setBoardGroupsByLabel(getGroupsByLabels)
-        
+
         // setInitialBoardId(board?._id.toString())
         // router.replace(`/boards/${initialBoard._id}`)
     }
@@ -240,8 +240,11 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
         } catch (error) {
-            console.log(error)
-
+            setSnacbarUserMessage({
+                setOpen: true,
+                message: 'Error',
+                severity: 'error'
+            })
 
         }
     }
@@ -306,7 +309,11 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 // await boardService.updateBoard(newBoard)
             }
         } catch (error) {
-            console.log(error)
+            setSnacbarUserMessage({
+                setOpen: true,
+                message: 'Error',
+                severity: 'error'
+            })
         }
 
     }
@@ -493,7 +500,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const onDragEnd = (result: DropResult) => {
-        console.log(result.type)
         const { destination, source } = result
         if (!destination) return
         if (!board) return

@@ -47,7 +47,6 @@ const Layout: React.FC<Props> = (props) => {
 
     const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
         setScrollLeft(event.currentTarget.scrollLeft as number)
-        // console.log('offsetHeight: ', event.currentTarget.offsetHeight)
     }
 
 

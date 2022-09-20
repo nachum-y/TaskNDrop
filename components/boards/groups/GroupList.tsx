@@ -33,7 +33,6 @@ const GroupList = () => {
 
     useEffect(() => {
         setBoardGroup(boardGroup)
-        console.log(boardGroup)
 
     }, [boardGroup])
 
@@ -48,7 +47,6 @@ const GroupList = () => {
 
 
     const onKeyPressHandler = (ev: KeyboardEvent<HTMLInputElement>) => {
-        console.log(ev)
         // "ShiftRight"
 
         if (ev.type === 'keydown' && ev.key === "Shift") {

@@ -29,7 +29,6 @@ const useTasksLocation = () => {
                     return tCols.type === 'location'
                 })
                 if (location?.value && typeof location?.value !== 'string' && typeof location?.value !== 'number' && !Array.isArray(location?.value)) {
-                    console.log(location)
 
                     return ({
                         task: t,

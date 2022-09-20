@@ -2,7 +2,6 @@ import Image from "next/image"
 import classes from './Message.module.scss'
 import ReactHtmlParser from "html-react-parser"
 const Message: React.FC<{ image: string, title: string, instruction: string }> = ({ image, title, instruction }) => {
-    console.log(image)
 
     return (
         <div className={classes.message}>
