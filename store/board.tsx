@@ -3,6 +3,7 @@ import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
 import SocketIOClient from "socket.io-client"
 import * as io from "socket.io-client"
+import Pusher, { Channel } from "pusher-js"
 
 import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage, ModalType } from '../service/type'
 import { title } from "process"
@@ -153,6 +154,10 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }, [])
 
 
+
+
+
+
     const sendBoard = async (boardUpdated: Board) => {
         if (boardUpdated) {
             // build message obj
@@ -176,6 +181,91 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
         // focus after click
     }
+
+
+
+    useEffect((): any => {
+
+
+        Pusher.logToConsole = false
+
+        // const pusher = new Pusher('98c0bf36299d507ec439', {
+        //     cluster: 'eu'
+        // })
+
+
+        // const channel = pusher.subscribe('groupUpdated')
+        // channel.bind('group', function (group: Group[]) {
+        //     console.log(group)
+        //     console.log('here')
+
+        // })
+
+        Pusher.logToConsole = true
+        var pusher = new Pusher('98c0bf36299d507ec439', {
+            cluster: 'eu',
+            forceTLS: true
+        })
+
+
+        var channel = pusher.subscribe('boardUpdated')
+        bindWithChunking(channel, "board", ({ board }: { board: Board }) => {
+
+            updateBoardState(board, true, true)
+        })
+
+
+    }, [])
+
+
+    const sendBoardPusher = async (boardUpdated: Board) => {
+        if (boardUpdated) {
+
+
+            const resp = await fetch('/api/pusher', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(boardUpdated)
+            })
+
+
+            if (resp.ok) console.log('ok')
+
+        }
+
+        // focus after click
+    }
+
+
+
+
+
+
+    function bindWithChunking(channel: Channel, event: string, callback: { ({ board }: { board: Board }): void; (arg0: any): void }) {
+        channel.bind(event, callback) // Allow normal unchunked events.
+
+        // Now the chunked variation. Allows arbitrarily long messages.
+        var events = {}
+        channel.bind("chunked-" + event, (data: { id: PropertyKey; index: string | number; chunk: any; final: any }) => {
+            if (!events.hasOwnProperty(data.id)) {
+                // @ts-expect-error
+
+                events[data.id] = { chunks: [], receivedFinal: false }
+            }
+            // @ts-expect-error
+            var ev = events[data.id]
+            ev.chunks[data.index] = data.chunk
+            if (data.final) ev.receivedFinal = true
+            if (ev.receivedFinal && ev.chunks.length === Object.keys(ev.chunks).length) {
+                callback(JSON.parse(ev.chunks.join("")))
+                // @ts-expect-error
+                delete events[data.id]
+            }
+        })
+    }
+
+
+
 
     useEffect(() => {
         if (board && boardGroup) {
@@ -205,7 +295,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
             if (!afterSendSocket) {
 
-                sendBoard(newBoard)
+                // sendBoard(newBoard)
+                sendBoardPusher(newBoard)
 
 
             }
