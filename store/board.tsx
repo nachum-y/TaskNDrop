@@ -126,7 +126,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 server, {
                 path: "/api/socketio",
             })
-
+           
             // log socket connection
             socket.on("connect", () => {
                 console.log("SOCKET CONNECTED!", socket.id)
@@ -134,16 +134,17 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
             })
-
+            console.log(socket)
             // update chat on new message dispatched
             socket.on("board", (board: Board) => {
                 updateBoardState(board, true, true)
 
 
             })
-
+            console.log(socket)
             // socket disconnet onUnmount if exists
             if (socket) return () => socket.disconnect()
+            console.log(socket)
         }
 
         catch (error) {
