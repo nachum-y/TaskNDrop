@@ -120,11 +120,14 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     useEffect((): any => {
-        console.log(server);
+   
 
         const socket = io.connect(server, {
             path: "/api/socketio",
         })
+
+        console.log(socket);
+        
 
         // log socket connection
         socket.on("connect", () => {
