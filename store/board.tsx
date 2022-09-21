@@ -296,7 +296,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
             if (!afterSendSocket) {
 
                 // sendBoard(newBoard)
-                sendBoardPusher(newBoard)
+                // sendBoardPusher(newBoard)
 
 
             }
