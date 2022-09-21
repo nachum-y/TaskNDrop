@@ -7,11 +7,10 @@ export const config = {
     api: {
         bodyParser: false,
     },
+    
 }
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
-    console.log(res);
-    
     if (!res.socket.server.io) {
         console.log("New Socket.io server...")
         // adapt Next's net Server to http Server
