@@ -22,6 +22,9 @@ export default async (req, res) => {
             console.log(`cannot update board ${updatedBoard._id}`, err)
             throw err
         }
+
+
+        
     }
 
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment, useContext, ReactEventHandler, UIEventHandler, DOMAttributes } from 'react'
+import { useEffect, useState, Fragment, useContext, ReactEventHandler, UIEventHandler, DOMAttributes, useRef } from 'react'
 import classes from './Layout.module.scss'
 import AppNavigation from '../app-navigation/AppNavigation'
 import AppSideControler from '../app-navigation/AppSideControler'
@@ -6,7 +6,7 @@ import { BoardContext } from '../../store/board'
 import SkeletonGroup from '../UI/skeletons/SkeletonGroup'
 import SkeletonBoardHeader from '../UI/skeletons/SkeletonBoardHeader'
 import MenuDialog from '../UI/menu/MenuDialog'
-import { Props } from '../../service/type'
+import { Board, Props } from '../../service/type'
 import CelMenu from '../UI/menu/cel-menu/CelMenu'
 import NewItem from '../UI/modal/new-item/NewItem'
 import Head from 'next/head'
@@ -19,6 +19,19 @@ import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
 import CustomizedSnackbars from '../UI/user-message/CustomizedSnackbars'
 import BasicModal from '../UI/modal/BasicModal'
+import SocketIOClient from "socket.io-client"
+
+
+
+
+interface IMsg {
+    user: string
+    msg: string
+}
+
+// create random user
+const user = "User_" + String(new Date().getTime()).substr(-3)
+
 
 const Layout: React.FC<Props> = (props) => {
 
@@ -40,7 +53,6 @@ const Layout: React.FC<Props> = (props) => {
     useEffect(() => {
         onAppLoad()
     }, [])
-
 
 
 
@@ -90,7 +102,6 @@ const Layout: React.FC<Props> = (props) => {
             </Head>
             <AppNavigation />
             <main className={classes.main}>
-
                 <AppSideControler />
                 <div className={classes['first-level-content']}>
                     <section className={classes['board-wrapper']}>

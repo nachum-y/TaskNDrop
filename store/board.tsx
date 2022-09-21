@@ -1,11 +1,15 @@
 // import React from "react"
 import { boardService } from "../service/boardService"
 import React, { createContext, useState, FC, useEffect } from "react"
+import SocketIOClient from "socket.io-client"
+import * as io from "socket.io-client"
 
 import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage, ModalType } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
+const dev = process.env.NODE_ENV !== 'production'
+export const server = dev ? 'http://127.0.0.1:3000' : 'https://taskndrop.vercel.app'
 
 
 const contextDefaultValues: BoardContextState = {
@@ -74,6 +78,8 @@ export const BoardContext = createContext<BoardContextState>(
     contextDefaultValues
 )
 
+const user = "User_" + String(new Date().getTime()).substr(-3)
+
 const BoardProvider: FC<Props> = ({ children }) => {
 
     const [initialBoardId, setInitialBoardId] = useState<undefined | string>('632a2ce94e7e4d793c9459a0')
@@ -99,6 +105,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [userScreenWidth, setUserScreenWidth] = useState<number | undefined>()
     const [isMobileView, setIsMobileView] = useState<boolean>(false)
     const [snacbarUserMessage, setSnacbarUserMessage] = useState<SnacbarUserMessage>(null)
+    const [connected, setConnected] = useState<boolean>(false)
 
 
 
@@ -113,18 +120,62 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }, [colsOrderBoard, board])
 
 
+    useEffect((): any => {
 
+        const socket = io.connect(server, {
+            path: "/api/socketio",
+        })
+
+        // log socket connection
+        socket.on("connect", () => {
+            console.log("SOCKET CONNECTED!", socket.id)
+            setConnected(true)
+        })
+
+        // update chat on new message dispatched
+        socket.on("board", (board: Board) => {
+            updateBoardState(board, true, true)
+        })
+
+        // socket disconnet onUnmount if exists
+        if (socket) return () => socket.disconnect()
+    }, [])
+
+
+    const sendBoard = async (boardUpdated: Board) => {
+        if (boardUpdated) {
+            // build message obj
+
+            // dispatch message to other users
+            const resp = await fetch("/api/boardSocket", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(boardUpdated),
+            })
+
+            // reset field if OK
+            console.log(boardUpdated)
+
+            if (resp.ok) console.log('ok')
+
+        }
+
+        // focus after click
+    }
 
     useEffect(() => {
         if (board && boardGroup) {
             setBoardGroupsByLabel(getGroupsByLabels)
-
         }
     }, [board, boardGroup])
 
 
 
-    const updateBoardState = (newBoard: Board, afterSave?: boolean) => {
+    const updateBoardState = (newBoard: Board, afterSave?: boolean, afterSendSocket?: boolean) => {
+        console.log(newBoard)
+
         if (board) {
             setBoard((prev) => {
                 if (activeFilterParam.isActive) {
@@ -134,7 +185,16 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 setBoardGroup(() => newBoard.groups)
                 return newBoard
             })
+            console.log(afterSave)
+
             if (!afterSave) updateBoard(newBoard)
+
+            if (!afterSendSocket) {
+                sendBoard(newBoard)
+                console.log('here')
+
+            }
+
         }
 
     }

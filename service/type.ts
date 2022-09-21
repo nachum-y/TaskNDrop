@@ -1,5 +1,8 @@
 import { Double, Int32, ObjectId } from "mongodb"
 import { type } from "os"
+import { Server as NetServer, Socket } from "net";
+import { NextApiResponse } from "next";
+import { Server as SocketIOServer } from "socket.io";
 
 export type Props = {
     children: React.ReactNode
@@ -253,6 +256,15 @@ export type SnacbarUserMessage = {
     message: string
     severity: string
 } | null
+
+
+export type NextApiResponseServerIO = NextApiResponse & {
+    socket: Socket & {
+        server: NetServer & {
+            io: SocketIOServer
+        }
+    }
+}
 
 export type BoardContextState = {
     initialBoardId: undefined | string
