@@ -7,10 +7,16 @@ export const config = {
     api: {
         bodyParser: false,
     },
-    
+
 }
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
+    console.log(res.socket.server.io)
+
+    console.log(res)
+    console.log(req)
+
+
     if (!res.socket.server.io) {
         console.log("New Socket.io server...")
         // adapt Next's net Server to http Server
@@ -20,6 +26,10 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
         })
         // append SocketIO server to Next.js socket server response
         res.socket.server.io = io
+        console.log(res)
+        console.log(req)
+
+
     }
     res.end()
 }

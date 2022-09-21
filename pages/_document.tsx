@@ -13,7 +13,7 @@ export default class MyDocument extends Document {
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
-                    <link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon.png" />
+                    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.png" />
 
                 </Head>
                 <body>

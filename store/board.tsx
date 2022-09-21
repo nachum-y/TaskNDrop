@@ -120,19 +120,20 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     useEffect((): any => {
-   
 
-        const socket = io.connect(server, {
+
+        const socket = io.connect(
+            server, {
             path: "/api/socketio",
         })
 
-        console.log(socket);
-        
 
         // log socket connection
         socket.on("connect", () => {
             console.log("SOCKET CONNECTED!", socket.id)
             setConnected(true)
+
+
         })
 
         // update chat on new message dispatched
@@ -150,8 +151,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const sendBoard = async (boardUpdated: Board) => {
         if (boardUpdated) {
             // build message obj
-           
-            
+
+
             // dispatch message to other users
             const resp = await fetch("/api/boardSocket", {
                 method: "POST",
@@ -180,7 +181,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const updateBoardState = (newBoard: Board, afterSave?: boolean, afterSendSocket?: boolean) => {
-  
+
 
         if (board || newBoard) {
 
@@ -640,7 +641,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (!destination) return
         if (!board) return
         if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) return
-     
+
 
         let updateBoard: Board = JSON.parse(JSON.stringify(board))
         if (type === 'column') {
