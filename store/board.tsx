@@ -122,7 +122,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     useEffect((): any => {
 
         const socket = io.connect(
-            server, {
+            'https://taskndrop.vercel.app', {
             path: "/api/socketio",
         })
         console.log(socket)
@@ -134,6 +134,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
         })
+
         console.log(socket)
         // update chat on new message dispatched
         socket.on("board", (board: Board) => {
@@ -141,6 +142,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
         })
+
         console.log(socket)
         // socket disconnet onUnmount if exists
         if (socket) return () => socket.disconnect()
