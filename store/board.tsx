@@ -184,38 +184,38 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
 
-    useEffect((): any => {
+    // useEffect((): any => {
 
 
-        Pusher.logToConsole = false
+    //     Pusher.logToConsole = false
 
-        // const pusher = new Pusher('98c0bf36299d507ec439', {
-        //     cluster: 'eu'
-        // })
-
-
-        // const channel = pusher.subscribe('groupUpdated')
-        // channel.bind('group', function (group: Group[]) {
-        //     console.log(group)
-        //     console.log('here')
-
-        // })
-
-        Pusher.logToConsole = true
-        var pusher = new Pusher('98c0bf36299d507ec439', {
-            cluster: 'eu',
-            forceTLS: true
-        })
+    //     // const pusher = new Pusher('98c0bf36299d507ec439', {
+    //     //     cluster: 'eu'
+    //     // })
 
 
-        var channel = pusher.subscribe('boardUpdated')
-        bindWithChunking(channel, "board", ({ board }: { board: Board }) => {
+    //     // const channel = pusher.subscribe('groupUpdated')
+    //     // channel.bind('group', function (group: Group[]) {
+    //     //     console.log(group)
+    //     //     console.log('here')
 
-            updateBoardState(board, true, true)
-        })
+    //     // })
+
+    //     Pusher.logToConsole = true
+    //     var pusher = new Pusher('98c0bf36299d507ec439', {
+    //         cluster: 'eu',
+    //         forceTLS: true
+    //     })
 
 
-    }, [])
+    //     var channel = pusher.subscribe('boardUpdated')
+    //     bindWithChunking(channel, "board", ({ board }: { board: Board }) => {
+
+    //         updateBoardState(board, true, true)
+    //     })
+
+
+    // }, [])
 
 
     const sendBoardPusher = async (boardUpdated: Board) => {
