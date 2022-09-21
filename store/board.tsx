@@ -78,7 +78,6 @@ export const BoardContext = createContext<BoardContextState>(
     contextDefaultValues
 )
 
-const user = "User_" + String(new Date().getTime()).substr(-3)
 
 const BoardProvider: FC<Props> = ({ children }) => {
 
@@ -121,6 +120,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     useEffect((): any => {
+        console.log('startSocket')
+
 
         const socket = io.connect(server, {
             path: "/api/socketio",
@@ -135,6 +136,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
         // update chat on new message dispatched
         socket.on("board", (board: Board) => {
             updateBoardState(board, true, true)
+
+
         })
 
         // socket disconnet onUnmount if exists
@@ -156,7 +159,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
             })
 
             // reset field if OK
-            console.log(boardUpdated)
+
 
             if (resp.ok) console.log('ok')
 
@@ -175,23 +178,29 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     const updateBoardState = (newBoard: Board, afterSave?: boolean, afterSendSocket?: boolean) => {
         console.log(newBoard)
+        console.log(board)
 
-        if (board) {
+        if (board || newBoard) {
+
             setBoard((prev) => {
+
                 if (activeFilterParam.isActive) {
+                    console.log(activeFilterParam)
                     onFilterGroup(newBoard)
                     return newBoard
                 }
                 setBoardGroup(() => newBoard.groups)
                 return newBoard
             })
-            console.log(afterSave)
+
 
             if (!afterSave) updateBoard(newBoard)
 
             if (!afterSendSocket) {
+                console.log(connected)
+
                 sendBoard(newBoard)
-                console.log('here')
+
 
             }
 
@@ -230,8 +239,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const onAppLoad = async () => {
         const boards = await boardService.query()
         const initialBoard: Board = boards[0]
-        console.log(initialBoard)
-
         loadBoard(initialBoard)
         setBoardGroup(initialBoard.groups)
         setStatusValueBoard(initialBoard.status)
