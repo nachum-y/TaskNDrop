@@ -120,7 +120,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     useEffect((): any => {
-        console.log('startSocket')
 
 
         const socket = io.connect(server, {
@@ -177,15 +176,13 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     const updateBoardState = (newBoard: Board, afterSave?: boolean, afterSendSocket?: boolean) => {
-        console.log(newBoard)
-        console.log(board)
+  
 
         if (board || newBoard) {
 
             setBoard((prev) => {
 
                 if (activeFilterParam.isActive) {
-                    console.log(activeFilterParam)
                     onFilterGroup(newBoard)
                     return newBoard
                 }
@@ -197,7 +194,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
             if (!afterSave) updateBoard(newBoard)
 
             if (!afterSendSocket) {
-                console.log(connected)
 
                 sendBoard(newBoard)
 
@@ -640,9 +636,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         if (!destination) return
         if (!board) return
         if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) return
-        console.log(
-            type
-        )
+     
 
         let updateBoard: Board = JSON.parse(JSON.stringify(board))
         if (type === 'column') {
@@ -892,7 +886,6 @@ const BoardProvider: FC<Props> = ({ children }) => {
                     let updateGroup = updatedBoard.groups[updateGorupIdx]
                     updateGroup.color = data
                     updatedBoard.groups.splice(updateGorupIdx, 1, updateGroup)
-                    console.log(updatedBoard)
                     updateBoardState(updatedBoard)
 
                 }

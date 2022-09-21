@@ -27,13 +27,17 @@ const SpeedDialMenu = () => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = (actionType?: string) => {
+        console.log(actionType)
+
         if (actionType === 'AddNewGroup') onSaveGroup()
-        else {
+        else if (actionType === 'AddNewTask') {
             const groupId = board?.groups[0].id
             if (groupId) {
                 addTask(groupId, 'New item', true)
             }
         }
+       
+
 
         setOpen(false)
     }
@@ -43,7 +47,7 @@ const SpeedDialMenu = () => {
             ariaLabel="Mobile SpeedDial Menu"
             sx={{ position: 'absolute', bottom: 16, right: 16 }}
             icon={<SvgIcon path={speedDialIcons.plusIcon} viewBox="0 0 448 512" classN={open ? classes['speed-dial-rotate'] : classes['speed-dial']} />}
-            onClose={() => handleClose}
+            onClose={() => handleClose()}
             onOpen={handleOpen}
             open={open}
         >
