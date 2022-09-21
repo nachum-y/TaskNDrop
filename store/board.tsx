@@ -121,31 +121,35 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     useEffect((): any => {
 
+        try {
+            const socket = io.connect(
+                server, {
+                path: "/api/socketio",
+            })
 
-        const socket = io.connect(
-            server, {
-            path: "/api/socketio",
-        })
-        console.log(socket);
-        
-
-        // log socket connection
-        socket.on("connect", () => {
-            console.log("SOCKET CONNECTED!", socket.id)
-            setConnected(true)
+            // log socket connection
+            socket.on("connect", () => {
+                console.log("SOCKET CONNECTED!", socket.id)
+                setConnected(true)
 
 
-        })
+            })
 
-        // update chat on new message dispatched
-        socket.on("board", (board: Board) => {
-            updateBoardState(board, true, true)
+            // update chat on new message dispatched
+            socket.on("board", (board: Board) => {
+                updateBoardState(board, true, true)
 
 
-        })
+            })
 
-        // socket disconnet onUnmount if exists
-        if (socket) return () => socket.disconnect()
+            // socket disconnet onUnmount if exists
+            if (socket) return () => socket.disconnect()
+        }
+
+        catch (error) {
+            console.log(error)
+
+        }
     }, [])
 
 
