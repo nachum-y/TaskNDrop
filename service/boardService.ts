@@ -71,7 +71,7 @@ async function query() {
 
 function getEmptyGroup() {
     return ({
-        title: "new group",
+        title: "New Group",
         color: utilService.getColor(),
         tasks: [],
         isCollapse: false
