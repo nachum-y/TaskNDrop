@@ -118,13 +118,14 @@ export type newItem = {
 
 
 export type menuDialogActionMap = {
-    deleteThisGroup: (groupId?: IdxOpt | undefined) => void
-    selectAllItems: (groupId?: IdxOpt | undefined) => void,
-    colapseThisGroup: (groupId?: IdxOpt | undefined) => void
+    deleteThisGroup: (groupId?: IdxOpt | undefined, data?: string | undefined) => void
+    selectAllItems: (groupId?: IdxOpt | undefined, data?: string | undefined) => void,
+    colapseThisGroup: (groupId?: IdxOpt | undefined, data?: string | undefined) => void
     colapseAllGroups: () => void
-    deleteThisTask: (idx?: IdxOpt) => void
-    duplicateThisTask: (idx?: IdxOpt) => void
-    copyTaskName: (idx?: IdxOpt) => void
+    deleteThisTask: (idx?: IdxOpt, data?: string | undefined) => void
+    duplicateThisTask: (idx?: IdxOpt, data?: string | undefined) => void
+    copyTaskName: (idx?: IdxOpt, data?: string | undefined) => void
+    changeGroupColor: (idx?: IdxOpt, data?: string | undefined) => void
 }
 export type AnchorElCel = {
     anchorElCel: HTMLSpanElement | null,
@@ -302,7 +303,7 @@ export type BoardContextState = {
     onSetModal: (newModal: ModalType) => void
     setModal: (newModal: ModalType) => void
     setDrawerMenu: (newMenu: DrawerMenuType) => void
-    onClickDialogMenu: (actionType: string) => void
+    onClickDialogMenu: (actionType: string, data?: string) => void
     onCloseDialogMenu: () => void
     setScrollLeft: (scrollNumber: number) => void
     setSnacbarUserMessage: (userMessage: SnacbarUserMessage) => void

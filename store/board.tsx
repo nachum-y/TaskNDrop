@@ -620,7 +620,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
 
         if (type === 'task-kanban') {
-            
+
             if (boardGroup) {
                 const taskList = boardGroup.map(g => g.tasks).flat()
                 let taskToUpdate = taskList.find(t => t.id === draggableId)
@@ -814,12 +814,38 @@ const BoardProvider: FC<Props> = ({ children }) => {
         }
     }
 
-    const onClickDialogMenu = (actionType: string) => {
+    const changeGroupColorHandler = (idx: IdxOpt, data: string | undefined) => {
+        const groupId = idx.groupId
+        if (groupId && data) {
 
+            try {
+                let updateGorupIdx = boardGroup.findIndex((g) => g.id === groupId)
+                if (updateGorupIdx !== -1) {
+                    let updatedBoard: Board = JSON.parse(JSON.stringify(board))
+                    let updateGroup = updatedBoard.groups[updateGorupIdx]
+                    updateGroup.color = data
+                    updatedBoard.groups.splice(updateGorupIdx, 1, updateGroup)
+                    console.log(updatedBoard)
+                    updateBoardState(updatedBoard)
+
+                }
+            } catch (error) {
+                setSnacbarUserMessage({
+                    setOpen: true,
+                    message: 'Error',
+                    severity: 'error'
+                })
+
+            }
+        }
+
+    }
+
+    const onClickDialogMenu = (actionType: string, data?: string | undefined) => {
+        let dataSet = data
         const key = actionType as string
-
         if (anchorEl && typeof menuDialogAction[key as keyof menuDialogActionMap] !== 'undefined') {
-            menuDialogAction[key as keyof menuDialogActionMap](anchorEl.idx)
+            menuDialogAction[key as keyof menuDialogActionMap](anchorEl.idx, dataSet)
             setAnchorEl(null)
         }
     }
@@ -875,8 +901,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     }
 
     const menuDialogAction: menuDialogActionMap = {
-        deleteThisGroup: (idx?: IdxOpt | undefined) => idx?.groupId ? removeGroup(idx.groupId) : console.log('error'),
-        selectAllItems: (idx?: IdxOpt) => {
+        deleteThisGroup: (idx?: IdxOpt | undefined, data?: string | undefined) => idx?.groupId ? removeGroup(idx.groupId) : console.log('error'),
+        selectAllItems: (idx?: IdxOpt, data?: string | undefined) => {
             if (!idx?.groupId) return
             const groupiId = idx.groupId
             if (selectedGroups.includes(groupiId)) return
@@ -888,11 +914,12 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 return setSelectedTasks(() => newSelectedTask)
             }
         },
-        colapseThisGroup: (idx?: IdxOpt) => idx?.groupId ? toggleCollapseGroup(idx?.groupId) : console.log('error'),
+        colapseThisGroup: (idx?: IdxOpt, data?: string | undefined) => idx?.groupId ? toggleCollapseGroup(idx?.groupId) : console.log('error'),
         colapseAllGroups: () => toggleCollapseAllGroups(),
-        deleteThisTask: (idx?: IdxOpt) => idx?.taskId ? removeTasks(idx.taskId) : console.log('error'),
-        duplicateThisTask: (idx?: IdxOpt) => idx?.taskId ? duplicateTasks(idx.taskId) : console.log('error'),
-        copyTaskName: (idx?: IdxOpt) => idx ? copyTextToClipboard(idx) : console.log('error'),
+        deleteThisTask: (idx?: IdxOpt, data?: string | undefined) => idx?.taskId ? removeTasks(idx.taskId) : console.log('error'),
+        duplicateThisTask: (idx?: IdxOpt, data?: string | undefined) => idx?.taskId ? duplicateTasks(idx.taskId) : console.log('error'),
+        copyTaskName: (idx?: IdxOpt, data?: string | undefined) => idx ? copyTextToClipboard(idx) : console.log('error'),
+        changeGroupColor: (idx?: IdxOpt, data?: string | undefined) => idx ? changeGroupColorHandler(idx, data) : console.log('error'),
 
 
     }

@@ -66,14 +66,14 @@ const GroupHeader: React.FC<{ title: string, removeGroup: () => void, groupColor
             </div>
             <div className={classes['background-hider']}></div>
             <div className={classes['group-header-border-color']} style={{ backgroundColor: groupColor }}></div>
-            <div className={classes['collapsable-icon-button']}
+            <div className={isCollapse ? classes['collapsable-icon-button-collapse'] : classes['collapsable-icon-button']}
                 onClick={toggaleCollapseGroup}
             >
                 <SvgIcon path={boardHeaderIcon.angleRight} viewBox="0 0 448 512" width="14" height="14" fill={groupColor} />
 
             </div>
             <div onClick={startEditingHandler} className={classes[`group-header-title${editingMode ? '-focus' : ''}`]} >
-                <div onClick={(event) => handleClick(event, 'GroupMenu')} className={classes['color-indicator-gh']} style={{ backgroundColor: groupColor }}>
+                <div onClick={(event) => handleClick(event, 'ColorMenu')} className={classes['color-indicator-gh']} style={{ backgroundColor: groupColor }}>
 
                 </div>
                 <div className={classes['group-header-title-wraper']}>

@@ -5,7 +5,7 @@
 .dialog-content-wrapper {
     outline: 0;
     display: flex;
-    width: 264px;
+    max-width: 264px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 17px 6px rgba(0, 0, 0, .1);
@@ -15,7 +15,8 @@
 
 
 .menu-dialog-inner {
-    width: 264px;
+    max-width: 264px;
+    padding: 0 1rem;
     transition: all 50ms ease-in;
     transition-property: opacity, width;
 }

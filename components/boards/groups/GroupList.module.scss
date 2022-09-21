@@ -939,18 +939,18 @@
     align-items: center;
 }
 
-.collapsable-icon-button {
-    transform-origin: center center;
-    transform: rotate(0deg);
-    transition: transform .2s;
-    font-size: 0.75rem;
-    // outline: none;
-    margin-inline-end: 0.625rem;
-    position: relative;
-    cursor: pointer;
-    display: flex;
+// .collapsable-icon-button {
+//     transform-origin: center center;
+//     transform: rotate(90deg);
+//     transition: transform .2s;
+//     font-size: 0.75rem;
+//     // outline: none;
+//     margin-inline-end: 0.625rem;
+//     position: relative;
+//     cursor: pointer;
+//     display: flex;
 
-}
+// }
 
 .color-indicator-gh {
     display: none;
@@ -1082,7 +1082,22 @@
 
 
 .collapsable-icon-button {
+    transform-origin: center center;
     transform: rotate(90deg);
+    transition: transform .2s;
+    font-size: 0.75rem;
+    // outline: none;
+    margin-inline-end: 0.625rem;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+
+    transform: rotate(90deg);
+
+    &-collapse {
+        transform: rotate(0deg);
+    }
+
 }
 
 .group-title-action {
