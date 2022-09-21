@@ -120,7 +120,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
 
     useEffect((): any => {
-
+        console.log(server);
 
         const socket = io.connect(server, {
             path: "/api/socketio",
@@ -147,7 +147,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const sendBoard = async (boardUpdated: Board) => {
         if (boardUpdated) {
             // build message obj
-
+           
+            
             // dispatch message to other users
             const resp = await fetch("/api/boardSocket", {
                 method: "POST",
