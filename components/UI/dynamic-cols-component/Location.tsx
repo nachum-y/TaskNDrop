@@ -19,7 +19,6 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
     const type = taskCol.type
     const [title, setTitle] = useState<string>('Type address...')
     const [selected, setSelected] = useState<LocationCol | null>(null)
-    const { NEXT_PUBLIC_GOOGLE_MAP_KEY } = process.env
     const loaded = useGoogleMap()
 
 
@@ -47,6 +46,8 @@ const Location: React.FC<{ taskCol: Col, updateCol: (newCol: Col) => void, onCel
     useEffect(() => {
         if (selected) {
             const newCol = { type, value: selected }
+            updateCol(newCol)
+
         }
     }, [selected])
 
