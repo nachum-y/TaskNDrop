@@ -4,6 +4,13 @@ import { Server as ServerIO } from "socket.io"
 import { Server as NetServer } from "http"
 
 
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+
+}
+
 const socketHandler = (req: NextApiRequest, res: NextApiResponseServerIO) => {
 
     if (!res.socket.server.io) {
@@ -19,17 +26,14 @@ const socketHandler = (req: NextApiRequest, res: NextApiResponseServerIO) => {
 
 
     }
+    else{
+        console.log('1??')
+    }
     res.end()
 
 
 }
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-
-}
 
 export default socketHandler
 
