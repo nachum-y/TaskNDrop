@@ -11,11 +11,6 @@ export const config = {
 }
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
-    console.log(res.socket.server.io)
-
-    console.log(res)
-    console.log(req)
-
 
     if (!res.socket.server.io) {
         console.log("New Socket.io server...")
