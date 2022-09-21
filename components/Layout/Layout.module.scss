@@ -31,6 +31,17 @@
   visibility: visible;
 
   &-pinned {
+    height: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    min-width: 0;
+    opacity: 1;
+    visibility: visible;
     margin-left: 255px;
   }
 }
