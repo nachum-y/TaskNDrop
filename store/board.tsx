@@ -43,6 +43,7 @@ const contextDefaultValues: BoardContextState = {
     userScreenWidth: undefined,
     isMobileView: false,
     snacbarUserMessage: null,
+    sideNavisPinned: false,
     loadBoard: () => { },
     setBoard: () => { },
     updateBoard: () => { },
@@ -72,6 +73,7 @@ const contextDefaultValues: BoardContextState = {
     onClickDialogMenu: () => { },
     setScrollLeft: () => { },
     setSnacbarUserMessage: () => { },
+    setSideNavisPinned: () => { },
 }
 
 export const BoardContext = createContext<BoardContextState>(
@@ -105,6 +107,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [isMobileView, setIsMobileView] = useState<boolean>(false)
     const [snacbarUserMessage, setSnacbarUserMessage] = useState<SnacbarUserMessage>(null)
     const [connected, setConnected] = useState<boolean>(false)
+    const [sideNavisPinned, setSideNavisPinned] = useState(false)
+
 
 
 
@@ -135,14 +139,14 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
         })
 
-       
+
         // update chat on new message dispatched
         socket.on("board", (board: Board) => {
             updateBoardState(board, true, true)
 
 
         })
-        
+
         // socket disconnet onUnmount if exists
         if (socket) return () => socket.disconnect()
 
@@ -1020,6 +1024,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 userScreenWidth,
                 isMobileView,
                 snacbarUserMessage,
+                sideNavisPinned,
                 setBoard,
                 loadBoard,
                 updateBoard,
@@ -1048,6 +1053,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 onCloseDialogMenu,
                 setScrollLeft,
                 setSnacbarUserMessage,
+                setSideNavisPinned,
             }}
         >
             {children}

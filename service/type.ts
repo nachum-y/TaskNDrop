@@ -1,8 +1,8 @@
 import { Double, Int32, ObjectId } from "mongodb"
 import { type } from "os"
-import { Server as NetServer, Socket } from "net";
-import { NextApiResponse } from "next";
-import { Server as SocketIOServer } from "socket.io";
+import { Server as NetServer, Socket } from "net"
+import { NextApiResponse } from "next"
+import { Server as SocketIOServer } from "socket.io"
 
 export type Props = {
     children: React.ReactNode
@@ -290,6 +290,7 @@ export type BoardContextState = {
     userScreenWidth: number | undefined
     isMobileView: boolean
     snacbarUserMessage: SnacbarUserMessage
+    sideNavisPinned: boolean
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -319,6 +320,7 @@ export type BoardContextState = {
     onCloseDialogMenu: () => void
     setScrollLeft: (scrollNumber: number) => void
     setSnacbarUserMessage: (userMessage: SnacbarUserMessage) => void
+    setSideNavisPinned: (set: boolean) => void
 
 }
 

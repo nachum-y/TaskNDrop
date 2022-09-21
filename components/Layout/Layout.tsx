@@ -48,7 +48,8 @@ const Layout: React.FC<Props> = (props) => {
         setDrawerMenu,
         snacbarUserMessage,
         setSnacbarUserMessage,
-        setModal } = useContext(BoardContext)
+        setModal,
+        sideNavisPinned } = useContext(BoardContext)
 
     useEffect(() => {
         onAppLoad()
@@ -103,7 +104,7 @@ const Layout: React.FC<Props> = (props) => {
             <AppNavigation />
             <main className={classes.main}>
                 <AppSideControler />
-                <div className={classes['first-level-content']}>
+                <div className={` ${sideNavisPinned ? classes['first-level-content-pinned'] : classes['first-level-content']}`}>
                     <section className={classes['board-wrapper']}>
                         <BoardAppHeader />
                         <div onScroll={handleScroll} className={classes['board-content-component']}>
@@ -139,7 +140,7 @@ const Layout: React.FC<Props> = (props) => {
 
                 {modal?.setOpen && <BasicModal modalSet={modal} setModal={setModal} />}
             </main>
-        </Fragment>
+        </Fragment >
     )
 }
 

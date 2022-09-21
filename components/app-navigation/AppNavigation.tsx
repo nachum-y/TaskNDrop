@@ -52,7 +52,6 @@ const AppNavigation = () => {
                     ))}
                 </div>
 
-
             </div>
         </nav>
     )

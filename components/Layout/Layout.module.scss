@@ -29,7 +29,12 @@
   min-width: 0;
   opacity: 1;
   visibility: visible;
+
+  &-pinned {
+    margin-left: 255px;
+  }
 }
+
 
 
 .board-wrapper {
@@ -59,6 +64,9 @@
 
   .first-level-content {
     margin-left: 0;
+    &-pinned {
+      margin-left: 0;
+    }
   }
 
   .board-content-component {
