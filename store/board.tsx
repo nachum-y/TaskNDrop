@@ -126,7 +126,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
             server, {
             path: "/api/socketio",
         })
-
+        console.log(socket);
+        
 
         // log socket connection
         socket.on("connect", () => {

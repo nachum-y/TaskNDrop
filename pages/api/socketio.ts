@@ -3,12 +3,12 @@ import { NextApiResponseServerIO } from "../../service/type"
 import { Server as ServerIO } from "socket.io"
 import { Server as NetServer } from "http"
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
 
-}
+// }
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
 
@@ -21,8 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
         })
         // append SocketIO server to Next.js socket server response
         res.socket.server.io = io
-        console.log(res)
-        console.log(req)
+      
 
 
     }
