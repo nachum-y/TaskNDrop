@@ -27,6 +27,7 @@ export default async (req, res) => {
 
 
     if (boardId) {
+        if (!ObjectId.isValid(boardId)) return
         try {
             const board = await db
                 .collection('boards')
@@ -37,6 +38,5 @@ export default async (req, res) => {
             throw err
         }
     }
-
 
 }

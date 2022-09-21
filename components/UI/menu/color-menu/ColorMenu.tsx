@@ -18,7 +18,7 @@ const ColorMenu: React.FC<{ onMenuClick: (actionType: string, data?: string | un
             <div className={classes['color-grid']}>
                 {
                     colors.map((color) => (
-                        <div onClick={() => clickHandler(color)} className={classes['color-option']} style={{ backgroundColor: color }}>
+                        <div key={color} onClick={() => clickHandler(color)} className={classes['color-option']} style={{ backgroundColor: color }}>
                         </div>
                     ))
 
