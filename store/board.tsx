@@ -1,11 +1,12 @@
 // import React from "react"
 import { boardService } from "../service/boardService"
+import { userService } from "../service/userService"
 import React, { createContext, useState, FC, useEffect } from "react"
 import SocketIOClient from "socket.io-client"
 import * as io from "socket.io-client"
 import Pusher, { Channel } from "pusher-js"
 
-import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage, ModalType } from '../service/type'
+import { BoardContextState, Props, Board, Group, ColsOrder, Status, Priority, Labels, Col, Idx, IdxOpt, menuDialogActionMap, AnchorElCel, Member, FullMember, SelectedTask, AnchorEl, Task, ActiveFilterParam, GroupByLabels, DropResult, newItem, TasksByLabel, LabelsCLass, TasksByStatus, DrawerMenuType, SnacbarUserMessage, ModalType, ConversationAdd } from '../service/type'
 import { title } from "process"
 import { group } from "console"
 import { json } from "stream/consumers"
@@ -45,6 +46,7 @@ const contextDefaultValues: BoardContextState = {
     isMobileView: false,
     snacbarUserMessage: null,
     sideNavisPinned: false,
+    activeUser: null,
     loadBoard: () => { },
     setBoard: () => { },
     updateBoard: () => { },
@@ -54,6 +56,8 @@ const contextDefaultValues: BoardContextState = {
     toggleCollapseGroup: () => { },
     updateTask: () => { },
     addTask: () => { },
+    conversionAdd: () => { },
+    conversionRemove: () => { },
     toggleSelection: () => { },
     toggleAll: () => { },
     removeTasks: () => { },
@@ -109,6 +113,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
     const [snacbarUserMessage, setSnacbarUserMessage] = useState<SnacbarUserMessage>(null)
     const [connected, setConnected] = useState<boolean>(false)
     const [sideNavisPinned, setSideNavisPinned] = useState(false)
+    const [activeUser, setActiveUser] = useState<FullMember | null>(null)
 
 
 
@@ -343,6 +348,9 @@ const BoardProvider: FC<Props> = ({ children }) => {
         setPriorityValueBoard(initialBoard.priority)
         setBoardMembers(initialBoard.members)
         setBoardGroupsByLabel(getGroupsByLabels)
+        let user = await userService.getActiveMember()
+        if (user) setActiveUser(user)
+
 
         // setInitialBoardId(board?._id.toString())
         // router.replace(`/boards/${initialBoard._id}`)
@@ -1085,7 +1093,33 @@ const BoardProvider: FC<Props> = ({ children }) => {
 
     }
 
+    const conversionAdd = async (newMsg: ConversationAdd, idx: Idx) => {
+        if (!board) return
+        console.log(idx)
+        try {
+            const updatedBoard = await boardService.conversionAdd(newMsg, idx, board._id.toString())
+            if (updatedBoard) updateBoardState(updatedBoard, true, true)
 
+        } catch (error) {
+            console.log(error)
+
+        }
+
+
+    }
+    const conversionRemove = async (msgId: string, idx: Idx) => {
+        if (!board) return
+        try {
+            const updatedBoard = await boardService.conversionRemove(msgId, idx, board._id.toString())
+            if (updatedBoard) updateBoardState(updatedBoard, true, true)
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
+
+    }
 
 
     return (
@@ -1116,6 +1150,7 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 isMobileView,
                 snacbarUserMessage,
                 sideNavisPinned,
+                activeUser,
                 setBoard,
                 loadBoard,
                 updateBoard,
@@ -1124,6 +1159,8 @@ const BoardProvider: FC<Props> = ({ children }) => {
                 toggleCollapseGroup,
                 updateTask,
                 addTask,
+                conversionAdd,
+                conversionRemove,
                 toggleSelection,
                 toggleAll,
                 removeTasks,

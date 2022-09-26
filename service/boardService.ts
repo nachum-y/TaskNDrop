@@ -3,7 +3,7 @@ import { utilService } from './util.service.js'
 import { userService } from './userService'
 
 import { type } from "os"
-import { Task, Board, Group, Col, Idx, ColsOrder, EmptyCol } from "./type.js"
+import { Task, Board, Group, Col, Idx, ColsOrder, EmptyCol, ConversationAdd, Conversation } from "./type.js"
 import { stringify } from 'querystring'
 
 // const BOARD_KEY = 'board_db'
@@ -22,6 +22,8 @@ type boardService = {
     duplicateTasks: () => {}
     updateTask: () => {}
     updateBoard: () => {}
+    conversionAdd: () => {}
+    conversionRemove: () => {}
 
 }
 
@@ -49,8 +51,8 @@ export const boardService = {
     updateTask,
     //     // saveGroupsRows,
     //     // duplicateTasks,
-    //     // conversionAdd,
-    //     // conversionRemove,
+    conversionAdd,
+    conversionRemove,
     //     // saveColsOrder
     updateBoard,
 
@@ -158,6 +160,7 @@ async function addTask(title: string, groupId: string, boardId: string, shift?: 
                 createdAt: Date.now(),
                 createdBy: await userService.getActiveMember(),
                 groupId: groupId,
+                conversation: null
             }
             if (shift) {
 
@@ -353,22 +356,24 @@ async function duplicateTasks(idsToDup: string[] | string, boardId: string) {
 
 
 
-// async function conversionAdd(ids, mgsContent) {
-//     const { groupId, taskId, boardId } = ids
-//     let board = await _getBoardById(boardId)
-//     const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-//     const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-
-//     if (!board.groups[groupIdx].tasks[taskIdx].conversion) {
-//         board.groups[groupIdx].tasks[taskIdx].conversion = []
-//     }
-//     mgsContent.id = utilService.makeId()
-//     mgsContent.replies = []
-//     board.groups[groupIdx].tasks[taskIdx].conversion.unshift(mgsContent)
-//     await httpService.put(`boards/${boardId}`, board)
-//     let updatedConversion = board.groups[groupIdx].tasks[taskIdx].conversion
-//     return updatedConversion
-// }
+async function conversionAdd(newMsg: ConversationAdd, idx: Idx, boardId: string) {
+    const groupId = idx.groupId
+    const taskId = idx.taskId
+    const res = await _getBoardById(boardId)
+    let board: Board = await res.json()
+    const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    if (groupIdx === -1 || taskIdx === -1) return
+    const taskToEdit = board.groups[groupIdx].tasks[taskIdx]
+    if (!taskToEdit.conversation) {
+        taskToEdit.conversation = []
+    }
+    let mgsContent = JSON.parse(JSON.stringify(newMsg))
+    mgsContent.id = utilService.makeId()
+    taskToEdit.conversation.unshift(mgsContent)
+    const response = await _updateBoard(board, boardId)
+    return board
+}
 
 // async function saveColsOrder(newOrder, boardId) {
 //     let board = await _getBoardById(boardId)
@@ -377,17 +382,22 @@ async function duplicateTasks(idsToDup: string[] | string, boardId: string) {
 
 // }
 
-// async function conversionRemove(ids, updateId) {
-//     const { groupId, taskId, boardId } = ids
-//     let board = await _getBoardById(boardId)
-//     const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-//     const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-//     const updateIdx = board.groups[groupIdx].tasks[taskIdx].conversion.findIndex(update => update.id === updateId)
-//     board.groups[groupIdx].tasks[taskIdx].conversion.splice(updateIdx, 1)
-//     await httpService.put(`boards/${boardId}`, board)
-//     let updatedConversion = board.groups[groupIdx].tasks[taskIdx].conversion
-//     return updatedConversion
-// }
+async function conversionRemove(msgId: string, idx: Idx, boardId: string) {
+    const groupId = idx.groupId
+    const taskId = idx.taskId
+    const res = await _getBoardById(boardId)
+    let board: Board = await res.json()
+    const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+
+    const taskToEdit = board.groups[groupIdx].tasks[taskIdx]
+    if (!taskToEdit.conversation) return
+
+    const updateIdx = taskToEdit.conversation.findIndex(update => update.id === msgId)
+    taskToEdit.conversation.splice(updateIdx, 1)
+    const response = await _updateBoard(board, boardId)
+    return board
+}
 
 async function _updateBoard(board: Board, boardId: string) {
     const response = await fetch(`${server}/api/boards/${boardId}`, {

@@ -73,6 +73,7 @@ export type Task = {
     createdAt: Double | number
     createdBy: FullMember
     groupId: string
+    conversation: Conversation | null
 }
 
 
@@ -248,7 +249,8 @@ export type TasksByStatus = {
 export type DrawerMenuType = {
     setOpen: boolean
     menuType: string,
-    title: string
+    title: string,
+    side?: 'left' | 'right'
 } | null
 
 export type SnacbarUserMessage = {
@@ -265,6 +267,23 @@ export type NextApiResponseServerIO = NextApiResponse & {
         }
     }
 }
+
+
+export type Conversation = {
+    content: string
+    by: FullMember
+    createdAt: Double | number
+    id: string
+    replies: []
+}[]
+
+export type ConversationAdd = {
+    content: string
+    createdAt: Double | number
+    by: FullMember
+    replies: []
+}
+
 
 export type BoardContextState = {
     initialBoardId: undefined | string
@@ -291,6 +310,7 @@ export type BoardContextState = {
     isMobileView: boolean
     snacbarUserMessage: SnacbarUserMessage
     sideNavisPinned: boolean
+    activeUser: FullMember | null
     setBoard: (board: Board) => void
     loadBoard: (boardInitial: Board) => void
     onSaveGroup: (group?: Group) => void
@@ -300,6 +320,8 @@ export type BoardContextState = {
     updateBoard: (board: Board) => void
     updateTask: (newCol: Col, idx: Idx) => void
     addTask: (groupId: string, title: string, shift?: boolean) => void
+    conversionAdd: (msg: ConversationAdd, idx: Idx) => void
+    conversionRemove: (msgId: string, idx: Idx) => void
     toggleSelection: (selectedTask: SelectedTask) => void
     toggleAll: (group: Group) => void
     removeTasks: (tasksIds: string | undefined) => void

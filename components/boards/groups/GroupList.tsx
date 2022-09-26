@@ -10,6 +10,8 @@ import Message from '../../UI/message/Message'
 
 import searchEmptyImg from '../../../assets/images/search_empty_state.svg'
 import BoardActionsMenu from './BoardActionsMenu'
+import Task from '../task/Task'
+import { useRouter } from 'next/router'
 
 const GroupContent = dynamic(() => import("./group/GroupContent"), { ssr: false })
 
@@ -29,7 +31,7 @@ const GroupList = () => {
 
     const [placeholderProps, setPlaceholderProps] = useState({})
     const [boardGroups, setBoardGroup] = useState<Group[]>(boardGroup)
-
+    const router = useRouter()
 
     useEffect(() => {
         setBoardGroup(boardGroup)
@@ -140,6 +142,9 @@ const GroupList = () => {
                     </div>
                 </button>
             )}
+
+            {router.query.taskId &&
+                <Task />}
 
         </>
     )

@@ -4,6 +4,8 @@ import classes from '../GroupList.module.scss'
 import DynamicColComponent from './DynamicColComponent'
 import { BoardContext } from "../../../../store/board"
 import { boardService } from '../../../../service/boardService'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 // import Test from './dynamic-component/Test'
 
@@ -11,18 +13,14 @@ import { boardService } from '../../../../service/boardService'
 
 const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: string }> = ({ task, colsOrder, groupColor }) => {
 
-    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks, onOpenDialogMenu, scrollLeft, userScreenWidth } = useContext(BoardContext)
-    const { cols, createdAt, id, groupId } = task
+    const { updateTask, onOpenCelMenu, toggleSelection, selectedTasks, onOpenDialogMenu, scrollLeft, userScreenWidth, setDrawerMenu } = useContext(BoardContext)
+    const { cols, createdAt, id, groupId, conversation } = task
     const inputRef = useRef<HTMLInputElement>(null)
 
     const [rowStyle, setRowStyle] = useState<number>(0)
 
 
-
-
-    useEffect(() => {
-        // selectedTasks
-    }, [selectedTasks])
+    const router = useRouter()
 
     useEffect(() => {
         if (userScreenWidth && userScreenWidth < 850) {
@@ -102,6 +100,22 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
     }
 
 
+
+    const openItem = () => {
+        // const MenuParam = {
+        //     setOpen: true,
+        //     menuType: 'TaskMenu',
+        //     title: '',
+        //     side: 'right' as any
+        // }
+
+
+        // setDrawerMenu(MenuParam)
+        
+        router.replace(`${router.query.boardId}/?taskId=${id}`)
+
+    }
+
     return (
         <div className={classes['board-content-group-row']} style={{ display: 'grid', gridTemplateColumns: `${400 - (rowStyle || 0)}px repeat(auto-fill, 140px)` }}>
             <div className={`${classes.col} ${classes.fixed}`}>
@@ -119,7 +133,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                     >
                         <div className={selectedTasks.find((selected) => selected.taskId.includes(task.id)) ? classes['checkbox-selected'] : classes['checkbox']}></div>
                     </div>
-                    <div className={classes['item-title']}>
+                    <div  className={classes['item-title']}>
                         <div className={classes['input-holder']}>
                             <form onSubmit={onSubmitHandler}>
                                 <input
@@ -131,15 +145,16 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
                                 />
                             </form>
                         </div>
-                        <div className={classes['open-icon-holder']}>
+                        <div onClick={openItem} className={classes['open-icon-holder']}>
                             <span>Open </span>
                             <div className={classes['open-icon']}></div>
                         </div>
                     </div>
-                    <div className={`${classes['item-conversation']} ${classes.active}`}>
+                    <div onClick={openItem} className={`${classes['item-conversation']} ${conversation && conversation.length > 0 ? classes.active : ''}`}>
                         <div className={classes['conversation-icon']}></div>
-                        <span className={classes['item-conversation-count']}>1</span>
+                        <span className={classes['item-conversation-count']}>{conversation ? conversation.length : 0}</span>
                     </div>
+
                 </div>
             </div>
             {

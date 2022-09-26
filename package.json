@@ -31,6 +31,7 @@
     "react-apexcharts": "^1.4.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "18.2.0",
+    "react-quill": "^2.0.0",
     "socket.io": "^4.5.2",
     "socket.io-client": "^4.5.2",
     "styled-components": "^5.3.5",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@types/google.maps": "^3.50.1",
     "@types/node": "18.7.14",
+    "@types/quill": "^2.0.9",
     "@types/react": "18.0.18",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "18.0.6",

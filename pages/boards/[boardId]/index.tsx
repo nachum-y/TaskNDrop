@@ -11,6 +11,7 @@ import GroupList from '../../../components/boards/groups/GroupList'
 
 const BoardApp = () => {
 
+    
     const router = useRouter()
     const { board } = useContext(BoardContext)
 

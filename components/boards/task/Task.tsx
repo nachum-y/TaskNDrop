@@ -9,9 +9,13 @@ import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import { DrawerMenuType } from '../../../service/type'
-import DynamicDrawerMenu from './DynamicDrawerMenu'
 import { useRouter } from 'next/router'
+// import TaskMenu from './TaskMenu'
+import useFindTask from '../../../hooks/useFindTask'
+import dynamic from 'next/dynamic'
 
+
+const TaskMenu = dynamic(() => import("./TaskMenu"), { ssr: false })
 const drawerBleeding = 56
 
 interface Props {
@@ -44,31 +48,17 @@ const Puller = styled(Box)(({ theme }) => ({
     left: 'calc(50% - 15px)',
 }))
 
-const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => void }> = ({ drawerParam, oncloseDrawer }) => {
-    // const { window } = props
-    const [open, setOpen] = React.useState(drawerParam?.setOpen || false)
+const Task: React.FC<{}> = () => {
+
+    const [open, setOpen] = React.useState(true)
     const router = useRouter()
     const toggleDrawer = (newOpen: boolean) => () => {
-        oncloseDrawer()
+        console.log('close')
+        router.replace(`/boards/${router.query.boardId}`)
     }
+    const taskId = router.query.taskId
+    const taskFind = useFindTask(taskId as string)
 
-    const route = router.route
-
-
-
-    React.useEffect(() => {
-        router.events.on("routeChangeComplete", () => {
-            oncloseDrawer()
-        })
-        return () => {
-            router.events.off("routeChangeComplete", () => {
-            })
-        }
-
-        // oncloseDrawer()
-    }, [router.events])
-    // This is used only for the example
-    // const container = window !== undefined ? () => window().document.body : undefined
 
     return (
         <Root>
@@ -76,7 +66,7 @@ const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => v
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
-                        height: `${drawerParam?.side ? '100%' : `calc(50% - ${drawerBleeding}px)`}`,
+                        height: '100%',
                         overflow: 'visible',
                         width: '-webkit-fill-available',
                         maxWidth: '700px'
@@ -88,7 +78,7 @@ const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => v
             </Box>
             <SwipeableDrawer
 
-                anchor={drawerParam?.side || 'bottom'}
+                anchor='right'
                 open={open}
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
@@ -110,8 +100,10 @@ const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => v
                     }}
                 >
                     <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}> {drawerParam?.title}</Typography>
-                    {drawerParam?.menuType && (<DynamicDrawerMenu menuType={drawerParam.menuType} />)}
+                    <Typography sx={{ p: 2, color: 'text.secondary' }}> title </Typography>
+                    {taskFind && <TaskMenu
+                        task={taskFind}
+                    />}
                 </StyledBox>)}
                 <StyledBox
                     sx={{
@@ -130,4 +122,4 @@ const DrawerMenu: React.FC<{ drawerParam: DrawerMenuType, oncloseDrawer: () => v
 }
 
 
-export default DrawerMenu
+export default Task

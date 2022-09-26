@@ -1,0 +1,191 @@
+    .task_container {
+        width: 700px;
+        background-color: #fff;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .conversation-close-btn::before {
+        content: "\f22c";
+        font-size: 15px;
+        color: #777777;
+        font-family: "dapulse";
+        position: absolute;
+        left: 16px;
+        cursor: pointer;
+        top: 20px;
+    }
+
+    .task-open-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 1.5rem 1rem;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .monday-board-subsets-tabs {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        width: 100%;
+        min-width: 0px;
+        padding: 0 24px;
+        border-bottom: 1px solid;
+    }
+
+    .monday-board-subsets-tabs>*:not(:last-child) {
+        margin-inline-end: 0.5rem;
+    }
+
+    .monday-board-subset-item-v2:hover:after {
+        content: "|";
+        height: 16px;
+        border-right: 1px solid;
+        border-color: #0073ea;
+        position: absolute;
+        top: 8px;
+    }
+
+    .monday-board-subsets-tabs>* {
+
+        max-width: 180px;
+        padding: 8px 24px 8px 12px !important;
+
+    }
+
+    .action_wrapper {
+        color: #0073ea;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        flex-grow: 1;
+        margin: 16px;
+    }
+
+    .action_wrapper .actions>* {
+        margin: 0.125rem 0.25rem;
+    }
+
+    .action_wrapper .actions {
+        flex-grow: 1;
+    }
+
+    .update-action {
+        background-color: #0073ea;
+        width: 60.4375px;
+        height: 32px;
+        color: #fff;
+        padding: 4px 8px;
+        line-height: 24px;
+        border-radius: 4px;
+        transition: 50ms transform, .1s cubic-bezier(0, 0, 0.35, 1) min-width;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        border: none;
+        box-sizing: border-box;
+    }
+
+    .update-action:hover {
+        background-color: #0060b9;
+    }
+
+    .task-open-task-name:focus {
+        display: flex;
+        flex: 1;
+    }
+
+    .task-container {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .el-drawer__body,
+    .task-container {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+
+
+    .open-update-form:not(:focus)>*:not(:first-child) {
+        display: none !important;
+    }
+
+    .open-update-form:focus .write-update-msg {
+        display: none;
+    }
+
+    .update-form.ql-container.ql-snow {
+        border: 1px solid #d1d5db;
+        height: 9rem;
+        cursor: text;
+        pointer-events: all;
+    }
+
+    .open-update-form:not(:focus) {
+        display: flex;
+        justify-content: flex-start;
+        font-size: 1rem;
+        /* outline: 1px solid #0073ea; */
+        /* outline-color: #0073ea; */
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.5rem;
+    }
+
+    .open-update-form {
+        margin: 1rem;
+        color: #323338;
+        outline: 1px solid #0073ea;
+
+
+    }
+
+    .space_view .unread_message {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--secondary-text-color);
+        padding: 15px;
+        text-align: center;
+    }
+
+    .pulse_container .posts_list .post_empty_state_image_wrapper,
+    .new_pulse .posts_list .post_empty_state_image_wrapper {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+
+
+    .pulse_container .posts_list .post_empty_state_image_wrapper img,
+    .new_pulse .posts_list .post_empty_state_image_wrapper img {
+
+        width: 290px;
+    }
+
+    .post_empty_state_image_wrapper img {
+        width: 290px;
+        margin: auto;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        padding: 5rem 0;
+    }
+
+    .post_not_found_text {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ql-toolbar.ql-snow {
+
+        cursor: default;
+    }

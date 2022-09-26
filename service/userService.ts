@@ -9,7 +9,23 @@ export const userService = {
 
 
 async function getActiveMember() {
-    // let activeMember = JSON.parse(sessionStorage.getItem('activeUser'))
+    let activeMemberSessionStorage = sessionStorage.getItem('activeUser')
+    if (activeMemberSessionStorage) {
+        let activeMember = JSON.parse(activeMemberSessionStorage)
+        return activeMember
+    } else {
+        return {
+            id: "m103",
+            name: "Nachum Yosef",
+            email: "Nachum@gmail.com",
+            isAdmin: true,
+            joinedAt: 1658291514565,
+            lastSeen: 1658291514565,
+            imgUrl: "",
+            color: "#f5f5f5"
+        }
+    }
+
     // if (!activeMember) return ({
     // id: "m101",
     // name: "Shiran Abir",
@@ -20,16 +36,7 @@ async function getActiveMember() {
     // imgUrl: "https://ca.slack-edge.com/T035GULFZRD-U038455HGEP-5bb9017045d1-512",
     // color: "#f5f5f5"
     // })
-    return {
-        id: "m103",
-        name: "Nachum Yosef",
-        email: "Nachum@gmail.com",
-        isAdmin: false,
-        joinedAt: 1658291514565,
-        lastSeen: 1658291514565,
-        imgUrl: "https://ca.slack-edge.com/T035GULFZRD-U03CGDCUXPA-307cccdf69f0-512",
-        color: "#f5f5f5"
-    }
+
 }
 
 

@@ -171,5 +171,9 @@ video {
 }
 
 .MuiBackdrop-root {
-  opacity: 0 !important;
+  opacity: 0.2 !important;
+}
+
+.css-1ytz6dp{
+  display: none;
 }
