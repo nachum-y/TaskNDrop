@@ -112,7 +112,7 @@ const GroupRow: React.FC<{ task: Task, colsOrder: ColsOrder[], groupColor: strin
 
         // setDrawerMenu(MenuParam)
         
-        router.replace(`${router.query.boardId}/?taskId=${id}`)
+        // router.replace(`${router.query.boardId}/?taskId=${id}`)
 
     }
 

@@ -67,8 +67,8 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
 
             <nav className={classes['monday-board-subsets-tabs']}>
                 <span>Update</span>
-                <span>Files</span>
-                <span>Activity log</span>
+                {/* <span>Files</span> */}
+                {/* <span>Activity log</span> */}
             </nav>
 
             <div className={classes['open-update-form']} >
