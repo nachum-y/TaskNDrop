@@ -8,6 +8,7 @@ import 'quill/dist/quill.snow.css'
 import { BoardContext } from '../../../store/board'
 import Image from 'next/image'
 import parse from 'html-react-parser'
+import { useRouter } from 'next/router'
 
 
 const TaskMenu: FC<{ task: Task }> = ({ task }) => {
@@ -16,6 +17,7 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
     const [hideSpan, setHideSpan,] = useState(false)
 
     const [value, setValue] = useState('')
+    const router = useRouter()
 
     const conversionRemoveHandler = (msgId: string) => {
         const Idx: Idx = {
@@ -48,6 +50,12 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
 
     }
 
+    const closeTaskMenu = () => {
+        console.log(router.pathname)
+
+        router.replace(`${router.query.boardId}`)
+    }
+
     return (
         <div>
             <div className={classes['conversation-colse-btn-container']}>
@@ -59,8 +67,8 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
                     {task.cols[0].value?.toLocaleString()}
                 </h2>
 
-                <button type="button">
-                    menu ...
+                <button onClick={closeTaskMenu} type="button" >
+                    Close
                 </button>
             </div>
 
@@ -97,7 +105,7 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
                 </div>
             </div>)}
 
-            {!task.conversation && (
+            {!task.conversation || task.conversation.length === 0 && (
                 <div id="!currTask.conversion">
 
                     <div className={classes['post_empty_state_image_wrapper']}>
