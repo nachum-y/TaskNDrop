@@ -51,7 +51,6 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
     }
 
     const closeTaskMenu = () => {
-        console.log(router.pathname)
 
         router.replace(`${router.query.boardId}`)
     }
@@ -59,7 +58,7 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
     return (
         <div>
             <div className={classes['conversation-colse-btn-container']}>
-                <div className={classes['conversation-close-btn']}>
+                <div onClick={closeTaskMenu} className={classes['conversation-close-btn']}>
                 </div>
             </div>
             <div className={classes['task-open-title']}>
@@ -67,9 +66,9 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
                     {task.cols[0].value?.toLocaleString()}
                 </h2>
 
-                <button onClick={closeTaskMenu} type="button" >
+                {/* <button onClick={closeTaskMenu} type="button" >
                     Close
-                </button>
+                </button> */}
             </div>
 
 
@@ -83,9 +82,8 @@ const TaskMenu: FC<{ task: Task }> = ({ task }) => {
                 <span style={{ display: hideSpan ? 'none' : 'block' }} className={classes['write-update-msg']} onClick={() => setHideSpan(() => true)}>
                     write an update...
                 </span>
-                <div style={{ display: hideSpan ? 'block' : 'none' }} >
-                    {/* <div ref={quillRef}   >
-                    </div> */}
+                <div style={{ display: hideSpan ? 'block' : 'none'}} >
+                    
                     <ReactQuill theme="snow" value={value} onChange={setValue} />
 
                 </div>

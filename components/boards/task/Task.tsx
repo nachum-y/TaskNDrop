@@ -13,6 +13,8 @@ import { useRouter } from 'next/router'
 // import TaskMenu from './TaskMenu'
 import useFindTask from '../../../hooks/useFindTask'
 import dynamic from 'next/dynamic'
+import SvgIcon from '../../UI/svgIcon/SvgIcon'
+import { TaskMenuIcon } from '../../../service/svgIcon'
 
 
 const TaskMenu = dynamic(() => import("./TaskMenu"), { ssr: false })
@@ -53,7 +55,6 @@ const Task: React.FC<{}> = () => {
     const [open, setOpen] = React.useState(true)
     const router = useRouter()
     const toggleDrawer = (newOpen: boolean) => () => {
-        console.log('close')
         router.replace(`/boards/${router.query.boardId}`)
     }
     const taskId = router.query.taskId
@@ -91,16 +92,18 @@ const Task: React.FC<{}> = () => {
                 {open && (<StyledBox
                     sx={{
                         position: 'absolute',
-                        top: -drawerBleeding,
+                        top: -12,
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
                         visibility: 'visible',
                         right: 0,
                         left: 0,
+
                     }}
                 >
                     <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}> title </Typography>
+                    <Typography sx={{ p: 2 }}>
+                    </Typography>
                     {taskFind && <TaskMenu
                         task={taskFind}
                     />}
